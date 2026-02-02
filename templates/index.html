@@ -6,18 +6,20 @@
     <title>Muhammad Haseeb | Design. Code. Inspire.</title>
     <meta name="description" content="Multidisciplinary creative professional from Pakistan specializing in graphic design, Python development, and front-end engineering.">
     
-    <!-- Favicon - Uses provided image -->
+    <!-- Favicon -->
     <link rel="icon" type="image/jpeg" href="{{ url_for('static', filename='images/profile.jpg') }}">
+    <link rel="shortcut icon" type="image/jpeg" href="{{ url_for('static', filename='images/profile.jpg') }}">
+    <link rel="apple-touch-icon" sizes="180x180" href="{{ url_for('static', filename='images/profile.jpg') }}">
     
-    <!-- Fonts -->
+    <!-- Advanced Font - Plus Jakarta Sans -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Pacifico&family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Pacifico&family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
     
     <!-- Font Awesome -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
     
-    <!-- Tailwind CSS -->
+    <!-- Tailwind CSS with Shadcn Config -->
     <script src="https://cdn.tailwindcss.com"></script>
     <script>
         tailwind.config = {
@@ -25,29 +27,54 @@
             theme: {
                 extend: {
                     fontFamily: {
+                        'sans': ['Plus Jakarta Sans', 'system-ui', 'sans-serif'],
+                        'display': ['Plus Jakarta Sans', 'system-ui', 'sans-serif'],
                         'pacifico': ['Pacifico', 'cursive'],
-                        'poppins': ['Poppins', 'sans-serif'],
-                        'inter': ['Inter', 'sans-serif'],
                     },
                     colors: {
-                        primary: '#3B82F6',
-                        secondary: '#8B5CF6',
-                        offwhite: '#FAFAFA',
-                        darkbg: '#0F172A',
-                    },
-                    animation: {
-                        'typing': 'typing 3.5s steps(30, end), blink-caret .75s step-end infinite',
-                        'float': 'float 6s ease-in-out infinite',
-                    },
-                    keyframes: {
-                        typing: {
-                            'from': { width: '0' },
-                            'to': { width: '100%' }
+                        background: '#ffffff',
+                        foreground: '#09090b',
+                        primary: {
+                            DEFAULT: '#18181b',
+                            foreground: '#fafafa',
                         },
-                        float: {
-                            '0%, 100%': { transform: 'translateY(0)' },
-                            '50%': { transform: 'translateY(-20px)' },
+                        secondary: {
+                            DEFAULT: '#f4f4f5',
+                            foreground: '#18181b',
+                        },
+                        muted: {
+                            DEFAULT: '#f4f4f5',
+                            foreground: '#71717a',
+                        },
+                        accent: {
+                            DEFAULT: '#f4f4f5',
+                            foreground: '#18181b',
+                        },
+                        card: {
+                            DEFAULT: '#ffffff',
+                            foreground: '#09090b',
+                        },
+                        border: '#e4e4e7',
+                        input: '#e4e4e7',
+                        ring: '#18181b',
+                        zinc: {
+                            50: '#fafafa',
+                            100: '#f4f4f5',
+                            200: '#e4e4e7',
+                            300: '#d4d4d8',
+                            400: '#a1a1aa',
+                            500: '#71717a',
+                            600: '#52525b',
+                            700: '#3f3f46',
+                            800: '#27272a',
+                            900: '#18181b',
+                            950: '#09090b',
                         }
+                    },
+                    borderRadius: {
+                        lg: '0.5rem',
+                        md: '0.375rem',
+                        sm: '0.25rem',
                     }
                 }
             }
@@ -55,93 +82,161 @@
     </script>
     
     <style>
-        /* Ensure sections are visible by default */
+        body {
+            font-family: 'Plus Jakarta Sans', system-ui, sans-serif;
+            font-feature-settings: "cv02", "cv03", "cv04", "cv11";
+        }
+        
+        * {
+            border-color: #e4e4e7;
+        }
+        
+        .dark * {
+            border-color: #27272a;
+        }
+        
+        ::selection {
+            background-color: #18181b;
+            color: white;
+        }
+        
+        .dark ::selection {
+            background-color: #fafafa;
+            color: #09090b;
+        }
+        
+        *:focus-visible {
+            outline: 2px solid #18181b;
+            outline-offset: 2px;
+        }
+        
+        .dark *:focus-visible {
+            outline-color: #fafafa;
+        }
+        
+        ::-webkit-scrollbar {
+            width: 14px;
+            height: 14px;
+        }
+        
+        ::-webkit-scrollbar-track {
+            background: transparent;
+        }
+        
+        ::-webkit-scrollbar-thumb {
+            background: #d4d4d8;
+            border: 4px solid transparent;
+            border-radius: 8px;
+            background-clip: content-box;
+        }
+        
+        ::-webkit-scrollbar-thumb:hover {
+            background: #a1a1aa;
+        }
+        
+        .dark ::-webkit-scrollbar-thumb {
+            background: #3f3f46;
+            border: 4px solid transparent;
+            background-clip: content-box;
+        }
+        
+        .dark ::-webkit-scrollbar-thumb:hover {
+            background: #52525b;
+        }
+        
         .hero-content, .about-content {
             opacity: 1 !important;
             transform: translateX(0) !important;
         }
         
-        /* Fix for typing cursor */
+        .timeline-item {
+            opacity: 1 !important;
+            transform: translateX(0) !important;
+        }
+        
         .typing-text {
-            border-right: 2px solid #3B82F6;
+            border-right: 2px solid #18181b;
             animation: blink 1s step-end infinite;
             white-space: nowrap;
             overflow: hidden;
+        }
+        
+        .dark .typing-text {
+            border-right-color: #fafafa;
         }
         
         @keyframes blink {
             50% { border-color: transparent; }
         }
         
-        /* Timeline fix */
-        .timeline-item {
-            opacity: 1 !important;
-            transform: translateX(0) !important;
+        .gradient-text {
+            background: linear-gradient(135deg, #2563eb 0%, #06b6d4 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
         }
     </style>
     
     <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
 </head>
-<body class="font-inter bg-offwhite dark:bg-darkbg text-gray-900 dark:text-gray-100 transition-colors duration-300 overflow-x-hidden">
+<body class="bg-white dark:bg-black text-zinc-950 dark:text-zinc-50 transition-colors duration-300 overflow-x-hidden antialiased">
 
     <!-- Custom Cursor -->
-    <div id="custom-cursor" class="fixed w-5 h-5 rounded-full border-2 border-primary pointer-events-none z-50 hidden md:block transform -translate-x-1/2 -translate-y-1/2 transition-transform duration-100"></div>
-    <div id="cursor-dot" class="fixed w-2 h-2 bg-primary rounded-full pointer-events-none z-50 hidden md:block transform -translate-x-1/2 -translate-y-1/2"></div>
+    <div id="custom-cursor" class="fixed w-5 h-5 rounded-full border-2 border-zinc-900 dark:border-zinc-100 pointer-events-none z-50 hidden md:block transform -translate-x-1/2 -translate-y-1/2 transition-transform duration-100"></div>
+    <div id="cursor-dot" class="fixed w-2 h-2 bg-zinc-900 dark:bg-zinc-100 rounded-full pointer-events-none z-50 hidden md:block transform -translate-x-1/2 -translate-y-1/2"></div>
 
     <!-- Social Sidebar -->
     <div class="fixed left-6 top-1/2 transform -translate-y-1/2 z-40 hidden lg:flex flex-col items-center gap-6">
-        <div class="w-px h-20 bg-gradient-to-b from-transparent via-gray-400 to-transparent"></div>
-        <a href="https://github.com/FalconCode786" target="_blank" class="text-gray-600 dark:text-gray-400 hover:text-primary transition-colors transform hover:scale-110">
+        <div class="w-px h-20 bg-gradient-to-b from-transparent via-zinc-400 to-transparent"></div>
+        <a href="https://github.com/FalconCode786" target="_blank" class="text-zinc-600 dark:text-zinc-400 hover:text-zinc-900 dark:hover:text-zinc-100 transition-colors transform hover:scale-110">
             <i class="fab fa-github text-xl"></i>
         </a>
-        <a href="https://linkedin.com/in/muhammad-haseeb-980b16366/" target="_blank" class="text-gray-600 dark:text-gray-400 hover:text-primary transition-colors transform hover:scale-110">
+        <a href="https://linkedin.com/in/muhammad-haseeb-980b16366/" target="_blank" class="text-zinc-600 dark:text-zinc-400 hover:text-zinc-900 dark:hover:text-zinc-100 transition-colors transform hover:scale-110">
             <i class="fab fa-linkedin text-xl"></i>
         </a>
-        <a href="https://dribbble.com/mh324" target="_blank" class="text-gray-600 dark:text-gray-400 hover:text-primary transition-colors transform hover:scale-110">
+        <a href="https://dribbble.com/mh324" target="_blank" class="text-zinc-600 dark:text-zinc-400 hover:text-zinc-900 dark:hover:text-zinc-100 transition-colors transform hover:scale-110">
             <i class="fab fa-dribbble text-xl"></i>
         </a>
-        <div class="w-px h-20 bg-gradient-to-b from-gray-400 via-gray-400 to-transparent"></div>
+        <div class="w-px h-20 bg-gradient-to-b from-zinc-400 via-zinc-400 to-transparent"></div>
     </div>
 
     <!-- Navigation -->
-    <nav class="fixed w-full z-30 bg-white/80 dark:bg-darkbg/80 backdrop-blur-md border-b border-gray-200 dark:border-gray-800 transition-all duration-300" id="navbar">
+    <nav class="fixed w-full z-30 bg-white/70 dark:bg-black/70 backdrop-blur-xl border-b border-zinc-200 dark:border-zinc-800 transition-all duration-300 supports-[backdrop-filter]:bg-white/60 dark:supports-[backdrop-filter]:bg-black/60" id="navbar">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div class="flex justify-between items-center h-20">
-                <a href="#" class="font-pacifico text-2xl bg-gradient-to-r from-primary to-secondary bg-clip-text text-transparent">
+            <div class="flex justify-between items-center h-16">
+                <a href="#" class="font-pacifico text-2xl gradient-text">
                     M.Haseeb
                 </a>
                 
-                <div class="hidden md:flex items-center space-x-8">
-                    <a href="#home" class="nav-link text-sm font-medium hover:text-primary transition-colors">Home</a>
-                    <a href="#about" class="nav-link text-sm font-medium hover:text-primary transition-colors">About</a>
-                    <a href="#portfolio" class="nav-link text-sm font-medium hover:text-primary transition-colors">Portfolio</a>
-                    <a href="#skills" class="nav-link text-sm font-medium hover:text-primary transition-colors">Skills</a>
-                    <a href="#contact" class="nav-link text-sm font-medium hover:text-primary transition-colors">Contact</a>
+                <div class="hidden md:flex items-center space-x-1">
+                    <a href="#home" class="px-4 py-2 text-sm font-medium text-zinc-700 dark:text-zinc-300 hover:text-zinc-900 dark:hover:text-zinc-100 hover:bg-zinc-100 dark:hover:bg-zinc-900 rounded-md transition-colors">Home</a>
+                    <a href="#about" class="px-4 py-2 text-sm font-medium text-zinc-700 dark:text-zinc-300 hover:text-zinc-900 dark:hover:text-zinc-100 hover:bg-zinc-100 dark:hover:bg-zinc-900 rounded-md transition-colors">About</a>
+                    <a href="#portfolio" class="px-4 py-2 text-sm font-medium text-zinc-700 dark:text-zinc-300 hover:text-zinc-900 dark:hover:text-zinc-100 hover:bg-zinc-100 dark:hover:bg-zinc-900 rounded-md transition-colors">Portfolio</a>
+                    <a href="#skills" class="px-4 py-2 text-sm font-medium text-zinc-700 dark:text-zinc-300 hover:text-zinc-900 dark:hover:text-zinc-100 hover:bg-zinc-100 dark:hover:bg-zinc-900 rounded-md transition-colors">Skills</a>
+                    <a href="#contact" class="px-4 py-2 text-sm font-medium text-zinc-700 dark:text-zinc-300 hover:text-zinc-900 dark:hover:text-zinc-100 hover:bg-zinc-100 dark:hover:bg-zinc-900 rounded-md transition-colors">Contact</a>
                 </div>
 
-                <div class="flex items-center gap-4">
-                    <!-- Dark/Light Toggle -->
-                    <button id="theme-toggle" class="p-2 rounded-full hover:bg-gray-200 dark:hover:bg-gray-800 transition-colors">
-                        <i class="fas fa-moon dark:hidden text-gray-700"></i>
-                        <i class="fas fa-sun hidden dark:block text-yellow-400"></i>
+                <div class="flex items-center gap-2">
+                    <button id="theme-toggle" class="h-9 w-9 inline-flex items-center justify-center rounded-md border border-zinc-200 dark:border-zinc-800 bg-transparent hover:bg-zinc-100 dark:hover:bg-zinc-900 transition-colors">
+                        <i class="fas fa-moon dark:hidden text-zinc-700 text-sm"></i>
+                        <i class="fas fa-sun hidden dark:block text-zinc-100 text-sm"></i>
                     </button>
                     
-                    <!-- Mobile Menu Button -->
-                    <button id="mobile-menu-btn" class="md:hidden p-2 rounded-lg hover:bg-gray-200 dark:hover:bg-gray-800">
-                        <i class="fas fa-bars text-xl"></i>
+                    <button id="mobile-menu-btn" class="md:hidden h-9 w-9 inline-flex items-center justify-center rounded-md border border-zinc-200 dark:border-zinc-800 bg-transparent hover:bg-zinc-100 dark:hover:bg-zinc-900 transition-colors">
+                        <i class="fas fa-bars text-zinc-700 dark:text-zinc-300 text-sm"></i>
                     </button>
                 </div>
             </div>
         </div>
         
         <!-- Mobile Menu -->
-        <div id="mobile-menu" class="hidden md:hidden bg-white dark:bg-darkbg border-t border-gray-200 dark:border-gray-800">
-            <div class="px-4 pt-2 pb-6 space-y-2">
-                <a href="#home" class="block px-3 py-2 rounded-md text-base font-medium hover:bg-gray-100 dark:hover:bg-gray-800">Home</a>
-                <a href="#about" class="block px-3 py-2 rounded-md text-base font-medium hover:bg-gray-100 dark:hover:bg-gray-800">About</a>
-                <a href="#portfolio" class="block px-3 py-2 rounded-md text-base font-medium hover:bg-gray-100 dark:hover:bg-gray-800">Portfolio</a>
-                <a href="#skills" class="block px-3 py-2 rounded-md text-base font-medium hover:bg-gray-100 dark:hover:bg-gray-800">Skills</a>
-                <a href="#contact" class="block px-3 py-2 rounded-md text-base font-medium hover:bg-gray-100 dark:hover:bg-gray-800">Contact</a>
+        <div id="mobile-menu" class="hidden md:hidden bg-white dark:bg-black border-t border-zinc-200 dark:border-zinc-800">
+            <div class="px-4 pt-2 pb-6 space-y-1">
+                <a href="#home" class="block px-3 py-2 rounded-md text-sm font-medium text-zinc-700 dark:text-zinc-300 hover:bg-zinc-100 dark:hover:bg-zinc-900">Home</a>
+                <a href="#about" class="block px-3 py-2 rounded-md text-sm font-medium text-zinc-700 dark:text-zinc-300 hover:bg-zinc-100 dark:hover:bg-zinc-900">About</a>
+                <a href="#portfolio" class="block px-3 py-2 rounded-md text-sm font-medium text-zinc-700 dark:text-zinc-300 hover:bg-zinc-100 dark:hover:bg-zinc-900">Portfolio</a>
+                <a href="#skills" class="block px-3 py-2 rounded-md text-sm font-medium text-zinc-700 dark:text-zinc-300 hover:bg-zinc-100 dark:hover:bg-zinc-900">Skills</a>
+                <a href="#contact" class="block px-3 py-2 rounded-md text-sm font-medium text-zinc-700 dark:text-zinc-300 hover:bg-zinc-100 dark:hover:bg-zinc-900">Contact</a>
             </div>
         </div>
     </nav>
@@ -149,34 +244,34 @@
     <!-- Hero Section -->
     <section id="home" class="min-h-screen flex items-center justify-center pt-20 relative overflow-hidden">
         <!-- Floating Elements -->
-        <div class="absolute top-20 left-10 text-6xl opacity-10 animate-float text-primary"><i class="fas fa-code"></i></div>
-        <div class="absolute top-40 right-20 text-4xl opacity-10 animate-float text-secondary" style="animation-delay: 1s;"><i class="fas fa-palette"></i></div>
-        <div class="absolute bottom-20 left-1/4 text-5xl opacity-10 animate-float text-primary" style="animation-delay: 2s;"><i class="fas fa-layer-group"></i></div>
+        <div class="absolute top-20 left-10 text-6xl opacity-10 animate-float text-zinc-400 dark:text-zinc-600"><i class="fas fa-code"></i></div>
+        <div class="absolute top-40 right-20 text-4xl opacity-10 animate-float text-zinc-400 dark:text-zinc-600" style="animation-delay: 1s;"><i class="fas fa-palette"></i></div>
+        <div class="absolute bottom-20 left-1/4 text-5xl opacity-10 animate-float text-zinc-400 dark:text-zinc-600" style="animation-delay: 2s;"><i class="fas fa-layer-group"></i></div>
 
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 grid md:grid-cols-2 gap-12 items-center">
             <!-- Left Content -->
             <div class="hero-content text-center md:text-left space-y-6">
-                <div class="inline-block px-4 py-2 rounded-full bg-primary/10 text-primary text-sm font-medium mb-2">
-                    <i class="fas fa-map-marker-alt mr-2"></i>Based in Rawalpindi
+                <div class="inline-flex items-center rounded-full border border-zinc-200 dark:border-zinc-800 bg-zinc-50 dark:bg-zinc-950 px-3 py-1 text-sm font-medium text-zinc-700 dark:text-zinc-300">
+                    <i class="fas fa-map-marker-alt mr-2 text-zinc-500"></i>Based in Rawalpindi
                 </div>
-                <h1 class="text-5xl md:text-7xl font-poppins font-bold leading-tight">
+                <h1 class="text-5xl md:text-7xl font-bold tracking-tight leading-tight">
                     Muhammad<br>
-                    <span class="bg-gradient-to-r from-primary to-secondary bg-clip-text text-transparent">Haseeb</span>
+                    <span class="gradient-text">Haseeb</span>
                 </h1>
                 
                 <div class="h-12 flex items-center justify-center md:justify-start">
-                    <span class="text-xl md:text-2xl text-gray-600 dark:text-gray-300 font-light typing-text pr-1" id="typing-text"></span>
+                    <span class="text-xl md:text-2xl text-zinc-600 dark:text-zinc-400 font-light typing-text pr-1" id="typing-text"></span>
                 </div>
                 
-                <p class="text-lg text-gray-600 dark:text-gray-400 max-w-lg mx-auto md:mx-0">
+                <p class="text-lg text-zinc-600 dark:text-zinc-400 max-w-lg mx-auto md:mx-0 leading-relaxed">
                     Multidisciplinary creative professional combining graphic design, Python web development, and Full Stack Expertise.
                 </p>
                 
                 <div class="flex flex-col sm:flex-row gap-4 justify-center md:justify-start pt-4">
-                    <a href="#portfolio" class="px-8 py-4 bg-gradient-to-r from-primary to-secondary text-white rounded-full font-medium hover:shadow-lg hover:shadow-primary/30 transform hover:-translate-y-1 transition-all">
+                    <a href="#portfolio" class="inline-flex h-11 items-center justify-center rounded-md bg-zinc-900 dark:bg-white px-8 text-sm font-medium text-white dark:text-zinc-900 ring-offset-white dark:ring-offset-black transition-colors hover:bg-zinc-800 dark:hover:bg-zinc-100 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-zinc-950 dark:focus-visible:ring-zinc-300">
                         View My Work
                     </a>
-                    <a href="#contact" class="px-8 py-4 border-2 border-gray-300 dark:border-gray-700 rounded-full font-medium hover:border-primary hover:text-primary transition-all">
+                    <a href="#contact" class="inline-flex h-11 items-center justify-center rounded-md border border-zinc-200 dark:border-zinc-800 bg-transparent px-8 text-sm font-medium text-zinc-700 dark:text-zinc-300 ring-offset-white dark:ring-offset-black transition-colors hover:bg-zinc-100 dark:hover:bg-zinc-900 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-zinc-950 dark:focus-visible:ring-zinc-300">
                         Get In Touch
                     </a>
                 </div>
@@ -185,18 +280,18 @@
             <!-- Right Content (Image) -->
             <div class="hero-content relative flex justify-center">
                 <div class="relative w-80 h-80 md:w-96 md:h-96">
-                    <div class="absolute inset-0 bg-gradient-to-br from-primary to-secondary rounded-full blur-2xl opacity-30 animate-pulse"></div>
-                    <img src="{{ url_for('static', filename='images/profile.jpg') }}" alt="Muhammad Haseeb" class="relative w-full h-full object-cover rounded-3xl shadow-2xl grayscale hover:grayscale-0 transition-all duration-500 border-4 border-white dark:border-gray-800">
+                    <div class="absolute inset-0 bg-gradient-to-br from-zinc-200 to-zinc-400 dark:from-zinc-800 dark:to-zinc-600 rounded-full blur-2xl opacity-30 animate-pulse"></div>
+                    <img src="{{ url_for('static', filename='images/profile.jpg') }}" alt="Muhammad Haseeb" class="relative w-full h-full object-cover rounded-lg shadow-2xl grayscale hover:grayscale-0 transition-all duration-500 border border-zinc-200 dark:border-zinc-800">
                     
                     <!-- Floating Badge -->
-                    <div class="absolute -bottom-4 -right-4 bg-white dark:bg-gray-800 p-4 rounded-2xl shadow-xl border border-gray-100 dark:border-gray-700">
+                    <div class="absolute -bottom-4 -right-4 bg-white dark:bg-zinc-950 p-4 rounded-lg shadow-lg border border-zinc-200 dark:border-zinc-800">
                         <div class="flex items-center gap-3">
-                            <div class="w-12 h-12 rounded-full bg-primary/20 flex items-center justify-center text-primary">
-                                <i class="fas fa-award text-xl"></i>
+                            <div class="w-10 h-10 rounded-md bg-zinc-100 dark:bg-zinc-900 flex items-center justify-center text-zinc-900 dark:text-zinc-100">
+                                <i class="fas fa-award text-lg"></i>
                             </div>
                             <div>
-                                <p class="text-sm font-bold">2+ Years</p>
-                                <p class="text-xs text-gray-500">Experience</p>
+                                <p class="text-sm font-semibold">2+ Years</p>
+                                <p class="text-xs text-zinc-500">Experience</p>
                             </div>
                         </div>
                     </div>
@@ -206,33 +301,33 @@
     </section>
 
     <!-- About Section -->
-    <section id="about" class="py-24 bg-white dark:bg-gray-900/50 relative">
+    <section id="about" class="py-24 bg-zinc-50 dark:bg-zinc-950/50 relative">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div class="text-center mb-16">
-                <h2 class="text-4xl font-poppins font-bold mb-4">About Me</h2>
-                <div class="w-20 h-1 bg-gradient-to-r from-primary to-secondary mx-auto rounded-full"></div>
-                <p class="mt-4 text-gray-600 dark:text-gray-400">My professional journey from 2021 to present</p>
+            <div class="text-center mb-16 space-y-4">
+                <h2 class="text-4xl font-bold tracking-tight">About Me</h2>
+                <div class="w-20 h-1 bg-zinc-900 dark:bg-zinc-100 mx-auto rounded-full"></div>
+                <p class="text-zinc-600 dark:text-zinc-400">My professional journey from 2021 to present</p>
             </div>
 
             <div class="relative">
                 <!-- Timeline Line -->
-                <div class="hidden md:block absolute left-1/2 transform -translate-x-1/2 h-full w-0.5 bg-gradient-to-b from-primary via-secondary to-primary"></div>
+                <div class="hidden md:block absolute left-1/2 transform -translate-x-1/2 h-full w-px bg-zinc-200 dark:bg-zinc-800"></div>
                 
                 <div class="space-y-12">
                     {% for item in timeline %}
                     <div class="timeline-item relative flex flex-col md:flex-row {% if loop.index % 2 == 0 %}md:flex-row-reverse{% endif %} items-center">
                         <div class="w-full md:w-1/2 {% if loop.index % 2 == 0 %}md:pl-12{% else %}md:pr-12{% endif %} mb-4 md:mb-0">
-                            <div class="about-content bg-white dark:bg-gray-800 p-6 rounded-2xl shadow-lg border border-gray-100 dark:border-gray-700 hover:shadow-xl transition-shadow">
-                                <span class="inline-block px-3 py-1 bg-primary/10 text-primary rounded-full text-sm font-bold mb-3">{{ item.year }}</span>
-                                <h3 class="text-xl font-bold mb-2">{{ item.title }}</h3>
-                                <p class="text-gray-600 dark:text-gray-400 mb-3">{{ item.description }}</p>
-                                <blockquote class="border-l-4 border-secondary pl-4 italic text-gray-500 dark:text-gray-400 text-sm">
+                            <div class="about-content bg-white dark:bg-zinc-950 p-6 rounded-lg border border-zinc-200 dark:border-zinc-800 shadow-sm hover:border-zinc-300 dark:hover:border-zinc-700 transition-colors">
+                                <span class="inline-flex items-center rounded-full border border-zinc-200 dark:border-zinc-800 bg-zinc-50 dark:bg-zinc-950 px-3 py-1 text-xs font-semibold text-zinc-700 dark:text-zinc-300 mb-3">{{ item.year }}</span>
+                                <h3 class="text-xl font-semibold tracking-tight mb-2">{{ item.title }}</h3>
+                                <p class="text-zinc-600 dark:text-zinc-400 mb-3 text-sm leading-relaxed">{{ item.description }}</p>
+                                <blockquote class="border-l-2 border-zinc-300 dark:border-zinc-700 pl-4 italic text-zinc-500 dark:text-zinc-500 text-sm">
                                     "{{ item.quote }}"
                                 </blockquote>
                             </div>
                         </div>
                         
-                        <div class="hidden md:block absolute left-1/2 transform -translate-x-1/2 w-4 h-4 rounded-full bg-gradient-to-r from-primary to-secondary border-4 border-white dark:border-gray-900 z-10"></div>
+                        <div class="hidden md:block absolute left-1/2 transform -translate-x-1/2 w-3 h-3 rounded-full bg-zinc-900 dark:bg-zinc-100 border-4 border-white dark:border-zinc-950 z-10"></div>
                         
                         <div class="w-full md:w-1/2 {% if loop.index % 2 == 0 %}md:pr-12{% else %}md:pl-12{% endif %}"></div>
                     </div>
@@ -244,30 +339,30 @@
 
     <!-- Skills Section -->
     <section id="skills" class="py-24 relative overflow-hidden">
-        <div class="absolute inset-0 bg-gradient-to-br from-primary/5 to-secondary/5 dark:from-primary/10 dark:to-secondary/10"></div>
+        <div class="absolute inset-0 bg-zinc-50 dark:bg-black"></div>
         
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative">
-            <div class="text-center mb-16">
-                <h2 class="text-4xl font-poppins font-bold mb-4">Skills & Expertise</h2>
-                <div class="w-20 h-1 bg-gradient-to-r from-primary to-secondary mx-auto rounded-full"></div>
+            <div class="text-center mb-16 space-y-4">
+                <h2 class="text-4xl font-bold tracking-tight">Skills & Expertise</h2>
+                <div class="w-20 h-1 bg-zinc-900 dark:bg-zinc-100 mx-auto rounded-full"></div>
             </div>
 
-            <div class="grid md:grid-cols-3 gap-8">
+            <div class="grid md:grid-cols-3 gap-6">
                 <!-- Design Tools -->
-                <div class="bg-white dark:bg-gray-800 rounded-2xl p-8 shadow-lg border border-gray-100 dark:border-gray-700 hover:transform hover:-translate-y-2 transition-all duration-300">
-                    <div class="w-14 h-14 rounded-xl bg-gradient-to-br from-purple-500 to-pink-500 flex items-center justify-center text-white text-2xl mb-6">
+                <div class="rounded-lg border border-zinc-200 dark:border-zinc-800 bg-white dark:bg-zinc-950 p-8 shadow-sm hover:shadow-md hover:-translate-y-1 transition-all duration-200">
+                    <div class="w-12 h-12 rounded-lg bg-zinc-100 dark:bg-zinc-900 flex items-center justify-center text-zinc-900 dark:text-zinc-100 text-xl mb-6 border border-zinc-200 dark:border-zinc-800">
                         <i class="fas fa-paint-brush"></i>
                     </div>
-                    <h3 class="text-2xl font-bold mb-6">Design Tools</h3>
+                    <h3 class="text-xl font-semibold tracking-tight mb-6">Design Tools</h3>
                     <div class="space-y-4">
                         {% for skill in skills.design %}
                         <div class="skill-bar">
-                            <div class="flex justify-between mb-1">
+                            <div class="flex justify-between mb-2">
                                 <span class="text-sm font-medium">{{ skill.name }}</span>
-                                <span class="text-sm text-gray-500">{{ skill.level }}%</span>
+                                <span class="text-sm text-zinc-500">{{ skill.level }}%</span>
                             </div>
-                            <div class="w-full bg-gray-200 dark:bg-gray-700 rounded-full h-2">
-                                <div class="skill-progress bg-gradient-to-r from-purple-500 to-pink-500 h-2 rounded-full" style="width: 0%" data-width="{{ skill.level }}%"></div>
+                            <div class="w-full bg-zinc-100 dark:bg-zinc-900 rounded-full h-2 border border-zinc-200 dark:border-zinc-800">
+                                <div class="skill-progress bg-zinc-900 dark:bg-zinc-100 h-2 rounded-full transition-all duration-1000" style="width: 0%" data-width="{{ skill.level }}%"></div>
                             </div>
                         </div>
                         {% endfor %}
@@ -275,20 +370,20 @@
                 </div>
 
                 <!-- Python Development -->
-                <div class="bg-white dark:bg-gray-800 rounded-2xl p-8 shadow-lg border border-gray-100 dark:border-gray-700 hover:transform hover:-translate-y-2 transition-all duration-300">
-                    <div class="w-14 h-14 rounded-xl bg-gradient-to-br from-yellow-500 to-orange-500 flex items-center justify-center text-white text-2xl mb-6">
+                <div class="rounded-lg border border-zinc-200 dark:border-zinc-800 bg-white dark:bg-zinc-950 p-8 shadow-sm hover:shadow-md hover:-translate-y-1 transition-all duration-200">
+                    <div class="w-12 h-12 rounded-lg bg-zinc-100 dark:bg-zinc-900 flex items-center justify-center text-zinc-900 dark:text-zinc-100 text-xl mb-6 border border-zinc-200 dark:border-zinc-800">
                         <i class="fab fa-python"></i>
                     </div>
-                    <h3 class="text-2xl font-bold mb-6">Python</h3>
+                    <h3 class="text-xl font-semibold tracking-tight mb-6">Python</h3>
                     <div class="space-y-4">
                         {% for skill in skills.python %}
                         <div class="skill-bar">
-                            <div class="flex justify-between mb-1">
+                            <div class="flex justify-between mb-2">
                                 <span class="text-sm font-medium">{{ skill.name }}</span>
-                                <span class="text-sm text-gray-500">{{ skill.level }}%</span>
+                                <span class="text-sm text-zinc-500">{{ skill.level }}%</span>
                             </div>
-                            <div class="w-full bg-gray-200 dark:bg-gray-700 rounded-full h-2">
-                                <div class="skill-progress bg-gradient-to-r from-yellow-500 to-orange-500 h-2 rounded-full" style="width: 0%" data-width="{{ skill.level }}%"></div>
+                            <div class="w-full bg-zinc-100 dark:bg-zinc-900 rounded-full h-2 border border-zinc-200 dark:border-zinc-800">
+                                <div class="skill-progress bg-zinc-900 dark:bg-zinc-100 h-2 rounded-full transition-all duration-1000" style="width: 0%" data-width="{{ skill.level }}%"></div>
                             </div>
                         </div>
                         {% endfor %}
@@ -296,20 +391,20 @@
                 </div>
 
                 <!-- Front-End -->
-                <div class="bg-white dark:bg-gray-800 rounded-2xl p-8 shadow-lg border border-gray-100 dark:border-gray-700 hover:transform hover:-translate-y-2 transition-all duration-300">
-                    <div class="w-14 h-14 rounded-xl bg-gradient-to-br from-blue-500 to-cyan-500 flex items-center justify-center text-white text-2xl mb-6">
+                <div class="rounded-lg border border-zinc-200 dark:border-zinc-800 bg-white dark:bg-zinc-950 p-8 shadow-sm hover:shadow-md hover:-translate-y-1 transition-all duration-200">
+                    <div class="w-12 h-12 rounded-lg bg-zinc-100 dark:bg-zinc-900 flex items-center justify-center text-zinc-900 dark:text-zinc-100 text-xl mb-6 border border-zinc-200 dark:border-zinc-800">
                         <i class="fas fa-code"></i>
                     </div>
-                    <h3 class="text-2xl font-bold mb-6">Front-End</h3>
+                    <h3 class="text-xl font-semibold tracking-tight mb-6">Front-End</h3>
                     <div class="space-y-4">
                         {% for skill in skills.frontend %}
                         <div class="skill-bar">
-                            <div class="flex justify-between mb-1">
+                            <div class="flex justify-between mb-2">
                                 <span class="text-sm font-medium">{{ skill.name }}</span>
-                                <span class="text-sm text-gray-500">{{ skill.level }}%</span>
+                                <span class="text-sm text-zinc-500">{{ skill.level }}%</span>
                             </div>
-                            <div class="w-full bg-gray-200 dark:bg-gray-700 rounded-full h-2">
-                                <div class="skill-progress bg-gradient-to-r from-blue-500 to-cyan-500 h-2 rounded-full" style="width: 0%" data-width="{{ skill.level }}%"></div>
+                            <div class="w-full bg-zinc-100 dark:bg-zinc-900 rounded-full h-2 border border-zinc-200 dark:border-zinc-800">
+                                <div class="skill-progress bg-zinc-900 dark:bg-zinc-100 h-2 rounded-full transition-all duration-1000" style="width: 0%" data-width="{{ skill.level }}%"></div>
                             </div>
                         </div>
                         {% endfor %}
@@ -320,68 +415,67 @@
     </section>
 
     <!-- Portfolio Section -->
-    <section id="portfolio" class="py-24 bg-white dark:bg-gray-900/50">
+    <section id="portfolio" class="py-24 bg-white dark:bg-black">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div class="text-center mb-12">
-                <h2 class="text-4xl font-poppins font-bold mb-4">Featured Projects</h2>
-                <div class="w-20 h-1 bg-gradient-to-r from-primary to-secondary mx-auto rounded-full"></div>
-                <p class="mt-4 text-gray-600 dark:text-gray-400 max-w-2xl mx-auto">
+            <div class="text-center mb-12 space-y-4">
+                <h2 class="text-4xl font-bold tracking-tight">Featured Projects</h2>
+                <div class="w-20 h-1 bg-zinc-900 dark:bg-zinc-100 mx-auto rounded-full"></div>
+                <p class="text-zinc-600 dark:text-zinc-400 max-w-2xl mx-auto">
                     Real-world applications deployed on Vercel. Click "Live Demo" to visit the working projects.
                 </p>
             </div>
 
             <!-- Filter Buttons -->
-            <div class="flex flex-wrap justify-center gap-4 mb-12">
-                <button class="filter-btn px-6 py-2 rounded-full bg-primary text-white font-medium transition-all" data-filter="all">All Projects</button>
-                <button class="filter-btn px-6 py-2 rounded-full bg-gray-200 dark:bg-gray-800 text-gray-700 dark:text-gray-300 font-medium hover:bg-primary hover:text-white transition-all" data-filter="python">Python</button>
-                <button class="filter-btn px-6 py-2 rounded-full bg-gray-200 dark:bg-gray-800 text-gray-700 dark:text-gray-300 font-medium hover:bg-primary hover:text-white transition-all" data-filter="frontend">Front-End</button>
+            <div class="flex flex-wrap justify-center gap-2 mb-12">
+                <button class="filter-btn h-10 px-6 rounded-md bg-zinc-900 dark:bg-white text-white dark:text-zinc-900 text-sm font-medium transition-all hover:bg-zinc-800 dark:hover:bg-zinc-100" data-filter="all">All Projects</button>
+                <button class="filter-btn h-10 px-6 rounded-md border border-zinc-200 dark:border-zinc-800 bg-transparent text-zinc-700 dark:text-zinc-300 text-sm font-medium transition-all hover:bg-zinc-100 dark:hover:bg-zinc-900" data-filter="python">Python</button>
+                <button class="filter-btn h-10 px-6 rounded-md border border-zinc-200 dark:border-zinc-800 bg-transparent text-zinc-700 dark:text-zinc-300 text-sm font-medium transition-all hover:bg-zinc-100 dark:hover:bg-zinc-900" data-filter="frontend">Front-End</button>
             </div>
 
             <!-- Projects Grid -->
-            <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-8" id="projects-grid">
+            <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-6" id="projects-grid">
                 {% for project in projects %}
-                <div class="project-card group relative overflow-hidden rounded-2xl shadow-xl bg-white dark:bg-gray-800 border border-gray-100 dark:border-gray-700" data-category="{{ project.category }}">
+                <div class="project-card group relative overflow-hidden rounded-lg border border-zinc-200 dark:border-zinc-800 bg-white dark:bg-zinc-950 shadow-sm hover:shadow-md transition-all" data-category="{{ project.category }}">
                     <!-- Image/Icon Area -->
-                    <div class="aspect-video bg-gradient-to-br from-gray-100 to-gray-200 dark:from-gray-800 dark:to-gray-900 flex items-center justify-center text-6xl text-gray-400 relative overflow-hidden">
+                    <div class="aspect-video bg-zinc-50 dark:bg-zinc-950 flex items-center justify-center text-5xl text-zinc-400 dark:text-zinc-600 relative overflow-hidden border-b border-zinc-200 dark:border-zinc-800">
                         {% if project.demo_link and project.demo_link != '#' %}
-                        <div class="absolute top-3 right-3 bg-green-500 text-white text-xs px-3 py-1 rounded-full flex items-center gap-2 z-10 shadow-lg">
+                        <div class="absolute top-3 right-3 bg-zinc-900 dark:bg-white text-white dark:text-zinc-900 text-xs px-3 py-1 rounded-full flex items-center gap-2 z-10 font-medium">
                             <span class="relative flex h-2 w-2">
-                                <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-white opacity-75"></span>
-                                <span class="relative inline-flex rounded-full h-2 w-2 bg-white"></span>
+                                <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-current opacity-75"></span>
+                                <span class="relative inline-flex rounded-full h-2 w-2 bg-current"></span>
                             </span>
                             Live
                         </div>
                         {% endif %}
                         
                         {% if project.category == 'python' %}
-                        <i class="fab fa-python text-blue-500 group-hover:scale-110 transition-transform duration-500"></i>
+                        <i class="fab fa-python text-zinc-600 dark:text-zinc-400 group-hover:scale-110 transition-transform duration-500"></i>
                         {% elif project.category == 'frontend' %}
-                        <i class="fab fa-react text-cyan-500 group-hover:scale-110 transition-transform duration-500"></i>
+                        <i class="fab fa-react text-zinc-600 dark:text-zinc-400 group-hover:scale-110 transition-transform duration-500"></i>
                         {% else %}
-                        <i class="fas fa-code text-purple-500 group-hover:scale-110 transition-transform duration-500"></i>
+                        <i class="fas fa-code text-zinc-600 dark:text-zinc-400 group-hover:scale-110 transition-transform duration-500"></i>
                         {% endif %}
-                        
-                        <!-- Gradient Overlay on Hover -->
-                        <div class="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
                     </div>
                     
                     <!-- Content Area -->
                     <div class="p-6">
                         <div class="flex items-center justify-between mb-3">
-                            <h3 class="text-xl font-bold text-gray-900 dark:text-white">{{ project.title }}</h3>
+                            <h3 class="text-lg font-semibold tracking-tight text-zinc-900 dark:text-zinc-100">{{ project.title }}</h3>
                             {% if project.demo_link and project.demo_link != '#' %}
-                            <span class="flex h-3 w-3">
-                                <span class="relative inline-flex rounded-full h-3 w-3 bg-green-500"></span>
+                            <span class="flex h-2.5 w-2.5">
+                                <span class="relative inline-flex rounded-full h-2.5 w-2.5 bg-zinc-900 dark:bg-white"></span>
                             </span>
                             {% endif %}
                         </div>
                         
-                        <p class="text-gray-600 dark:text-gray-400 text-sm mb-4 line-clamp-2 h-10">{{ project.description }}</p>
+                        <p class="text-zinc-600 dark:text-zinc-400 text-sm mb-4 line-clamp-2 h-10 leading-relaxed">{{ project.description }}</p>
                         
                         <!-- Tech Stack Tags -->
                         <div class="flex flex-wrap gap-2 mb-6">
                             {% for tech in project.tech.split(',')[:3] %}
-                            <span class="text-xs px-2 py-1 bg-primary/10 dark:bg-primary/20 text-primary rounded-full">{{ tech.strip() }}</span>
+                            <span class="inline-flex items-center rounded-full border border-zinc-200 dark:border-zinc-800 bg-zinc-50 dark:bg-zinc-950 px-2.5 py-0.5 text-xs font-medium text-zinc-700 dark:text-zinc-300">
+                                {{ tech.strip() }}
+                            </span>
                             {% endfor %}
                         </div>
                         
@@ -389,20 +483,20 @@
                         <div class="flex gap-3">
                             {% if project.demo_link and project.demo_link != '#' %}
                             <a href="{{ project.demo_link }}" target="_blank" rel="noopener noreferrer" 
-                               class="flex-1 px-4 py-2.5 bg-primary hover:bg-blue-600 text-white text-sm font-medium rounded-lg transition-all duration-200 flex items-center justify-center gap-2 group/btn shadow-lg shadow-primary/30 hover:shadow-xl hover:-translate-y-0.5">
+                               class="inline-flex flex-1 h-9 items-center justify-center rounded-md bg-zinc-900 dark:bg-white px-4 text-sm font-medium text-white dark:text-zinc-900 ring-offset-white dark:ring-offset-black transition-colors hover:bg-zinc-800 dark:hover:bg-zinc-100 gap-2">
                                 <i class="fas fa-external-link-alt text-xs"></i>
                                 Live Demo
                             </a>
                             {% else %}
-                            <button disabled class="flex-1 px-4 py-2.5 bg-gray-300 dark:bg-gray-700 text-gray-500 dark:text-gray-400 text-sm font-medium rounded-lg cursor-not-allowed flex items-center justify-center gap-2 opacity-60">
+                            <button disabled class="inline-flex flex-1 h-9 items-center justify-center rounded-md border border-zinc-200 dark:border-zinc-800 bg-zinc-50 dark:bg-zinc-950 px-4 text-sm font-medium text-zinc-500 cursor-not-allowed gap-2 opacity-60">
                                 <i class="fas fa-clock text-xs"></i>
                                 Coming Soon
                             </button>
                             {% endif %}
                             
                             <a href="{{ project.github_link }}" target="_blank" rel="noopener noreferrer" 
-                               class="flex-1 px-4 py-2.5 border-2 border-gray-300 dark:border-gray-600 text-gray-700 dark:text-gray-300 hover:border-gray-900 dark:hover:border-white hover:bg-gray-900 dark:hover:bg-white hover:text-white dark:hover:text-gray-900 text-sm font-medium rounded-lg transition-all duration-200 flex items-center justify-center gap-2">
-                                <i class="fab fa-github text-sm"></i>
+                               class="inline-flex flex-1 h-9 items-center justify-center rounded-md border border-zinc-200 dark:border-zinc-800 bg-transparent px-4 text-sm font-medium text-zinc-700 dark:text-zinc-300 ring-offset-white dark:ring-offset-black transition-colors hover:bg-zinc-100 dark:hover:bg-zinc-900 gap-2">
+                                <i class="fab fa-github text-xs"></i>
                                 Code
                             </a>
                         </div>
@@ -414,7 +508,7 @@
             <!-- View All Button -->
             <div class="text-center mt-12">
                 <a href="https://github.com/FalconCode786" target="_blank" rel="noopener noreferrer" 
-                   class="inline-flex items-center gap-2 px-8 py-3 border-2 border-primary text-primary rounded-full font-medium hover:bg-primary hover:text-white transition-all duration-300 hover:shadow-lg hover:shadow-primary/30">
+                   class="inline-flex h-11 items-center justify-center rounded-md border border-zinc-200 dark:border-zinc-800 bg-transparent px-8 text-sm font-medium text-zinc-700 dark:text-zinc-300 ring-offset-white dark:ring-offset-black transition-colors hover:bg-zinc-100 dark:hover:bg-zinc-900 gap-2">
                     View All Projects on GitHub
                     <i class="fab fa-github"></i>
                 </a>
@@ -423,43 +517,43 @@
     </section>
 
     <!-- Contact Section -->
-    <section id="contact" class="py-24 relative">
-        <div class="absolute inset-0 bg-gradient-to-br from-primary/5 to-secondary/5"></div>
+    <section id="contact" class="py-24 bg-zinc-50 dark:bg-zinc-950 relative">
+        <div class="absolute inset-0 bg-zinc-50 dark:bg-zinc-950"></div>
         
-        <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 relative">
-            <div class="text-center mb-16">
-                <h2 class="text-4xl font-poppins font-bold mb-4">Get In Touch</h2>
-                <p class="text-gray-600 dark:text-gray-400">Have a project in mind? Let's work together!</p>
+        <div class="max-w-2xl mx-auto px-4 sm:px-6 lg:px-8 relative">
+            <div class="text-center mb-12 space-y-4">
+                <h2 class="text-4xl font-bold tracking-tight">Get In Touch</h2>
+                <p class="text-zinc-600 dark:text-zinc-400">Have a project in mind? Let's work together!</p>
             </div>
 
-            <div class="bg-white dark:bg-gray-800 rounded-3xl shadow-xl p-8 md:p-12 border border-gray-100 dark:border-gray-700">
+            <div class="rounded-lg border border-zinc-200 dark:border-zinc-800 bg-white dark:bg-zinc-950 shadow-sm p-8 md:p-10">
                 <form id="contact-form" class="space-y-6">
-                    <div class="grid md:grid-cols-2 gap-6">
-                        <div>
-                            <label class="block text-sm font-medium mb-2">Full Name *</label>
-                            <input type="text" name="name" required class="w-full px-4 py-3 rounded-lg bg-gray-50 dark:bg-gray-900 border border-gray-200 dark:border-gray-700 focus:border-primary focus:ring-2 focus:ring-primary/20 outline-none transition-all" placeholder="Your name">
+                    <div class="grid md:grid-cols-2 gap-4">
+                        <div class="space-y-2">
+                            <label class="text-sm font-medium text-zinc-700 dark:text-zinc-300">Full Name *</label>
+                            <input type="text" name="name" required class="flex h-10 w-full rounded-md border border-zinc-200 dark:border-zinc-800 bg-transparent px-3 py-2 text-sm ring-offset-white dark:ring-offset-black placeholder:text-zinc-500 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-zinc-950 dark:focus-visible:ring-zinc-300 disabled:cursor-not-allowed disabled:opacity-50 transition-colors" placeholder="Your name">
                         </div>
-                        <div>
-                            <label class="block text-sm font-medium mb-2">Email *</label>
-                            <input type="email" name="email" required class="w-full px-4 py-3 rounded-lg bg-gray-50 dark:bg-gray-900 border border-gray-200 dark:border-gray-700 focus:border-primary focus:ring-2 focus:ring-primary/20 outline-none transition-all" placeholder="your@email.com">
-                        </div>
-                    </div>
-
-                    <div class="grid md:grid-cols-2 gap-6">
-                        <div>
-                            <label class="block text-sm font-medium mb-2">Phone</label>
-                            <input type="tel" name="phone" class="w-full px-4 py-3 rounded-lg bg-gray-50 dark:bg-gray-900 border border-gray-200 dark:border-gray-700 focus:border-primary focus:ring-2 focus:ring-primary/20 outline-none transition-all" placeholder="+92 300 1234567">
-                        </div>
-                        <div>
-                            <label class="block text-sm font-medium mb-2">Company</label>
-                            <input type="text" name="company" class="w-full px-4 py-3 rounded-lg bg-gray-50 dark:bg-gray-900 border border-gray-200 dark:border-gray-700 focus:border-primary focus:ring-2 focus:ring-primary/20 outline-none transition-all" placeholder="Your company">
+                        <div class="space-y-2">
+                            <label class="text-sm font-medium text-zinc-700 dark:text-zinc-300">Email *</label>
+                            <input type="email" name="email" required class="flex h-10 w-full rounded-md border border-zinc-200 dark:border-zinc-800 bg-transparent px-3 py-2 text-sm ring-offset-white dark:ring-offset-black placeholder:text-zinc-500 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-zinc-950 dark:focus-visible:ring-zinc-300 disabled:cursor-not-allowed disabled:opacity-50 transition-colors" placeholder="your@email.com">
                         </div>
                     </div>
 
-                    <div class="grid md:grid-cols-2 gap-6">
-                        <div>
-                            <label class="block text-sm font-medium mb-2">Project Type</label>
-                            <select name="project_type" class="w-full px-4 py-3 rounded-lg bg-gray-50 dark:bg-gray-900 border border-gray-200 dark:border-gray-700 focus:border-primary focus:ring-2 focus:ring-primary/20 outline-none transition-all">
+                    <div class="grid md:grid-cols-2 gap-4">
+                        <div class="space-y-2">
+                            <label class="text-sm font-medium text-zinc-700 dark:text-zinc-300">Phone</label>
+                            <input type="tel" name="phone" class="flex h-10 w-full rounded-md border border-zinc-200 dark:border-zinc-800 bg-transparent px-3 py-2 text-sm ring-offset-white dark:ring-offset-black placeholder:text-zinc-500 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-zinc-950 dark:focus-visible:ring-zinc-300 disabled:cursor-not-allowed disabled:opacity-50 transition-colors" placeholder="+92 300 1234567">
+                        </div>
+                        <div class="space-y-2">
+                            <label class="text-sm font-medium text-zinc-700 dark:text-zinc-300">Company</label>
+                            <input type="text" name="company" class="flex h-10 w-full rounded-md border border-zinc-200 dark:border-zinc-800 bg-transparent px-3 py-2 text-sm ring-offset-white dark:ring-offset-black placeholder:text-zinc-500 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-zinc-950 dark:focus-visible:ring-zinc-300 disabled:cursor-not-allowed disabled:opacity-50 transition-colors" placeholder="Your company">
+                        </div>
+                    </div>
+
+                    <div class="grid md:grid-cols-2 gap-4">
+                        <div class="space-y-2">
+                            <label class="text-sm font-medium text-zinc-700 dark:text-zinc-300">Project Type</label>
+                            <select name="project_type" class="flex h-10 w-full rounded-md border border-zinc-200 dark:border-zinc-800 bg-transparent px-3 py-2 text-sm ring-offset-white dark:ring-offset-black focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-zinc-950 dark:focus-visible:ring-zinc-300 disabled:cursor-not-allowed disabled:opacity-50 transition-colors bg-white dark:bg-zinc-950">
                                 <option value="">Select a service...</option>
                                 <option value="Web Development">Web Development</option>
                                 <option value="Mobile App Development">Mobile App Development</option>
@@ -470,9 +564,9 @@
                                 <option value="Other">Other</option>
                             </select>
                         </div>
-                        <div>
-                            <label class="block text-sm font-medium mb-2">Budget Range</label>
-                            <select name="budget" class="w-full px-4 py-3 rounded-lg bg-gray-50 dark:bg-gray-900 border border-gray-200 dark:border-gray-700 focus:border-primary focus:ring-2 focus:ring-primary/20 outline-none transition-all">
+                        <div class="space-y-2">
+                            <label class="text-sm font-medium text-zinc-700 dark:text-zinc-300">Budget Range</label>
+                            <select name="budget" class="flex h-10 w-full rounded-md border border-zinc-200 dark:border-zinc-800 bg-transparent px-3 py-2 text-sm ring-offset-white dark:ring-offset-black focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-zinc-950 dark:focus-visible:ring-zinc-300 disabled:cursor-not-allowed disabled:opacity-50 transition-colors bg-white dark:bg-zinc-950">
                                 <option value="">Select budget...</option>
                                 <option value="Less than $1,000">Less than $1,000</option>
                                 <option value="$1,000 - $5,000">$1,000 - $5,000</option>
@@ -484,51 +578,59 @@
                         </div>
                     </div>
 
-                    <div>
-                        <label class="block text-sm font-medium mb-2">Subject *</label>
-                        <input type="text" name="subject" required class="w-full px-4 py-3 rounded-lg bg-gray-50 dark:bg-gray-900 border border-gray-200 dark:border-gray-700 focus:border-primary focus:ring-2 focus:ring-primary/20 outline-none transition-all" placeholder="What's this about?">
+                    <div class="space-y-2">
+                        <label class="text-sm font-medium text-zinc-700 dark:text-zinc-300">Subject *</label>
+                        <input type="text" name="subject" required class="flex h-10 w-full rounded-md border border-zinc-200 dark:border-zinc-800 bg-transparent px-3 py-2 text-sm ring-offset-white dark:ring-offset-black placeholder:text-zinc-500 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-zinc-950 dark:focus-visible:ring-zinc-300 disabled:cursor-not-allowed disabled:opacity-50 transition-colors" placeholder="What's this about?">
                     </div>
 
-                    <div>
-                        <label class="block text-sm font-medium mb-2">Message *</label>
-                        <textarea name="message" required rows="5" class="w-full px-4 py-3 rounded-lg bg-gray-50 dark:bg-gray-900 border border-gray-200 dark:border-gray-700 focus:border-primary focus:ring-2 focus:ring-primary/20 outline-none transition-all resize-none" placeholder="Tell me about your project..."></textarea>
+                    <div class="space-y-2">
+                        <label class="text-sm font-medium text-zinc-700 dark:text-zinc-300">Message *</label>
+                        <textarea name="message" required rows="5" class="flex w-full rounded-md border border-zinc-200 dark:border-zinc-800 bg-transparent px-3 py-2 text-sm ring-offset-white dark:ring-offset-black placeholder:text-zinc-500 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-zinc-950 dark:focus-visible:ring-zinc-300 disabled:cursor-not-allowed disabled:opacity-50 transition-colors resize-none" placeholder="Tell me about your project..."></textarea>
                     </div>
 
                     <!-- Honeypot field -->
                     <input type="text" name="website" class="hidden">
 
                     <div class="flex items-start gap-3">
-                        <input type="checkbox" id="privacy" required class="mt-1 w-4 h-4 text-primary rounded border-gray-300 focus:ring-primary">
-                        <label for="privacy" class="text-sm text-gray-600 dark:text-gray-400">I agree to the privacy policy and terms of service. My data will be handled securely.</label>
+                        <input type="checkbox" id="privacy" required class="h-4 w-4 rounded border-zinc-300 dark:border-zinc-700 text-zinc-900 dark:text-white focus:ring-zinc-900 dark:focus:ring-white mt-1">
+                        <label for="privacy" class="text-sm text-zinc-600 dark:text-zinc-400 leading-relaxed">I agree to the privacy policy and terms of service. My data will be handled securely.</label>
                     </div>
 
-                    <button type="submit" id="submit-btn" class="w-full py-4 bg-gradient-to-r from-primary to-secondary text-white rounded-lg font-bold text-lg hover:shadow-lg hover:shadow-primary/30 transform hover:-translate-y-1 transition-all flex items-center justify-center gap-2">
+                    <button type="submit" id="submit-btn" class="inline-flex w-full h-11 items-center justify-center rounded-md bg-zinc-900 dark:bg-white px-8 text-sm font-medium text-white dark:text-zinc-900 ring-offset-white dark:ring-offset-black transition-colors hover:bg-zinc-800 dark:hover:bg-zinc-100 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-zinc-950 dark:focus-visible:ring-zinc-300 disabled:pointer-events-none disabled:opacity-50 gap-2">
                         <span>Send Message</span>
-                        <i class="fas fa-paper-plane"></i>
+                        <i class="fas fa-paper-plane text-xs"></i>
                     </button>
                 </form>
 
                 <div id="form-status" class="mt-4 text-center hidden">
-                    <p class="text-green-500 font-medium"></p>
+                    <p class="text-sm font-medium text-zinc-900 dark:text-zinc-100"></p>
                 </div>
             </div>
         </div>
     </section>
 
     <!-- Footer -->
-    <footer class="bg-white dark:bg-gray-900 border-t border-gray-200 dark:border-gray-800 py-12">
+    <footer class="border-t border-zinc-200 dark:border-zinc-800 bg-white dark:bg-black py-12">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div class="flex flex-col md:flex-row justify-between items-center">
-                <div class="mb-4 md:mb-0">
-                    <span class="font-pacifico text-2xl bg-gradient-to-r from-primary to-secondary bg-clip-text text-transparent">M.Haseeb</span>
-                    <p class="text-sm text-gray-500 mt-2">© 2026 Muhammad Haseeb. All rights reserved.</p>
+            <div class="flex flex-col md:flex-row justify-between items-center gap-4">
+                <div>
+                    <span class="font-pacifico text-2xl gradient-text">M.Haseeb</span>
+                    <p class="text-sm text-zinc-500 mt-2">© 2026 Muhammad Haseeb. All rights reserved.</p>
                 </div>
                 
-                <div class="flex gap-6">
-                    <a href="https://github.com/FalconCode786" target="_blank" class="text-gray-400 hover:text-primary transition-colors text-xl"><i class="fab fa-github"></i></a>
-                    <a href="https://linkedin.com/in/muhammad-haseeb-980b16366/" target="_blank" class="text-gray-400 hover:text-primary transition-colors text-xl"><i class="fab fa-linkedin"></i></a>
-                    <a href="https://dribbble.com/mh324" target="_blank" class="text-gray-400 hover:text-primary transition-colors text-xl"><i class="fab fa-dribbble"></i></a>
-                    <a href="mailto:muhammadhaseeb.code@gmail.com" class="text-gray-400 hover:text-primary transition-colors text-xl"><i class="fas fa-envelope"></i></a>
+                <div class="flex gap-4">
+                    <a href="https://github.com/FalconCode786" target="_blank" class="inline-flex h-10 w-10 items-center justify-center rounded-md border border-zinc-200 dark:border-zinc-800 text-zinc-600 dark:text-zinc-400 hover:bg-zinc-100 dark:hover:bg-zinc-900 hover:text-zinc-900 dark:hover:text-zinc-100 transition-colors">
+                        <i class="fab fa-github"></i>
+                    </a>
+                    <a href="https://linkedin.com/in/muhammad-haseeb-980b16366/" target="_blank" class="inline-flex h-10 w-10 items-center justify-center rounded-md border border-zinc-200 dark:border-zinc-800 text-zinc-600 dark:text-zinc-400 hover:bg-zinc-100 dark:hover:bg-zinc-900 hover:text-zinc-900 dark:hover:text-zinc-100 transition-colors">
+                        <i class="fab fa-linkedin"></i>
+                    </a>
+                    <a href="https://dribbble.com/mh324" target="_blank" class="inline-flex h-10 w-10 items-center justify-center rounded-md border border-zinc-200 dark:border-zinc-800 text-zinc-600 dark:text-zinc-400 hover:bg-zinc-100 dark:hover:bg-zinc-900 hover:text-zinc-900 dark:hover:text-zinc-100 transition-colors">
+                        <i class="fab fa-dribbble"></i>
+                    </a>
+                    <a href="mailto:muhammadhaseeb.code@gmail.com" class="inline-flex h-10 w-10 items-center justify-center rounded-md border border-zinc-200 dark:border-zinc-800 text-zinc-600 dark:text-zinc-400 hover:bg-zinc-100 dark:hover:bg-zinc-900 hover:text-zinc-900 dark:hover:text-zinc-100 transition-colors">
+                        <i class="fas fa-envelope"></i>
+                    </a>
                 </div>
             </div>
         </div>
@@ -537,50 +639,52 @@
     <!-- Chatbot Widget -->
     <div id="chatbot" class="fixed bottom-6 right-6 z-40">
         <!-- Chat Button -->
-        <button id="chat-btn" class="w-14 h-14 bg-gradient-to-r from-primary to-secondary rounded-full shadow-lg flex items-center justify-center text-white hover:scale-110 transition-transform">
-            <i class="fas fa-comment-dots text-2xl"></i>
+        <button id="chat-btn" class="inline-flex h-12 w-12 items-center justify-center rounded-full bg-zinc-900 dark:bg-white text-white dark:text-zinc-900 shadow-lg hover:scale-110 transition-transform border border-zinc-200 dark:border-zinc-800">
+            <i class="fas fa-comment-dots text-lg"></i>
         </button>
         
         <!-- Chat Window -->
-        <div id="chat-window" class="hidden absolute bottom-20 right-0 w-96 h-[500px] bg-white dark:bg-gray-800 rounded-2xl shadow-2xl border border-gray-200 dark:border-gray-700 flex flex-col overflow-hidden">
-            <div class="bg-gradient-to-r from-primary to-secondary p-4 text-white flex justify-between items-center">
+        <div id="chat-window" class="hidden absolute bottom-20 right-0 w-96 h-[500px] rounded-lg border border-zinc-200 dark:border-zinc-800 bg-white dark:bg-zinc-950 shadow-2xl flex flex-col overflow-hidden">
+            <div class="border-b border-zinc-200 dark:border-zinc-800 bg-zinc-50 dark:bg-zinc-950 p-4 flex justify-between items-center">
                 <div>
-                    <h3 class="font-bold">Haseeb's Assistant</h3>
-                    <p class="text-xs opacity-80">Usually responds instantly</p>
+                    <h3 class="font-semibold text-sm text-zinc-900 dark:text-zinc-100">Haseeb's Assistant</h3>
+                    <p class="text-xs text-zinc-500">Usually responds instantly</p>
                 </div>
-                <button id="close-chat" class="hover:bg-white/20 rounded-full p-1 transition-colors"><i class="fas fa-times"></i></button>
+                <button id="close-chat" class="inline-flex h-8 w-8 items-center justify-center rounded-md text-zinc-500 hover:bg-zinc-100 dark:hover:bg-zinc-900 transition-colors">
+                    <i class="fas fa-times"></i>
+                </button>
             </div>
             
             <div id="chat-messages" class="flex-1 overflow-y-auto p-4 space-y-4">
                 <div class="flex gap-3">
-                    <div class="w-8 h-8 rounded-full bg-gradient-to-br from-primary to-secondary flex items-center justify-center text-white text-xs flex-shrink-0">
+                    <div class="w-8 h-8 rounded-full bg-zinc-900 dark:bg-white flex items-center justify-center text-white dark:text-zinc-900 text-xs flex-shrink-0 border border-zinc-200 dark:border-zinc-800">
                         <i class="fas fa-robot"></i>
                     </div>
-                    <div class="bg-gray-100 dark:bg-gray-700 rounded-2xl rounded-tl-none px-4 py-2 text-sm max-w-[80%]">
-                        Asalamu alikum! Ask me about Haseeb's skills, projects, or how I can help you. 🎨💻
+                    <div class="rounded-lg border border-zinc-200 dark:border-zinc-800 bg-zinc-50 dark:bg-zinc-900 px-4 py-2 text-sm text-zinc-700 dark:text-zinc-300 max-w-[80%]">
+                        Asalamu alikum! Ask me about Haseeb's skills, projects, or how I can help you.
                     </div>
                 </div>
             </div>
             
-            <div class="p-4 border-t border-gray-200 dark:border-gray-700">
+            <div class="p-4 border-t border-zinc-200 dark:border-zinc-800 bg-white dark:bg-zinc-950">
                 <div class="relative">
-                    <input type="text" id="chat-input" placeholder="Type a message..." class="w-full pl-4 pr-12 py-3 rounded-full bg-gray-100 dark:bg-gray-900 border-0 focus:ring-2 focus:ring-primary text-sm">
-                    <button id="send-message" class="absolute right-2 top-1/2 transform -translate-y-1/2 w-8 h-8 bg-primary text-white rounded-full flex items-center justify-center hover:bg-primary/80 transition-colors">
+                    <input type="text" id="chat-input" placeholder="Type a message..." class="flex h-10 w-full rounded-md border border-zinc-200 dark:border-zinc-800 bg-white dark:bg-zinc-950 px-3 py-2 text-sm ring-offset-white dark:ring-offset-black placeholder:text-zinc-500 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-zinc-950 dark:focus-visible:ring-zinc-300 pr-10">
+                    <button id="send-message" class="absolute right-2 top-1/2 transform -translate-y-1/2 inline-flex h-8 w-8 items-center justify-center rounded-md bg-zinc-900 dark:bg-white text-white dark:text-zinc-900 hover:bg-zinc-800 dark:hover:bg-zinc-100 transition-colors">
                         <i class="fas fa-paper-plane text-xs"></i>
                     </button>
                 </div>
                 <div class="flex gap-2 mt-3 overflow-x-auto pb-2">
-                    <button class="quick-reply px-3 py-1 bg-gray-100 dark:bg-gray-700 rounded-full text-xs whitespace-nowrap hover:bg-primary hover:text-white transition-colors">Skills?</button>
-                    <button class="quick-reply px-3 py-1 bg-gray-100 dark:bg-gray-700 rounded-full text-xs whitespace-nowrap hover:bg-primary hover:text-white transition-colors">Contact</button>
-                    <button class="quick-reply px-3 py-1 bg-gray-100 dark:bg-gray-700 rounded-full text-xs whitespace-nowrap hover:bg-primary hover:text-white transition-colors">Location</button>
-                    <button class="quick-reply px-3 py-1 bg-gray-100 dark:bg-gray-700 rounded-full text-xs whitespace-nowrap hover:bg-primary hover:text-white transition-colors">Experience</button>
+                    <button class="quick-reply inline-flex items-center rounded-full border border-zinc-200 dark:border-zinc-800 bg-zinc-50 dark:bg-zinc-950 px-3 py-1 text-xs font-medium text-zinc-700 dark:text-zinc-300 hover:bg-zinc-100 dark:hover:bg-zinc-900 transition-colors whitespace-nowrap">Skills?</button>
+                    <button class="quick-reply inline-flex items-center rounded-full border border-zinc-200 dark:border-zinc-800 bg-zinc-50 dark:bg-zinc-950 px-3 py-1 text-xs font-medium text-zinc-700 dark:text-zinc-300 hover:bg-zinc-100 dark:hover:bg-zinc-900 transition-colors whitespace-nowrap">Contact</button>
+                    <button class="quick-reply inline-flex items-center rounded-full border border-zinc-200 dark:border-zinc-800 bg-zinc-50 dark:bg-zinc-950 px-3 py-1 text-xs font-medium text-zinc-700 dark:text-zinc-300 hover:bg-zinc-100 dark:hover:bg-zinc-900 transition-colors whitespace-nowrap">Location</button>
+                    <button class="quick-reply inline-flex items-center rounded-full border border-zinc-200 dark:border-zinc-800 bg-zinc-50 dark:bg-zinc-950 px-3 py-1 text-xs font-medium text-zinc-700 dark:text-zinc-300 hover:bg-zinc-100 dark:hover:bg-zinc-900 transition-colors whitespace-nowrap">Experience</button>
                 </div>
             </div>
         </div>
     </div>
 
     <!-- Scroll to Top -->
-    <button id="scroll-top" class="fixed bottom-6 left-6 w-12 h-12 bg-white dark:bg-gray-800 rounded-full shadow-lg border border-gray-200 dark:border-gray-700 text-primary flex items-center justify-center transform translate-y-20 opacity-0 transition-all hover:bg-primary hover:text-white z-40">
+    <button id="scroll-top" class="fixed bottom-6 left-6 z-40 inline-flex h-10 w-10 items-center justify-center rounded-md border border-zinc-200 dark:border-zinc-800 bg-white dark:bg-zinc-950 text-zinc-700 dark:text-zinc-300 shadow-sm hover:bg-zinc-100 dark:hover:bg-zinc-900 transform translate-y-20 opacity-0 transition-all">
         <i class="fas fa-arrow-up"></i>
     </button>
 

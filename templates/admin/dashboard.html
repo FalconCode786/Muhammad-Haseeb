@@ -184,7 +184,7 @@
     </div>
 
     <script>
-        const submissions = {{ submissions|tojson }};
+        const submissionsData = {{ submissions|tojson|safe }};
         
         function filterSubmissions(status) {
             const rows = document.querySelectorAll('#submissions-tbody tr[data-id]');
@@ -222,7 +222,7 @@
         }
 
         function viewDetails(id) {
-            const sub = submissions.find(s => s.id === id);
+            const sub = submissionsData.find(s => s.id === id);
             if(!sub) return;
             
             const content = `
