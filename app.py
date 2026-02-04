@@ -67,6 +67,16 @@ def login_required(f):
         return f(*args, **kwargs)
     return decorated_function
 
+# Error Handler for 500 errors
+@app.errorhandler(500)
+def internal_error(error):
+    db.session.rollback()
+    return jsonify({'error': 'Internal server error'}), 500
+
+@app.errorhandler(400)
+def bad_request(error):
+    return jsonify({'error': 'Bad request'}), 400
+
 # Routes
 @app.route('/')
 def index():
@@ -94,7 +104,6 @@ def index():
         ]
     }
     
-    # Timeline based on PRD - Updated for accuracy
     timeline = [
         {
             'year': '2021',
@@ -122,7 +131,7 @@ def index():
         }
     ]
     
-    # All projects are Python-based with specific technologies
+    # FIXED: Removed trailing spaces from URLs
     projects = [
         {
             'id': 1,
@@ -131,8 +140,8 @@ def index():
             'description': 'Automated CV parsing and job matching platform using regex pattern matching to extract relevant information from job listings and candidate profiles',
             'image': 'scraper.jpg',
             'tech': 'Python, Regex, Pattern Matching, Flask',
-            'demo_link': 'https://cv-job-scrapper.vercel.app/',  # Removed space
-            'github_link': 'https://github.com/FalconCode786/Job-Scrapper.git'  # Removed space
+            'demo_link': 'https://cv-job-scrapper.vercel.app/',
+            'github_link': 'https://github.com/FalconCode786/Job-Scrapper.git'
         },
         {
             'id': 2,
@@ -141,8 +150,8 @@ def index():
             'description': 'Intelligent note-taking application using Hugging Face Transformers to automatically generate structured summaries from lectures and documents',
             'image': 'notes.jpg',
             'tech': 'Python, Hugging Face, NLP, Transformers',
-            'demo_link': 'https://notes-generator-mu.vercel.app/',  # Removed space
-            'github_link': 'https://github.com/FalconCode786/Notes-Generator.git'  # Removed space
+            'demo_link': 'https://notes-generator-mu.vercel.app/',
+            'github_link': 'https://github.com/FalconCode786/Notes-Generator.git'
         },
         {
             'id': 3,
@@ -151,8 +160,8 @@ def index():
             'description': 'Advanced Turnitin alternative using regex-based text similarity analysis, pattern matching for citation detection, and comprehensive originality scoring',
             'image': 'plagiarism.jpg',
             'tech': 'Python, Regex, Text Processing, Flask',
-            'demo_link': 'https://turnitin-alternative.vercel.app/',  # Removed space
-            'github_link': 'https://github.com/FalconCode786/Turnitin-Alternative.git'  # Removed space
+            'demo_link': 'https://turnitin-alternative.vercel.app/',
+            'github_link': 'https://github.com/FalconCode786/Turnitin-Alternative.git'
         }
     ]
     
@@ -163,77 +172,95 @@ def index():
 
 @app.route('/api/contact', methods=['POST'])
 def contact():
-    data = request.get_json()
-    
-    # Honeypot check (anti-spam)
-    if data.get('website'):
-        return jsonify({'error': 'Spam detected'}), 400
-    
-    # Validation
-    required = ['name', 'email', 'subject', 'message']
-    for field in required:
-        if not data.get(field):
-            return jsonify({'error': f'{field} is required'}), 400
-    
-    # Email validation
-    email_pattern = r'^[\w\.-]+@[\w\.-]+\.\w+$'
-    if not re.match(email_pattern, data['email']):
-        return jsonify({'error': 'Invalid email'}), 400
-    
-    submission = ContactSubmission(
-        name=data['name'],
-        email=data['email'],
-        phone=data.get('phone'),
-        company=data.get('company'),
-        budget=data.get('budget'),
-        project_type=data.get('project_type'),
-        subject=data['subject'],
-        message=data['message']
-    )
-    
-    db.session.add(submission)
-    db.session.commit()
-    
-    return jsonify({'ok': True, 'message': 'Message sent successfully!'})
+    try:
+        # Check if request is JSON
+        if not request.is_json:
+            return jsonify({'error': 'Content-Type must be application/json'}), 400
+        
+        data = request.get_json()
+        
+        # Honeypot check (anti-spam)
+        if data.get('website'):
+            return jsonify({'error': 'Spam detected'}), 400
+        
+        # Validation
+        required = ['name', 'email', 'subject', 'message']
+        for field in required:
+            if not data.get(field) or not str(data.get(field)).strip():
+                return jsonify({'error': f'{field} is required'}), 400
+        
+        # Email validation
+        email_pattern = r'^[\w\.-]+@[\w\.-]+\.\w+$'
+        if not re.match(email_pattern, data['email']):
+            return jsonify({'error': 'Invalid email format'}), 400
+        
+        # Create submission
+        submission = ContactSubmission(
+            name=data['name'].strip(),
+            email=data['email'].strip().lower(),
+            phone=data.get('phone', '').strip() if data.get('phone') else None,
+            company=data.get('company', '').strip() if data.get('company') else None,
+            budget=data.get('budget') if data.get('budget') else None,
+            project_type=data.get('project_type') if data.get('project_type') else None,
+            subject=data['subject'].strip(),
+            message=data['message'].strip()
+        )
+        
+        db.session.add(submission)
+        db.session.commit()
+        
+        return jsonify({'ok': True, 'message': 'Message sent successfully!'}), 200
+        
+    except Exception as e:
+        db.session.rollback()
+        app.logger.error(f'Contact form error: {str(e)}')
+        return jsonify({'error': 'Failed to save message. Please try again.'}), 500
 
 @app.route('/api/chat', methods=['POST'])
 def chat():
-    data = request.get_json()
-    user_message = data.get('message', '').lower()
-    
-    # Rule-based chatbot - no API keys needed
-    responses = {
-        'contact': "You can reach Muhammad at muhammadhaseeb.code@gmail.com or use the contact form below.",
-        'email': "Email: muhammadhaseeb.code@gmail.com",
-        'location': "Muhammad is based in Rawalpindi, Pakistan, available for local and remote work.",
-        'pakistan': "Yes, Muhammad is based in Pakistan and works with clients globally!",
-        'skills': "Muhammad specializes in Python Development (Flask, Regex, Hugging Face), Graphic Design (Photoshop, Figma), and Front-End (React, Vue).",
-        'python': "Muhammad is experienced in Python, Flask, Regex pattern matching, Hugging Face Transformers, and web scraping.",
-        'regex': "Regex (Regular Expressions) is Muhammad's specialty for text processing, pattern matching, and data extraction in the Job Scraper and Plagiarism Checker projects.",
-        'hugging face': "The Notes Generator uses Hugging Face Transformers library for AI-powered text summarization and NLP tasks.",
-        'design': "He creates stunning designs using Adobe Photoshop, Figma, Illustrator, and XD.",
-        'frontend': "Expert in React, Vue.js, HTML/CSS, and TailwindCSS with modern responsive design.",
-        'hire': "Great! Use the contact form below or email directly. Muhammad is available for freelance and full-time opportunities.",
-        'price': "Budget ranges from less than $1,000 to $25,000+ depending on project scope. Contact for detailed quote!",
-        'experience': "Muhammad has been coding since 2021, specializing in Python, Regex, and AI integration. Check the About timeline!",
-        'job scraper': "CV Job Scraper uses Python and Regex to parse job listings and match them with candidate profiles. Live demo available!",
-        'notes generator': "AI Notes Generator uses Hugging Face Transformers to create intelligent summaries from text and documents.",
-        'plagiarism': "Plagiarism Checker uses advanced regex patterns to detect text similarity and check for copied content.",
-        'hello': "Asalamu alikum! How can I help you learn about Muhammad Haseeb today?",
-        'hi': "Hello! I'm Haseeb's assistant. Ask about his Python skills, AI projects, or how I can help you!",
-        'github': "Check his code at https://github.com/FalconCode786",
-        'linkedin': "Connect professionally at https://linkedin.com/in/muhammad-haseeb-980b16366/",
-        'dribbble': "See design work at https://dribbble.com/mh324",
-        'default': "I'm here to help! Ask about Muhammad's Python projects, AI tools, contact info, or services."
-    }
+    try:
+        if not request.is_json:
+            return jsonify({'error': 'Content-Type must be application/json'}), 400
+            
+        data = request.get_json()
+        user_message = data.get('message', '').lower()
+        
+        responses = {
+            'contact': "You can reach Muhammad at muhammadhaseeb.code@gmail.com or use the contact form below.",
+            'email': "Email: muhammadhaseeb.code@gmail.com",
+            'location': "Muhammad is based in Rawalpindi, Pakistan, available for local and remote work.",
+            'pakistan': "Yes, Muhammad is based in Pakistan and works with clients globally!",
+            'skills': "Muhammad specializes in Python Development (Flask, Regex, Hugging Face), Graphic Design (Photoshop, Figma), and Front-End (React, Vue).",
+            'python': "Muhammad is experienced in Python, Flask, Regex pattern matching, Hugging Face Transformers, and web scraping.",
+            'regex': "Regex (Regular Expressions) is Muhammad's specialty for text processing, pattern matching, and data extraction in the Job Scraper and Plagiarism Checker projects.",
+            'hugging face': "The Notes Generator uses Hugging Face Transformers library for AI-powered text summarization and NLP tasks.",
+            'design': "He creates stunning designs using Adobe Photoshop, Figma, Illustrator, and XD.",
+            'frontend': "Expert in React, Vue.js, HTML/CSS, and TailwindCSS with modern responsive design.",
+            'hire': "Great! Use the contact form below or email directly. Muhammad is available for freelance and full-time opportunities.",
+            'price': "Budget ranges from less than $1,000 to $25,000+ depending on project scope. Contact for detailed quote!",
+            'experience': "Muhammad has been coding since 2021, specializing in Python, Regex, and AI integration. Check the About timeline!",
+            'job scraper': "CV Job Scraper uses Python and Regex to parse job listings and match them with candidate profiles. Live demo available!",
+            'notes generator': "AI Notes Generator uses Hugging Face Transformers to create intelligent summaries from text and documents.",
+            'plagiarism': "Plagiarism Checker uses advanced regex patterns to detect text similarity and check for copied content.",
+            'hello': "Asalamu alikum! How can I help you learn about Muhammad Haseeb today?",
+            'hi': "Hello! I'm Haseeb's assistant. Ask about his Python skills, AI projects, or how I can help you!",
+            'github': "Check his code at https://github.com/FalconCode786",
+            'linkedin': "Connect professionally at https://linkedin.com/in/muhammad-haseeb-980b16366/",
+            'dribbble': "See design work at https://dribbble.com/mh324",
+            'default': "I'm here to help! Ask about Muhammad's Python projects, AI tools, contact info, or services."
+        }
 
-    response_text = responses['default']
-    for key, value in responses.items():
-        if key in user_message:
-            response_text = value
-            break
-    
-    return jsonify({'response': response_text})
+        response_text = responses['default']
+        for key, value in responses.items():
+            if key in user_message:
+                response_text = value
+                break
+        
+        return jsonify({'response': response_text}), 200
+        
+    except Exception as e:
+        app.logger.error(f'Chat error: {str(e)}')
+        return jsonify({'response': 'Sorry, I encountered an error. Please try again.'}), 500
 
 # Admin Routes
 @app.route('/admin/login', methods=['GET', 'POST'])
