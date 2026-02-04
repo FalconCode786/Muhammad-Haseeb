@@ -175,6 +175,58 @@
             -webkit-text-fill-color: transparent;
             background-clip: text;
         }
+
+        /* Loading Spinner */
+        .spinner {
+            border: 2px solid #f3f3f3;
+            border-top: 2px solid #18181b;
+            border-radius: 50%;
+            width: 16px;
+            height: 16px;
+            animation: spin 1s linear infinite;
+            display: inline-block;
+        }
+        
+        .dark .spinner {
+            border: 2px solid #27272a;
+            border-top: 2px solid #fafafa;
+        }
+        
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        /* Success/Error States */
+        .form-success {
+            background-color: #dcfce7;
+            border: 1px solid #86efac;
+            color: #166534;
+            padding: 1rem;
+            border-radius: 0.5rem;
+            margin-top: 1rem;
+        }
+        
+        .form-error {
+            background-color: #fee2e2;
+            border: 1px solid #fca5a5;
+            color: #991b1b;
+            padding: 1rem;
+            border-radius: 0.5rem;
+            margin-top: 1rem;
+        }
+        
+        .dark .form-success {
+            background-color: #052e16;
+            border-color: #166534;
+            color: #86efac;
+        }
+        
+        .dark .form-error {
+            background-color: #450a0a;
+            border-color: #991b1b;
+            color: #fca5a5;
+        }
     </style>
     
     <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
@@ -516,7 +568,7 @@
         </div>
     </section>
 
-    <!-- Contact Section -->
+    <!-- Contact Section - FIXED -->
     <section id="contact" class="py-24 bg-zinc-50 dark:bg-zinc-950 relative">
         <div class="absolute inset-0 bg-zinc-50 dark:bg-zinc-950"></div>
         
@@ -527,7 +579,13 @@
             </div>
 
             <div class="rounded-lg border border-zinc-200 dark:border-zinc-800 bg-white dark:bg-zinc-950 shadow-sm p-8 md:p-10">
-                <form id="contact-form" class="space-y-6">
+                <!-- FIXED FORM: Added proper ID and removed Flask-WTF dependencies for vanilla JS approach -->
+                <form id="contact-form" class="space-y-6" novalidate>
+                    <!-- CSRF Token for Flask - Remove if not using Flask-WTF -->
+                    {% if csrf_token %}
+                    <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+                    {% endif %}
+                    
                     <div class="grid md:grid-cols-2 gap-4">
                         <div class="space-y-2">
                             <label class="text-sm font-medium text-zinc-700 dark:text-zinc-300">Full Name *</label>
@@ -588,22 +646,23 @@
                         <textarea name="message" required rows="5" class="flex w-full rounded-md border border-zinc-200 dark:border-zinc-800 bg-transparent px-3 py-2 text-sm ring-offset-white dark:ring-offset-black placeholder:text-zinc-500 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-zinc-950 dark:focus-visible:ring-zinc-300 disabled:cursor-not-allowed disabled:opacity-50 transition-colors resize-none" placeholder="Tell me about your project..."></textarea>
                     </div>
 
-                    <!-- Honeypot field -->
-                    <input type="text" name="website" class="hidden">
+                    <!-- Honeypot field for spam protection -->
+                    <input type="text" name="website" class="hidden" tabindex="-1" autocomplete="off">
 
                     <div class="flex items-start gap-3">
-                        <input type="checkbox" id="privacy" required class="h-4 w-4 rounded border-zinc-300 dark:border-zinc-700 text-zinc-900 dark:text-white focus:ring-zinc-900 dark:focus:ring-white mt-1">
+                        <input type="checkbox" id="privacy" name="privacy" required class="h-4 w-4 rounded border-zinc-300 dark:border-zinc-700 text-zinc-900 dark:text-white focus:ring-zinc-900 dark:focus:ring-white mt-1">
                         <label for="privacy" class="text-sm text-zinc-600 dark:text-zinc-400 leading-relaxed">I agree to the privacy policy and terms of service. My data will be handled securely.</label>
                     </div>
 
                     <button type="submit" id="submit-btn" class="inline-flex w-full h-11 items-center justify-center rounded-md bg-zinc-900 dark:bg-white px-8 text-sm font-medium text-white dark:text-zinc-900 ring-offset-white dark:ring-offset-black transition-colors hover:bg-zinc-800 dark:hover:bg-zinc-100 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-zinc-950 dark:focus-visible:ring-zinc-300 disabled:pointer-events-none disabled:opacity-50 gap-2">
-                        <span>Send Message</span>
-                        <i class="fas fa-paper-plane text-xs"></i>
+                        <span id="btn-text">Send Message</span>
+                        <i id="btn-icon" class="fas fa-paper-plane text-xs"></i>
                     </button>
                 </form>
 
-                <div id="form-status" class="mt-4 text-center hidden">
-                    <p class="text-sm font-medium text-zinc-900 dark:text-zinc-100"></p>
+                <!-- Status Messages -->
+                <div id="form-status" class="mt-4 hidden">
+                    <div id="status-message" class="text-sm font-medium"></div>
                 </div>
             </div>
         </div>
