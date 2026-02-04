@@ -135,6 +135,24 @@
         .dark ::-webkit-scrollbar-thumb:hover {
             background: #52525b;
         }
+        
+        .fade-in {
+            animation: fadeIn 0.3s ease-in-out;
+        }
+        
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        
+        .modal-enter {
+            animation: modalEnter 0.2s ease-out;
+        }
+        
+        @keyframes modalEnter {
+            from { opacity: 0; transform: scale(0.95); }
+            to { opacity: 1; transform: scale(1); }
+        }
     </style>
 </head>
 <body class="bg-zinc-50 dark:bg-black text-zinc-950 dark:text-zinc-50 min-h-screen antialiased">
@@ -163,11 +181,11 @@
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
         <!-- Stats Grid -->
         <div class="grid grid-cols-1 md:grid-cols-4 gap-4 mb-8">
-            <div class="rounded-lg border border-zinc-200 dark:border-zinc-800 bg-white dark:bg-zinc-950 p-6 shadow-sm">
+            <div class="rounded-lg border border-zinc-200 dark:border-zinc-800 bg-white dark:bg-zinc-950 p-6 shadow-sm hover:shadow-md transition-shadow">
                 <div class="flex items-center justify-between">
                     <div>
                         <p class="text-sm font-medium text-zinc-500 dark:text-zinc-400">Total Submissions</p>
-                        <p class="text-3xl font-bold tracking-tight mt-2">{{ stats.total }}</p>
+                        <p class="text-3xl font-bold tracking-tight mt-2">{{ stats.total | default(0) }}</p>
                     </div>
                     <div class="h-10 w-10 rounded-md bg-zinc-100 dark:bg-zinc-900 flex items-center justify-center text-zinc-900 dark:text-zinc-100 border border-zinc-200 dark:border-zinc-800">
                         <i class="fas fa-inbox"></i>
@@ -175,11 +193,11 @@
                 </div>
             </div>
 
-            <div class="rounded-lg border border-zinc-200 dark:border-zinc-800 bg-white dark:bg-zinc-950 p-6 shadow-sm">
+            <div class="rounded-lg border border-zinc-200 dark:border-zinc-800 bg-white dark:bg-zinc-950 p-6 shadow-sm hover:shadow-md transition-shadow">
                 <div class="flex items-center justify-between">
                     <div>
                         <p class="text-sm font-medium text-zinc-500 dark:text-zinc-400">Unread</p>
-                        <p class="text-3xl font-bold tracking-tight text-amber-600 mt-2">{{ stats.unread }}</p>
+                        <p class="text-3xl font-bold tracking-tight text-amber-600 mt-2">{{ stats.unread | default(0) }}</p>
                     </div>
                     <div class="h-10 w-10 rounded-md bg-amber-100 dark:bg-amber-950 flex items-center justify-center text-amber-600 dark:text-amber-400 border border-amber-200 dark:border-amber-900">
                         <i class="fas fa-envelope"></i>
@@ -187,11 +205,11 @@
                 </div>
             </div>
 
-            <div class="rounded-lg border border-zinc-200 dark:border-zinc-800 bg-white dark:bg-zinc-950 p-6 shadow-sm">
+            <div class="rounded-lg border border-zinc-200 dark:border-zinc-800 bg-white dark:bg-zinc-950 p-6 shadow-sm hover:shadow-md transition-shadow">
                 <div class="flex items-center justify-between">
                     <div>
                         <p class="text-sm font-medium text-zinc-500 dark:text-zinc-400">Replied</p>
-                        <p class="text-3xl font-bold tracking-tight text-emerald-600 mt-2">{{ stats.replied }}</p>
+                        <p class="text-3xl font-bold tracking-tight text-emerald-600 mt-2">{{ stats.replied | default(0) }}</p>
                     </div>
                     <div class="h-10 w-10 rounded-md bg-emerald-100 dark:bg-emerald-950 flex items-center justify-center text-emerald-600 dark:text-emerald-400 border border-emerald-200 dark:border-emerald-900">
                         <i class="fas fa-check"></i>
@@ -199,11 +217,11 @@
                 </div>
             </div>
 
-            <div class="rounded-lg border border-zinc-200 dark:border-zinc-800 bg-white dark:bg-zinc-950 p-6 shadow-sm">
+            <div class="rounded-lg border border-zinc-200 dark:border-zinc-800 bg-white dark:bg-zinc-950 p-6 shadow-sm hover:shadow-md transition-shadow">
                 <div class="flex items-center justify-between">
                     <div>
                         <p class="text-sm font-medium text-zinc-500 dark:text-zinc-400">Archived</p>
-                        <p class="text-3xl font-bold tracking-tight text-zinc-600 dark:text-zinc-400 mt-2">{{ stats.archived }}</p>
+                        <p class="text-3xl font-bold tracking-tight text-zinc-600 dark:text-zinc-400 mt-2">{{ stats.archived | default(0) }}</p>
                     </div>
                     <div class="h-10 w-10 rounded-md bg-zinc-100 dark:bg-zinc-900 flex items-center justify-center text-zinc-600 dark:text-zinc-400 border border-zinc-200 dark:border-zinc-800">
                         <i class="fas fa-archive"></i>
@@ -214,11 +232,11 @@
 
         <!-- Filters -->
         <div class="rounded-lg border border-zinc-200 dark:border-zinc-800 bg-white dark:bg-zinc-950 p-4 mb-6 flex flex-wrap gap-2 shadow-sm">
-            <button onclick="filterSubmissions('all')" class="filter-btn inline-flex h-9 items-center justify-center rounded-md bg-zinc-900 dark:bg-white px-4 text-sm font-medium text-white dark:text-zinc-900 ring-offset-white dark:ring-offset-black transition-colors hover:bg-zinc-800 dark:hover:bg-zinc-100 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-zinc-950 dark:focus-visible:ring-zinc-300">All</button>
-            <button onclick="filterSubmissions('unread')" class="filter-btn inline-flex h-9 items-center justify-center rounded-md border border-zinc-200 dark:border-zinc-800 bg-transparent px-4 text-sm font-medium text-zinc-700 dark:text-zinc-300 ring-offset-white dark:ring-offset-black transition-colors hover:bg-zinc-100 dark:hover:bg-zinc-900 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-zinc-950 dark:focus-visible:ring-zinc-300">Unread</button>
-            <button onclick="filterSubmissions('read')" class="filter-btn inline-flex h-9 items-center justify-center rounded-md border border-zinc-200 dark:border-zinc-800 bg-transparent px-4 text-sm font-medium text-zinc-700 dark:text-zinc-300 ring-offset-white dark:ring-offset-black transition-colors hover:bg-zinc-100 dark:hover:bg-zinc-900 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-zinc-950 dark:focus-visible:ring-zinc-300">Read</button>
-            <button onclick="filterSubmissions('replied')" class="filter-btn inline-flex h-9 items-center justify-center rounded-md border border-zinc-200 dark:border-zinc-800 bg-transparent px-4 text-sm font-medium text-zinc-700 dark:text-zinc-300 ring-offset-white dark:ring-offset-black transition-colors hover:bg-zinc-100 dark:hover:bg-zinc-900 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-zinc-950 dark:focus-visible:ring-zinc-300">Replied</button>
-            <button onclick="filterSubmissions('archived')" class="filter-btn inline-flex h-9 items-center justify-center rounded-md border border-zinc-200 dark:border-zinc-800 bg-transparent px-4 text-sm font-medium text-zinc-700 dark:text-zinc-300 ring-offset-white dark:ring-offset-black transition-colors hover:bg-zinc-100 dark:hover:bg-zinc-900 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-zinc-950 dark:focus-visible:ring-zinc-300">Archived</button>
+            <button onclick="filterSubmissions('all')" class="filter-btn active inline-flex h-9 items-center justify-center rounded-md bg-zinc-900 dark:bg-white px-4 text-sm font-medium text-white dark:text-zinc-900 ring-offset-white dark:ring-offset-black transition-colors hover:bg-zinc-800 dark:hover:bg-zinc-100 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-zinc-950 dark:focus-visible:ring-zinc-300" data-filter="all">All</button>
+            <button onclick="filterSubmissions('unread')" class="filter-btn inline-flex h-9 items-center justify-center rounded-md border border-zinc-200 dark:border-zinc-800 bg-transparent px-4 text-sm font-medium text-zinc-700 dark:text-zinc-300 ring-offset-white dark:ring-offset-black transition-colors hover:bg-zinc-100 dark:hover:bg-zinc-900 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-zinc-950 dark:focus-visible:ring-zinc-300" data-filter="unread">Unread</button>
+            <button onclick="filterSubmissions('read')" class="filter-btn inline-flex h-9 items-center justify-center rounded-md border border-zinc-200 dark:border-zinc-800 bg-transparent px-4 text-sm font-medium text-zinc-700 dark:text-zinc-300 ring-offset-white dark:ring-offset-black transition-colors hover:bg-zinc-100 dark:hover:bg-zinc-900 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-zinc-950 dark:focus-visible:ring-zinc-300" data-filter="read">Read</button>
+            <button onclick="filterSubmissions('replied')" class="filter-btn inline-flex h-9 items-center justify-center rounded-md border border-zinc-200 dark:border-zinc-800 bg-transparent px-4 text-sm font-medium text-zinc-700 dark:text-zinc-300 ring-offset-white dark:ring-offset-black transition-colors hover:bg-zinc-100 dark:hover:bg-zinc-900 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-zinc-950 dark:focus-visible:ring-zinc-300" data-filter="replied">Replied</button>
+            <button onclick="filterSubmissions('archived')" class="filter-btn inline-flex h-9 items-center justify-center rounded-md border border-zinc-200 dark:border-zinc-800 bg-transparent px-4 text-sm font-medium text-zinc-700 dark:text-zinc-300 ring-offset-white dark:ring-offset-black transition-colors hover:bg-zinc-100 dark:hover:bg-zinc-900 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-zinc-950 dark:focus-visible:ring-zinc-300" data-filter="archived">Archived</button>
         </div>
 
         <!-- Submissions Table -->
@@ -237,61 +255,70 @@
                         </tr>
                     </thead>
                     <tbody id="submissions-tbody" class="divide-y divide-zinc-200 dark:divide-zinc-800">
-                        {% for sub in submissions %}
-                        <tr data-id="{{ sub.id }}" data-status="{{ sub.status }}" class="hover:bg-zinc-50 dark:hover:bg-zinc-900/50 transition-colors">
-                            <td class="px-6 py-4">
-                                <div class="font-semibold text-zinc-900 dark:text-zinc-100">{{ sub.name }}</div>
-                                <div class="text-xs text-zinc-500">{{ sub.email }}</div>
-                            </td>
-                            <td class="px-6 py-4 text-zinc-700 dark:text-zinc-300 max-w-xs truncate">{{ sub.subject }}</td>
-                            <td class="px-6 py-4">
-                                {% if sub.project_type %}
-                                <span class="inline-flex items-center rounded-full border border-zinc-200 dark:border-zinc-800 bg-zinc-50 dark:bg-zinc-950 px-2.5 py-0.5 text-xs font-medium text-zinc-700 dark:text-zinc-300">
-                                    {{ sub.project_type }}
-                                </span>
-                                {% else %}
-                                <span class="text-zinc-400">-</span>
-                                {% endif %}
-                            </td>
-                            <td class="px-6 py-4 text-zinc-600 dark:text-zinc-400">
-                                {% if sub.budget %}
-                                {{ sub.budget }}
-                                {% else %}
-                                <span class="text-zinc-400">-</span>
-                                {% endif %}
-                            </td>
-                            <td class="px-6 py-4">
-                                <select onchange="updateStatus({{ sub.id }}, this.value)" class="h-8 rounded-md border border-zinc-200 dark:border-zinc-800 bg-white dark:bg-zinc-950 px-3 text-xs text-zinc-700 dark:text-zinc-300 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-zinc-950 dark:focus-visible:ring-zinc-300 ring-offset-white dark:ring-offset-black">
-                                    <option value="unread" {% if sub.status == 'unread' %}selected{% endif %}>Unread</option>
-                                    <option value="read" {% if sub.status == 'read' %}selected{% endif %}>Read</option>
-                                    <option value="replied" {% if sub.status == 'replied' %}selected{% endif %}>Replied</option>
-                                    <option value="archived" {% if sub.status == 'archived' %}selected{% endif %}>Archived</option>
-                                </select>
-                            </td>
-                            <td class="px-6 py-4 text-zinc-500 text-xs">{{ sub.created_at.strftime('%Y-%m-%d %H:%M') }}</td>
-                            <td class="px-6 py-4">
-                                <div class="flex items-center gap-2">
-                                    <button onclick="viewDetails({{ sub.id }})" class="inline-flex h-8 w-8 items-center justify-center rounded-md border border-zinc-200 dark:border-zinc-800 text-zinc-700 dark:text-zinc-300 hover:bg-zinc-100 dark:hover:bg-zinc-900 transition-colors" title="View">
-                                        <i class="fas fa-eye text-xs"></i>
-                                    </button>
-                                    <button onclick="deleteSubmission({{ sub.id }})" class="inline-flex h-8 w-8 items-center justify-center rounded-md border border-red-200 dark:border-red-900 text-red-600 dark:text-red-400 hover:bg-red-50 dark:hover:bg-red-950 transition-colors" title="Delete">
-                                        <i class="fas fa-trash text-xs"></i>
-                                    </button>
-                                </div>
-                            </td>
-                        </tr>
+                        {% if submissions %}
+                            {% for sub in submissions %}
+                            <tr data-id="{{ sub.id }}" data-status="{{ sub.status }}" class="hover:bg-zinc-50 dark:hover:bg-zinc-900/50 transition-colors fade-in">
+                                <td class="px-6 py-4">
+                                    <div class="font-semibold text-zinc-900 dark:text-zinc-100">{{ sub.name | default('Unknown') }}</div>
+                                    <div class="text-xs text-zinc-500">{{ sub.email | default('No email') }}</div>
+                                </td>
+                                <td class="px-6 py-4 text-zinc-700 dark:text-zinc-300 max-w-xs truncate">{{ sub.subject | default('No subject') }}</td>
+                                <td class="px-6 py-4">
+                                    {% if sub.project_type %}
+                                    <span class="inline-flex items-center rounded-full border border-zinc-200 dark:border-zinc-800 bg-zinc-50 dark:bg-zinc-950 px-2.5 py-0.5 text-xs font-medium text-zinc-700 dark:text-zinc-300">
+                                        {{ sub.project_type }}
+                                    </span>
+                                    {% else %}
+                                    <span class="text-zinc-400">-</span>
+                                    {% endif %}
+                                </td>
+                                <td class="px-6 py-4 text-zinc-600 dark:text-zinc-400">
+                                    {% if sub.budget %}
+                                    {{ sub.budget }}
+                                    {% else %}
+                                    <span class="text-zinc-400">-</span>
+                                    {% endif %}
+                                </td>
+                                <td class="px-6 py-4">
+                                    <select onchange="updateStatus('{{ sub.id }}', this.value)" class="h-8 rounded-md border border-zinc-200 dark:border-zinc-800 bg-white dark:bg-zinc-950 px-3 text-xs text-zinc-700 dark:text-zinc-300 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-zinc-950 dark:focus-visible:ring-zinc-300 ring-offset-white dark:ring-offset-black cursor-pointer hover:border-zinc-400 dark:hover:border-zinc-600 transition-colors">
+                                        <option value="unread" {% if sub.status == 'unread' %}selected{% endif %}>Unread</option>
+                                        <option value="read" {% if sub.status == 'read' %}selected{% endif %}>Read</option>
+                                        <option value="replied" {% if sub.status == 'replied' %}selected{% endif %}>Replied</option>
+                                        <option value="archived" {% if sub.status == 'archived' %}selected{% endif %}>Archived</option>
+                                    </select>
+                                </td>
+                                <td class="px-6 py-4 text-zinc-500 text-xs">
+                                    {% if sub.created_at %}
+                                        {{ sub.created_at.strftime('%Y-%m-%d %H:%M') }}
+                                    {% else %}
+                                        Unknown
+                                    {% endif %}
+                                </td>
+                                <td class="px-6 py-4">
+                                    <div class="flex items-center gap-2">
+                                        <button onclick="viewDetails('{{ sub.id }}')" class="inline-flex h-8 w-8 items-center justify-center rounded-md border border-zinc-200 dark:border-zinc-800 text-zinc-700 dark:text-zinc-300 hover:bg-zinc-100 dark:hover:bg-zinc-900 hover:text-zinc-900 dark:hover:text-zinc-100 transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-zinc-950 dark:focus-visible:ring-zinc-300" title="View Details">
+                                            <i class="fas fa-eye text-xs"></i>
+                                        </button>
+                                        <button onclick="deleteSubmission('{{ sub.id }}')" class="inline-flex h-8 w-8 items-center justify-center rounded-md border border-red-200 dark:border-red-900 text-red-600 dark:text-red-400 hover:bg-red-50 dark:hover:bg-red-950 transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-red-500" title="Delete Submission">
+                                            <i class="fas fa-trash text-xs"></i>
+                                        </button>
+                                    </div>
+                                </td>
+                            </tr>
+                            {% endfor %}
                         {% else %}
-                        <tr>
+                        <tr id="empty-state">
                             <td colspan="7" class="px-6 py-12 text-center text-zinc-500">
                                 <div class="flex flex-col items-center gap-3">
                                     <div class="h-12 w-12 rounded-full bg-zinc-100 dark:bg-zinc-900 flex items-center justify-center">
-                                        <i class="fas fa-inbox text-zinc-400"></i>
+                                        <i class="fas fa-inbox text-zinc-400 text-xl"></i>
                                     </div>
-                                    <p class="text-sm">No submissions yet</p>
+                                    <p class="text-sm font-medium">No submissions yet</p>
+                                    <p class="text-xs text-zinc-400">New messages will appear here</p>
                                 </div>
                             </td>
                         </tr>
-                        {% endfor %}
+                        {% endif %}
                     </tbody>
                 </table>
             </div>
@@ -300,10 +327,15 @@
 
     <!-- Detail Modal -->
     <div id="detail-modal" class="hidden fixed inset-0 bg-black/50 z-50 flex items-center justify-center p-4 backdrop-blur-sm">
-        <div class="rounded-lg border border-zinc-200 dark:border-zinc-800 bg-white dark:bg-zinc-950 max-w-2xl w-full max-h-[90vh] overflow-y-auto shadow-2xl">
-            <div class="p-6 border-b border-zinc-200 dark:border-zinc-800 flex justify-between items-center">
-                <h3 class="text-lg font-semibold tracking-tight">Message Details</h3>
-                <button onclick="closeModal()" class="inline-flex h-8 w-8 items-center justify-center rounded-md text-zinc-500 hover:bg-zinc-100 dark:hover:bg-zinc-900 hover:text-zinc-900 dark:hover:text-zinc-100 transition-colors">
+        <div class="modal-enter rounded-lg border border-zinc-200 dark:border-zinc-800 bg-white dark:bg-zinc-950 max-w-2xl w-full max-h-[90vh] overflow-y-auto shadow-2xl">
+            <div class="p-6 border-b border-zinc-200 dark:border-zinc-800 flex justify-between items-center sticky top-0 bg-white dark:bg-zinc-950 z-10">
+                <div class="flex items-center gap-3">
+                    <div class="h-8 w-8 rounded-md bg-zinc-100 dark:bg-zinc-900 flex items-center justify-center">
+                        <i class="fas fa-envelope-open text-zinc-600 dark:text-zinc-400"></i>
+                    </div>
+                    <h3 class="text-lg font-semibold tracking-tight">Message Details</h3>
+                </div>
+                <button onclick="closeModal()" class="inline-flex h-8 w-8 items-center justify-center rounded-md text-zinc-500 hover:bg-zinc-100 dark:hover:bg-zinc-900 hover:text-zinc-900 dark:hover:text-zinc-100 transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-zinc-950 dark:focus-visible:ring-zinc-300">
                     <i class="fas fa-times"></i>
                 </button>
             </div>
@@ -313,13 +345,30 @@
         </div>
     </div>
 
+    <!-- Toast Notification -->
+    <div id="toast" class="hidden fixed bottom-4 right-4 z-50 transform transition-all duration-300 translate-y-20 opacity-0">
+        <div class="rounded-lg border border-zinc-200 dark:border-zinc-800 bg-white dark:bg-zinc-950 shadow-lg p-4 flex items-center gap-3 min-w-[300px]">
+            <div id="toast-icon" class="h-8 w-8 rounded-full bg-emerald-100 dark:bg-emerald-950 flex items-center justify-center text-emerald-600 dark:text-emerald-400">
+                <i class="fas fa-check text-xs"></i>
+            </div>
+            <div class="flex-1">
+                <p id="toast-title" class="text-sm font-semibold text-zinc-900 dark:text-zinc-100">Success</p>
+                <p id="toast-message" class="text-xs text-zinc-500 dark:text-zinc-400">Operation completed successfully</p>
+            </div>
+        </div>
+    </div>
+
     <script>
-        const submissionsData = {{ submissions|tojson|safe }};
-        
+        // Safely initialize data with proper escaping
+        const submissionsData = JSON.parse('{{ submissions|tojson|safe if submissions is defined else "[]" }}');
+        const currentFilter = 'all';
+
+        // Filter functionality
         function filterSubmissions(status) {
             // Update active button state
             document.querySelectorAll('.filter-btn').forEach(btn => {
-                if (btn.textContent.toLowerCase() === status || (status === 'all' && btn.textContent === 'All')) {
+                const isActive = btn.dataset.filter === status;
+                if (isActive) {
                     btn.classList.remove('border', 'border-zinc-200', 'dark:border-zinc-800', 'bg-transparent', 'text-zinc-700', 'dark:text-zinc-300', 'hover:bg-zinc-100', 'dark:hover:bg-zinc-900');
                     btn.classList.add('bg-zinc-900', 'dark:bg-white', 'text-white', 'dark:text-zinc-900', 'hover:bg-zinc-800', 'dark:hover:bg-zinc-100');
                 } else {
@@ -329,110 +378,283 @@
             });
             
             const rows = document.querySelectorAll('#submissions-tbody tr[data-id]');
+            let visibleCount = 0;
+            
             rows.forEach(row => {
                 if (status === 'all' || row.dataset.status === status) {
                     row.style.display = '';
+                    row.classList.add('fade-in');
+                    visibleCount++;
                 } else {
                     row.style.display = 'none';
+                    row.classList.remove('fade-in');
                 }
             });
-        }
 
-        function updateStatus(id, status) {
-            fetch(`/api/admin/submissions/${id}/status`, {
-                method: 'PATCH',
-                headers: {'Content-Type': 'application/json'},
-                body: JSON.stringify({status: status})
-            }).then(r => r.json()).then(data => {
-                if(data.ok) {
-                    document.querySelector(`tr[data-id="${id}"]`).dataset.status = status;
+            // Show empty state if no results
+            const emptyState = document.getElementById('empty-state');
+            if (emptyState) {
+                if (visibleCount === 0 && status !== 'all') {
+                    emptyState.style.display = '';
+                    emptyState.querySelector('p').textContent = `No ${status} submissions found`;
+                } else if (submissionsData.length === 0) {
+                    emptyState.style.display = '';
+                } else {
+                    emptyState.style.display = 'none';
                 }
-            });
+            }
         }
 
-        function deleteSubmission(id) {
-            if(!confirm('Are you sure you want to delete this submission?')) return;
+        // Update submission status
+        async function updateStatus(id, status) {
+            try {
+                const response = await fetch(`/api/admin/submissions/${id}/status`, {
+                    method: 'PATCH',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'X-Requested-With': 'XMLHttpRequest'
+                    },
+                    body: JSON.stringify({ status: status })
+                });
+                
+                const data = await response.json();
+                
+                if (data.ok || data.success) {
+                    const row = document.querySelector(`tr[data-id="${id}"]`);
+                    if (row) {
+                        row.dataset.status = status;
+                        // Add visual feedback
+                        row.classList.add('bg-zinc-100', 'dark:bg-zinc-900');
+                        setTimeout(() => {
+                            row.classList.remove('bg-zinc-100', 'dark:bg-zinc-900');
+                        }, 300);
+                    }
+                    showToast('Success', `Status updated to ${status}`, 'success');
+                } else {
+                    throw new Error(data.message || 'Failed to update status');
+                }
+            } catch (error) {
+                console.error('Error updating status:', error);
+                showToast('Error', error.message || 'Failed to update status', 'error');
+                // Revert select to previous value
+                const row = document.querySelector(`tr[data-id="${id}"]`);
+                if (row) {
+                    const select = row.querySelector('select');
+                    select.value = row.dataset.status;
+                }
+            }
+        }
+
+        // Delete submission
+        async function deleteSubmission(id) {
+            if (!confirm('Are you sure you want to delete this submission? This action cannot be undone.')) {
+                return;
+            }
             
-            fetch(`/api/admin/submissions/${id}`, {
-                method: 'DELETE'
-            }).then(r => r.json()).then(data => {
-                if(data.ok) {
-                    document.querySelector(`tr[data-id="${id}"]`).remove();
+            try {
+                const response = await fetch(`/api/admin/submissions/${id}`, {
+                    method: 'DELETE',
+                    headers: {
+                        'X-Requested-With': 'XMLHttpRequest'
+                    }
+                });
+                
+                const data = await response.json();
+                
+                if (data.ok || data.success) {
+                    const row = document.querySelector(`tr[data-id="${id}"]`);
+                    if (row) {
+                        row.style.transform = 'translateX(-100%)';
+                        row.style.opacity = '0';
+                        setTimeout(() => {
+                            row.remove();
+                            // Remove from data array
+                            const index = submissionsData.findIndex(s => s.id == id);
+                            if (index > -1) {
+                                submissionsData.splice(index, 1);
+                            }
+                            // Check if table is empty
+                            if (submissionsData.length === 0) {
+                                location.reload();
+                            }
+                        }, 300);
+                    }
+                    showToast('Deleted', 'Submission has been deleted', 'success');
+                } else {
+                    throw new Error(data.message || 'Failed to delete submission');
                 }
-            });
+            } catch (error) {
+                console.error('Error deleting submission:', error);
+                showToast('Error', error.message || 'Failed to delete submission', 'error');
+            }
         }
 
+        // View submission details
         function viewDetails(id) {
-            const sub = submissionsData.find(s => s.id === id);
-            if(!sub) return;
+            const sub = submissionsData.find(s => s.id == id);
+            if (!sub) {
+                showToast('Error', 'Submission not found', 'error');
+                return;
+            }
+            
+            const formatDate = (dateStr) => {
+                if (!dateStr) return 'Unknown';
+                try {
+                    return new Date(dateStr).toLocaleString('en-US', {
+                        year: 'numeric',
+                        month: 'short',
+                        day: 'numeric',
+                        hour: '2-digit',
+                        minute: '2-digit'
+                    });
+                } catch (e) {
+                    return dateStr;
+                }
+            };
             
             const content = `
-                <div class="grid grid-cols-2 gap-4 text-sm">
-                    <div class="space-y-1">
+                <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 text-sm">
+                    <div class="space-y-1 p-3 rounded-md bg-zinc-50 dark:bg-zinc-900/50 border border-zinc-200 dark:border-zinc-800">
                         <span class="text-xs font-medium text-zinc-500 uppercase tracking-wider">Name</span>
-                        <p class="font-semibold text-zinc-900 dark:text-zinc-100">${sub.name}</p>
+                        <p class="font-semibold text-zinc-900 dark:text-zinc-100">${sub.name || 'Unknown'}</p>
                     </div>
-                    <div class="space-y-1">
+                    <div class="space-y-1 p-3 rounded-md bg-zinc-50 dark:bg-zinc-900/50 border border-zinc-200 dark:border-zinc-800">
                         <span class="text-xs font-medium text-zinc-500 uppercase tracking-wider">Email</span>
-                        <p><a href="mailto:${sub.email}" class="text-zinc-900 dark:text-zinc-100 hover:underline">${sub.email}</a></p>
+                        <p><a href="mailto:${sub.email || '#'}" class="text-zinc-900 dark:text-zinc-100 hover:underline font-medium">${sub.email || 'No email'}</a></p>
                     </div>
-                    <div class="space-y-1">
+                    <div class="space-y-1 p-3 rounded-md bg-zinc-50 dark:bg-zinc-900/50 border border-zinc-200 dark:border-zinc-800">
                         <span class="text-xs font-medium text-zinc-500 uppercase tracking-wider">Phone</span>
-                        <p class="text-zinc-700 dark:text-zinc-300">${sub.phone || '-'}</p>
+                        <p class="text-zinc-700 dark:text-zinc-300 font-mono text-sm">${sub.phone || '-'}</p>
                     </div>
-                    <div class="space-y-1">
+                    <div class="space-y-1 p-3 rounded-md bg-zinc-50 dark:bg-zinc-900/50 border border-zinc-200 dark:border-zinc-800">
                         <span class="text-xs font-medium text-zinc-500 uppercase tracking-wider">Company</span>
                         <p class="text-zinc-700 dark:text-zinc-300">${sub.company || '-'}</p>
                     </div>
-                    <div class="space-y-1">
+                    <div class="space-y-1 p-3 rounded-md bg-zinc-50 dark:bg-zinc-900/50 border border-zinc-200 dark:border-zinc-800">
                         <span class="text-xs font-medium text-zinc-500 uppercase tracking-wider">Project Type</span>
                         <p class="text-zinc-700 dark:text-zinc-300">${sub.project_type || '-'}</p>
                     </div>
-                    <div class="space-y-1">
+                    <div class="space-y-1 p-3 rounded-md bg-zinc-50 dark:bg-zinc-900/50 border border-zinc-200 dark:border-zinc-800">
                         <span class="text-xs font-medium text-zinc-500 uppercase tracking-wider">Budget</span>
-                        <p class="text-zinc-700 dark:text-zinc-300">${sub.budget || '-'}</p>
+                        <p class="text-zinc-700 dark:text-zinc-300 font-semibold">${sub.budget || '-'}</p>
                     </div>
-                    <div class="space-y-1">
-                        <span class="text-xs font-medium text-zinc-500 uppercase tracking-wider">Date</span>
-                        <p class="text-zinc-700 dark:text-zinc-300">${new Date(sub.created_at).toLocaleString()}</p>
+                    <div class="space-y-1 p-3 rounded-md bg-zinc-50 dark:bg-zinc-900/50 border border-zinc-200 dark:border-zinc-800">
+                        <span class="text-xs font-medium text-zinc-500 uppercase tracking-wider">Date Received</span>
+                        <p class="text-zinc-700 dark:text-zinc-300">${formatDate(sub.created_at)}</p>
                     </div>
-                    <div class="space-y-1">
+                    <div class="space-y-1 p-3 rounded-md bg-zinc-50 dark:bg-zinc-900/50 border border-zinc-200 dark:border-zinc-800">
                         <span class="text-xs font-medium text-zinc-500 uppercase tracking-wider">Status</span>
-                        <span class="inline-flex items-center rounded-full border border-zinc-200 dark:border-zinc-800 bg-zinc-50 dark:bg-zinc-950 px-2.5 py-0.5 text-xs font-medium text-zinc-700 dark:text-zinc-300 capitalize">${sub.status}</span>
+                        <span class="inline-flex items-center rounded-full border border-zinc-200 dark:border-zinc-800 bg-zinc-100 dark:bg-zinc-900 px-2.5 py-0.5 text-xs font-medium capitalize
+                            ${sub.status === 'unread' ? 'text-amber-600 dark:text-amber-400 border-amber-200 dark:border-amber-900 bg-amber-50 dark:bg-amber-950' : ''}
+                            ${sub.status === 'replied' ? 'text-emerald-600 dark:text-emerald-400 border-emerald-200 dark:border-emerald-900 bg-emerald-50 dark:bg-emerald-950' : ''}
+                            ${sub.status === 'archived' ? 'text-zinc-600 dark:text-zinc-400' : ''}
+                        ">
+                            ${sub.status || 'unknown'}
+                        </span>
                     </div>
                 </div>
-                <div class="space-y-2 pt-4 border-t border-zinc-200 dark:border-zinc-800">
+                
+                <div class="space-y-3 pt-4 border-t border-zinc-200 dark:border-zinc-800">
                     <span class="text-xs font-medium text-zinc-500 uppercase tracking-wider">Subject</span>
-                    <p class="font-semibold text-zinc-900 dark:text-zinc-100">${sub.subject}</p>
+                    <p class="font-semibold text-zinc-900 dark:text-zinc-100 text-lg">${sub.subject || 'No subject'}</p>
                 </div>
-                <div class="space-y-2 pt-4 border-t border-zinc-200 dark:border-zinc-800">
+                
+                <div class="space-y-3 pt-4 border-t border-zinc-200 dark:border-zinc-800">
                     <span class="text-xs font-medium text-zinc-500 uppercase tracking-wider">Message</span>
-                    <div class="rounded-md border border-zinc-200 dark:border-zinc-800 bg-zinc-50 dark:bg-zinc-950 p-4">
-                        <p class="text-zinc-700 dark:text-zinc-300 whitespace-pre-wrap text-sm leading-relaxed">${sub.message}</p>
+                    <div class="rounded-lg border border-zinc-200 dark:border-zinc-800 bg-zinc-50 dark:bg-zinc-950 p-4 max-h-60 overflow-y-auto">
+                        <p class="text-zinc-700 dark:text-zinc-300 whitespace-pre-wrap text-sm leading-relaxed font-light">${sub.message || 'No message content'}</p>
                     </div>
                 </div>
-                <div class="pt-4 flex gap-3">
-                    <a href="mailto:${sub.email}?subject=Re: ${sub.subject}" class="inline-flex h-10 items-center justify-center rounded-md bg-zinc-900 dark:bg-white px-4 text-sm font-medium text-white dark:text-zinc-900 ring-offset-white dark:ring-offset-black transition-colors hover:bg-zinc-800 dark:hover:bg-zinc-100 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-zinc-950 dark:focus-visible:ring-zinc-300 gap-2">
+                
+                <div class="pt-6 flex flex-wrap gap-3 border-t border-zinc-200 dark:border-zinc-800">
+                    <a href="mailto:${sub.email || '#'}?subject=Re: ${encodeURIComponent(sub.subject || '')}&body=Hi ${sub.name || ''},%0D%0A%0D%0AThank you for your message.%0D%0A%0D%0A" 
+                       class="inline-flex h-10 items-center justify-center rounded-md bg-zinc-900 dark:bg-white px-4 text-sm font-medium text-white dark:text-zinc-900 ring-offset-white dark:ring-offset-black transition-colors hover:bg-zinc-800 dark:hover:bg-zinc-100 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-zinc-950 dark:focus-visible:ring-zinc-300 gap-2">
                         <i class="fas fa-reply text-xs"></i>
                         Reply via Email
                     </a>
+                    <button onclick="updateStatus('${sub.id}', 'replied'); closeModal();" 
+                            class="inline-flex h-10 items-center justify-center rounded-md border border-emerald-200 dark:border-emerald-900 bg-emerald-50 dark:bg-emerald-950 px-4 text-sm font-medium text-emerald-700 dark:text-emerald-300 hover:bg-emerald-100 dark:hover:bg-emerald-900 transition-colors gap-2">
+                        <i class="fas fa-check text-xs"></i>
+                        Mark as Replied
+                    </button>
+                    <button onclick="updateStatus('${sub.id}', 'archived'); closeModal();" 
+                            class="inline-flex h-10 items-center justify-center rounded-md border border-zinc-200 dark:border-zinc-800 bg-transparent px-4 text-sm font-medium text-zinc-700 dark:text-zinc-300 hover:bg-zinc-100 dark:hover:bg-zinc-900 transition-colors gap-2 ml-auto">
+                        <i class="fas fa-archive text-xs"></i>
+                        Archive
+                    </button>
                 </div>
             `;
             
             document.getElementById('modal-content').innerHTML = content;
             document.getElementById('detail-modal').classList.remove('hidden');
+            document.body.style.overflow = 'hidden';
         }
 
+        // Close modal
         function closeModal() {
-            document.getElementById('detail-modal').classList.add('hidden');
+            const modal = document.getElementById('detail-modal');
+            modal.classList.add('hidden');
+            document.body.style.overflow = '';
+            setTimeout(() => {
+                document.getElementById('modal-content').innerHTML = '';
+            }, 300);
         }
 
-        // Close modal on backdrop click
-        document.getElementById('detail-modal').addEventListener('click', (e) => {
-            if (e.target === e.currentTarget) {
-                closeModal();
+        // Toast notification system
+        function showToast(title, message, type = 'success') {
+            const toast = document.getElementById('toast');
+            const toastTitle = document.getElementById('toast-title');
+            const toastMessage = document.getElementById('toast-message');
+            const toastIcon = document.getElementById('toast-icon');
+            
+            toastTitle.textContent = title;
+            toastMessage.textContent = message;
+            
+            // Update icon based on type
+            if (type === 'error') {
+                toastIcon.className = 'h-8 w-8 rounded-full bg-red-100 dark:bg-red-950 flex items-center justify-center text-red-600 dark:text-red-400';
+                toastIcon.innerHTML = '<i class="fas fa-exclamation text-xs"></i>';
+            } else {
+                toastIcon.className = 'h-8 w-8 rounded-full bg-emerald-100 dark:bg-emerald-950 flex items-center justify-center text-emerald-600 dark:text-emerald-400';
+                toastIcon.innerHTML = '<i class="fas fa-check text-xs"></i>';
             }
+            
+            toast.classList.remove('hidden', 'translate-y-20', 'opacity-0');
+            
+            setTimeout(() => {
+                toast.classList.add('translate-y-20', 'opacity-0');
+                setTimeout(() => {
+                    toast.classList.add('hidden');
+                }, 300);
+            }, 3000);
+        }
+
+        // Event listeners
+        document.addEventListener('DOMContentLoaded', function() {
+            // Close modal on backdrop click
+            document.getElementById('detail-modal').addEventListener('click', function(e) {
+                if (e.target === this) {
+                    closeModal();
+                }
+            });
+
+            // Keyboard shortcuts
+            document.addEventListener('keydown', function(e) {
+                if (e.key === 'Escape') {
+                    closeModal();
+                }
+            });
+
+            // Check for empty state on load
+            if (submissionsData.length === 0) {
+                console.log('No submissions loaded');
+            }
+        });
+
+        // Handle window errors gracefully
+        window.addEventListener('error', function(e) {
+            console.error('Global error:', e.error);
         });
     </script>
 </body>
-</html> 
+</html>
