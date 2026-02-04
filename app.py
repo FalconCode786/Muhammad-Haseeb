@@ -38,6 +38,22 @@ class ContactSubmission(db.Model):
     created_at = db.Column(db.DateTime, default=datetime.utcnow)
     updated_at = db.Column(db.DateTime, default=datetime.utcnow, onupdate=datetime.utcnow)
 
+    def to_dict(self):
+        return {
+            'id': self.id,
+            'name': self.name,
+            'email': self.email,
+            'phone': self.phone,
+            'company': self.company,
+            'budget': self.budget,
+            'project_type': self.project_type,
+            'subject': self.subject,
+            'message': self.message,
+            'status': self.status,
+            'created_at': self.created_at.strftime('%Y-%m-%d %H:%M') if self.created_at else None,
+            'updated_at': self.updated_at.strftime('%Y-%m-%d %H:%M') if self.updated_at else None
+        }
+
 class PortfolioItem(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     title = db.Column(db.String(200), nullable=False)
@@ -266,7 +282,8 @@ def admin_dashboard():
         'archived': ContactSubmission.query.filter_by(status='archived').count()
     }
     submissions = ContactSubmission.query.order_by(ContactSubmission.created_at.desc()).all()
-    return render_template('admin/dashboard.html', stats=stats, submissions=submissions)
+    submissions_dicts = [s.to_dict() for s in submissions]
+    return render_template('admin/dashboard.html', stats=stats, submissions=submissions, submissions_dicts=submissions_dicts)
 
 @app.route('/api/admin/submissions', methods=['GET'])
 @login_required

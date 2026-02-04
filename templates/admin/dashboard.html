@@ -176,8 +176,8 @@
 
     <script>
         // Safely initialize data with proper escaping
-        {% if submissions is defined %}
-        const submissionsData = {{ submissions|tojson|safe }};
+        {% if submissions_dicts is defined %}
+        const submissionsData = {{ submissions_dicts|tojson|safe }};
         {% else %}
         const submissionsData = [];
         {% endif %}
@@ -191,13 +191,27 @@
                     ? 'filter-btn inline-flex h-9 items-center justify-center rounded-md bg-zinc-900 dark:bg-white px-4 text-sm font-medium text-white dark:text-zinc-900 hover:bg-zinc-800 dark:hover:bg-zinc-100'
                     : 'filter-btn inline-flex h-9 items-center justify-center rounded-md border border-zinc-200 dark:border-zinc-800 bg-transparent px-4 text-sm font-medium text-zinc-700 dark:text-zinc-300 hover:bg-zinc-100 dark:hover:bg-zinc-900';
             });
+            let visibleCount = 0;
             document.querySelectorAll('#submissions-tbody tr[data-id]').forEach(row => {
-                row.style.display = (status === 'all' || row.dataset.status === status) ? '' : 'none';
+                if (status === 'all' || row.dataset.status === status) {
+                    row.style.display = '';
+                    visibleCount++;
+                } else {
+                    row.style.display = 'none';
+                }
             });
+            // Handle empty state row
+            const emptyRow = document.getElementById('empty-state');
+            if (emptyRow) {
+                emptyRow.style.display = visibleCount === 0 ? '' : 'none';
+            }
         }
 
         async function updateStatus(id, status) {
             id = String(id);
+            const row = document.querySelector(`tr[data-id="${id}"]`);
+            let select = row ? row.querySelector('select') : null;
+            let prevStatus = row ? row.dataset.status : null;
             try {
                 const response = await fetch(`/api/admin/submissions/${id}/status`, {
                     method: 'PATCH',
@@ -206,15 +220,17 @@
                 });
                 const data = await response.json();
                 if (data.ok || data.success) {
-                    const row = document.querySelector(`tr[data-id="${id}"]`);
                     if (row) row.dataset.status = status;
                     // Update in JS array
                     const sub = submissionsData.find(s => String(s.id) === id);
                     if (sub) sub.status = status;
                     showToast('Success', `Status updated to ${status}`, 'success');
+                    filterSubmissions(currentFilter);
                 } else throw new Error(data.message);
             } catch (error) {
                 showToast('Error', error.message, 'error');
+                // Revert select to previous value
+                if (select && prevStatus) select.value = prevStatus;
             }
         }
 
@@ -231,6 +247,7 @@
                     const idx = submissionsData.findIndex(s => String(s.id) === id);
                     if (idx > -1) submissionsData.splice(idx, 1);
                     showToast('Deleted', 'Submission deleted', 'success');
+                    filterSubmissions(currentFilter);
                 } else throw new Error(data.message);
             } catch (error) {
                 showToast('Error', error.message, 'error');
@@ -244,11 +261,15 @@
             // Format date
             let dateStr = sub.created_at;
             if (dateStr && !dateStr.startsWith('Unknown')) {
+                // Try to parse ISO or fallback to original
                 try {
-                    dateStr = new Date(dateStr).toLocaleString('en-US', {
-                        year: 'numeric', month: 'short', day: 'numeric',
-                        hour: '2-digit', minute: '2-digit'
-                    });
+                    let d = new Date(dateStr);
+                    if (!isNaN(d)) {
+                        dateStr = d.toLocaleString('en-US', {
+                            year: 'numeric', month: 'short', day: 'numeric',
+                            hour: '2-digit', minute: '2-digit'
+                        });
+                    }
                 } catch {}
             }
             document.getElementById('modal-content').innerHTML = `
@@ -313,6 +334,11 @@
         function closeModal() {
             document.getElementById('detail-modal').classList.add('hidden');
             document.body.style.overflow = '';
+            // Clear modal content for safety
+            setTimeout(() => {
+                const modalContent = document.getElementById('modal-content');
+                if (modalContent) modalContent.innerHTML = '';
+            }, 200);
         }
 
         function showToast(title, message, type = 'success') {
@@ -338,6 +364,8 @@
             document.addEventListener('keydown', e => {
                 if (e.key === 'Escape') closeModal();
             });
+            // Trigger default filter on load
+            filterSubmissions(currentFilter);
         });
     </script>
 </body>
