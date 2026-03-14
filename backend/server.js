@@ -8,6 +8,7 @@ require('dotenv').config();
 const connectDB = require('./config/database');
 const { errorHandler, notFound } = require('./middleware/errorHandler');
 const { protect, adminOnly } = require('./middleware/auth');
+const { adminRateLimiter } = require('./middleware/rateLimit');
 
 // Route imports
 const contactRoutes = require('./routes/contact');
@@ -41,7 +42,7 @@ app.get('/api/health', (req, res) => {
 app.use('/api/contact', contactRoutes);
 app.use('/api/consultation', consultationRoutes);
 app.use('/api/auth', authRoutes);
-app.use('/api/admin', protect, adminOnly, adminRoutes);
+app.use('/api/admin', protect, adminOnly, adminRateLimiter, adminRoutes);
 // 404 handler
 app.use(notFound);
 
