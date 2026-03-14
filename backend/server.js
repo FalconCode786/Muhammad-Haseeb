@@ -59,7 +59,7 @@ const startServer = async () => {
       console.log(`🌐 Environment: ${process.env.NODE_ENV}`);
     });
     server.on('error', (error) => {
-      console.error('❌ Server failed to bind:', error);
+      console.error('❌ Server error occurred:', error);
       process.exit(1);
     });
   } catch (error) {

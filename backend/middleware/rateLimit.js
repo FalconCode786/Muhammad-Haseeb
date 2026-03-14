@@ -1,7 +1,7 @@
 const DEFAULT_WINDOW_MS = 15 * 60 * 1000;
 const DEFAULT_MAX_REQUESTS = 100;
 const MAX_STORE_SIZE = 1000;
-const CLEANUP_INTERVAL = 100;
+const REQUESTS_BETWEEN_CLEANUP = 100;
 
 const createRateLimiter = ({
   windowMs = DEFAULT_WINDOW_MS,
@@ -47,7 +47,7 @@ const createRateLimiter = ({
 
     if (
       store.size > MAX_STORE_SIZE &&
-      (requestCounter % CLEANUP_INTERVAL === 0 || now - lastCleanup > windowMs)
+      (requestCounter % REQUESTS_BETWEEN_CLEANUP === 0 || now - lastCleanup > windowMs)
     ) {
       for (const [storedKey, storedEntry] of store.entries()) {
         if (storedEntry.resetTime <= now) {
@@ -55,6 +55,7 @@ const createRateLimiter = ({
         }
       }
       lastCleanup = now;
+      requestCounter = 0;
     }
 
     return next();
