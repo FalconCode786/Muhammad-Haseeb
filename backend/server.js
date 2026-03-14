@@ -64,7 +64,7 @@ const startServer = async () => {
 };
 
 startServer();
-// In server.js test route or create separate script
+// Utility helper for manual admin creation (not invoked by default)
 const createAdmin = async () => {
   const User = require('./models/User');
   await User.create({
