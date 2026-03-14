@@ -18,7 +18,7 @@ export const AuthProvider = ({ children }) => {
       if (token && storedUser) {
         try {
           const parsed = JSON.parse(storedUser);
-          const normalized = parsed?.id ? parsed : { ...parsed, id: parsed?._id };
+          const normalized = { ...parsed, id: parsed?.id || parsed?._id };
           setUser(normalized);
           if (normalized?.id && normalized?.id !== parsed?.id) {
             localStorage.setItem('adminUser', JSON.stringify(normalized));

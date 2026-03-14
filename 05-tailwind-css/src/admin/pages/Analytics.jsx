@@ -145,8 +145,12 @@ const Analytics = () => {
   })) || [];
 
   const conversion = consultationAnalytics?.conversion || { total: 0, confirmed: 0, completed: 0 };
-  const confirmedRate = conversion.total ? Math.round((conversion.confirmed / conversion.total) * 100) : 0;
-  const completedRate = conversion.total ? Math.round((conversion.completed / conversion.total) * 100) : 0;
+  const confirmedRate = conversion.total
+    ? ((conversion.confirmed / conversion.total) * 100).toFixed(1)
+    : '0.0';
+  const completedRate = conversion.total
+    ? ((conversion.completed / conversion.total) * 100).toFixed(1)
+    : '0.0';
 
   return (
     <div className="space-y-6">
