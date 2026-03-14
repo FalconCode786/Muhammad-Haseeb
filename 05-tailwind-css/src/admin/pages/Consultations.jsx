@@ -366,7 +366,7 @@ const Consultations = () => {
                         <ConsultationBadge status={c.status} />
                       </td>
                       <td className="py-3 px-4">
-                        <div className="flex items-center justify-end gap-2 opacity-0 group-hover:opacity-100 transition-opacity">
+                        <div className="flex items-center justify-end gap-2 opacity-100 lg:opacity-0 lg:group-hover:opacity-100 transition-opacity">
                           <button
                             onClick={() => setViewItem(c)}
                             className="p-2 rounded-lg bg-white/5 text-neutral-400 hover:bg-white/10 hover:text-white transition-all"
