@@ -135,7 +135,6 @@ const Hero = () => {
                 width="400"
                 height="400"
                 loading="eager"
-                decoding="sync"
                 fetchPriority="high"
                 className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110"
               />
