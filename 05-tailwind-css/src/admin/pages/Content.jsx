@@ -45,8 +45,13 @@ const TextAreaField = ({ label, value, onChange, placeholder }) => (
 
 const Content = () => {
   const { content, saveContent, resetContent } = useSiteContent();
-  const [draft, setDraft] = useState(content);
-  const [roleInput, setRoleInput] = useState((content.hero.roles || []).join(', '));
+  const [draft, setDraft] = useState(() => ({
+    ...content,
+    hero: {
+      ...content.hero,
+      rolesText: (content.hero.roles || []).join(', ')
+    }
+  }));
   const [saving, setSaving] = useState(false);
   const [toast, setToast] = useState(null);
 
@@ -90,28 +95,40 @@ const Content = () => {
 
   const handleSave = () => {
     setSaving(true);
+    const roleInput = draft.hero.rolesText || '';
     const roles = roleInput
       .split(',')
       .map((role) => role.trim())
       .filter(Boolean);
+    const { rolesText: _rolesText, ...heroRest } = draft.hero;
     const updated = {
       ...draft,
       hero: {
-        ...draft.hero,
+        ...heroRest,
         roles: roles.length ? roles : draft.hero.roles
       }
     };
     const savedContent = saveContent(updated);
-    setDraft(savedContent);
-    setRoleInput((savedContent.hero.roles || []).join(', '));
+    setDraft({
+      ...savedContent,
+      hero: {
+        ...savedContent.hero,
+        rolesText: (savedContent.hero.roles || []).join(', ')
+      }
+    });
     setSaving(false);
     showToast('Content updated successfully');
   };
 
   const handleReset = () => {
     const resetValue = resetContent();
-    setDraft(resetValue);
-    setRoleInput((resetValue.hero.roles || []).join(', '));
+    setDraft({
+      ...resetValue,
+      hero: {
+        ...resetValue.hero,
+        rolesText: (resetValue.hero.roles || []).join(', ')
+      }
+    });
     showToast('Content reset to defaults');
   };
 
@@ -179,8 +196,8 @@ const Content = () => {
           />
           <InputField
             label="Roles (comma-separated)"
-            value={roleInput}
-            onChange={(event) => setRoleInput(event.target.value)}
+            value={draft.hero.rolesText || ''}
+            onChange={(event) => updateHero('rolesText', event.target.value)}
             placeholder="UI/UX Designer, Full Stack Developer, AI Automation Specialist"
           />
           <div className="grid sm:grid-cols-2 gap-4">

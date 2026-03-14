@@ -15,11 +15,15 @@ const Hero = () => {
   }, [roles, currentRole, content.hero.fallbackRole]);
 
   useEffect(() => {
-    if (roles.length === 0) return;
-    const interval = setInterval(() => {
-      setCurrentRole((prev) => (prev + 1) % roles.length);
-    }, 3000);
-    return () => clearInterval(interval);
+    let interval;
+    if (roles.length > 0) {
+      interval = setInterval(() => {
+        setCurrentRole((prev) => (prev + 1) % roles.length);
+      }, 3000);
+    }
+    return () => {
+      if (interval) clearInterval(interval);
+    };
   }, [roles]);
 
 
