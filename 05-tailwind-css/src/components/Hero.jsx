@@ -132,6 +132,11 @@ const Hero = () => {
               <img
                 src={profilePic}
                 alt="Muhammad Haseeb"
+                width="400"
+                height="400"
+                loading="eager"
+                decoding="async"
+                fetchPriority="high"
                 className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110"
               />
 
