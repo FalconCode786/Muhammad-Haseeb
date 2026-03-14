@@ -71,8 +71,16 @@ const consultationSchema = new mongoose.Schema(
   }
 );
 
-// Prevent double bookings
-consultationSchema.index({ date: 1, time: 1 }, { unique: true });
+// Prevent double bookings for active consultations (allow rebooking cancelled/no-show slots)
+consultationSchema.index(
+  { date: 1, time: 1 },
+  {
+    unique: true,
+    partialFilterExpression: {
+      status: { $in: ['pending', 'confirmed', 'completed'] }
+    }
+  }
+);
 consultationSchema.index({ status: 1, date: 1 });
 
 module.exports = mongoose.model('Consultation', consultationSchema);

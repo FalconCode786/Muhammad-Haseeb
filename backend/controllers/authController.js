@@ -19,7 +19,7 @@ const cookieOptions = {
 // @desc    Register admin (super admin only)
 // @route   POST /api/auth/register
 // @access  Private/SuperAdmin
-const register = async (req, res) => {
+const register = async (req, res, next) => {
   try {
     const { name, email, password, role } = req.body;
 
@@ -52,17 +52,14 @@ const register = async (req, res) => {
     });
 
   } catch (error) {
-    res.status(500).json({
-      success: false,
-      message: error.message
-    });
+    return next(error);
   }
 };
 
 // @desc    Login user
 // @route   POST /api/auth/login
 // @access  Public
-const login = async (req, res) => {
+const login = async (req, res, next) => {
   try {
     const { email, password } = req.body;
 
@@ -124,17 +121,14 @@ const login = async (req, res) => {
     });
 
   } catch (error) {
-    res.status(500).json({
-      success: false,
-      message: error.message
-    });
+    return next(error);
   }
 };
 
 // @desc    Logout user
 // @route   POST /api/auth/logout
 // @access  Private
-const logout = async (req, res) => {
+const logout = async (req, res, next) => {
   try {
     res.cookie('token', 'none', {
       httpOnly: true,
@@ -147,17 +141,14 @@ const logout = async (req, res) => {
     });
 
   } catch (error) {
-    res.status(500).json({
-      success: false,
-      message: error.message
-    });
+    return next(error);
   }
 };
 
 // @desc    Get current user
 // @route   GET /api/auth/me
 // @access  Private
-const getMe = async (req, res) => {
+const getMe = async (req, res, next) => {
   try {
     const user = await User.findById(req.user.id);
 
@@ -174,17 +165,14 @@ const getMe = async (req, res) => {
     });
 
   } catch (error) {
-    res.status(500).json({
-      success: false,
-      message: error.message
-    });
+    return next(error);
   }
 };
 
 // @desc    Update password
 // @route   PUT /api/auth/update-password
 // @access  Private
-const updatePassword = async (req, res) => {
+const updatePassword = async (req, res, next) => {
   try {
     const { currentPassword, newPassword } = req.body;
 
@@ -208,17 +196,14 @@ const updatePassword = async (req, res) => {
     });
 
   } catch (error) {
-    res.status(500).json({
-      success: false,
-      message: error.message
-    });
+    return next(error);
   }
 };
 
 // @desc    Forgot password (send reset email)
 // @route   POST /api/auth/forgot-password
 // @access  Public
-const forgotPassword = async (req, res) => {
+const forgotPassword = async (req, res, next) => {
   try {
     const { email } = req.body;
 
@@ -238,10 +223,7 @@ const forgotPassword = async (req, res) => {
     });
 
   } catch (error) {
-    res.status(500).json({
-      success: false,
-      message: error.message
-    });
+    return next(error);
   }
 };
 
