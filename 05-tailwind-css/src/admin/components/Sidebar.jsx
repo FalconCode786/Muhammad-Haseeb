@@ -1,10 +1,11 @@
-import React from 'react';
+import React, { useEffect, useRef } from 'react';
 import { NavLink } from 'react-router-dom';
 import { LayoutDashboard, Users, Calendar, Settings, LogOut, X } from 'lucide-react';
 import { useAuth } from '../hooks/useAuth';
 
-const Sidebar = ({ isOpen, onClose }) => {
+const Sidebar = ({ isOpen, onClose = () => {} }) => {
   const { logout } = useAuth();
+  const closeButtonRef = useRef(null);
 
   const navItems = [
     { path: '/admin/dashboard', label: 'Dashboard', icon: LayoutDashboard },
@@ -13,21 +14,25 @@ const Sidebar = ({ isOpen, onClose }) => {
     { path: '/admin/settings', label: 'Settings', icon: Settings },
   ];
 
-  const handleClose = () => {
-    if (onClose) onClose();
+  const handleLogout = () => {
+    onClose();
+    logout();
   };
 
-  const handleLogout = () => {
-    logout();
-    handleClose();
-  };
+  useEffect(() => {
+    if (isOpen) {
+      closeButtonRef.current?.focus();
+    }
+  }, [isOpen]);
 
   return (
     <>
-      <div
+      <button
+        type="button"
+        aria-label="Close navigation"
+        tabIndex={isOpen ? 0 : -1}
+        onClick={onClose}
         className={`fixed inset-0 z-40 bg-black/60 backdrop-blur-sm transition-opacity lg:hidden ${isOpen ? 'opacity-100' : 'pointer-events-none opacity-0'}`}
-        onClick={handleClose}
-        aria-hidden="true"
       />
       <aside
         className={`fixed left-0 top-0 z-50 h-full w-64 bg-neutral-900 border-r border-white/10 flex flex-col transform transition-transform duration-300 ${isOpen ? 'translate-x-0' : '-translate-x-full'} lg:translate-x-0`}
@@ -39,7 +44,8 @@ const Sidebar = ({ isOpen, onClose }) => {
           </h1>
           <button
             type="button"
-            onClick={handleClose}
+            onClick={onClose}
+            ref={closeButtonRef}
             className="lg:hidden p-2 rounded-lg text-neutral-400 hover:text-white hover:bg-white/5 transition-all"
             aria-label="Close navigation"
           >
@@ -53,7 +59,7 @@ const Sidebar = ({ isOpen, onClose }) => {
             <NavLink
               key={item.path}
               to={item.path}
-              onClick={handleClose}
+              onClick={onClose}
               className={({ isActive }) =>
                 `flex items-center gap-3 px-4 py-3 rounded-xl transition-all ${isActive
                   ? 'bg-red-600/10 text-red-400 border border-red-500/20'

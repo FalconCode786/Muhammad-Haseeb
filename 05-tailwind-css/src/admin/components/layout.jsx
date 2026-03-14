@@ -7,9 +7,16 @@ const Layout = () => {
   const [sidebarOpen, setSidebarOpen] = useState(false);
 
   useEffect(() => {
-    document.body.style.overflow = sidebarOpen ? 'hidden' : '';
+    document.body.classList.toggle('overflow-hidden', sidebarOpen);
+    const handleKeyDown = (event) => {
+      if (event.key === 'Escape' && sidebarOpen) {
+        setSidebarOpen(false);
+      }
+    };
+    window.addEventListener('keydown', handleKeyDown);
     return () => {
-      document.body.style.overflow = '';
+      document.body.classList.remove('overflow-hidden');
+      window.removeEventListener('keydown', handleKeyDown);
     };
   }, [sidebarOpen]);
 
