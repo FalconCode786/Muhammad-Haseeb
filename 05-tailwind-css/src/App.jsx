@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { Suspense, lazy } from 'react';
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import Navbar from './components/Navbar';
 import Hero from './components/Hero';
@@ -7,7 +7,7 @@ import Services from './components/Services';
 import Work from './components/Work';
 import Consultation from './components/Consultation';
 import Contact from './components/Contact';
-import AdminApp from './admin/AdminApp';
+const AdminApp = lazy(() => import('./admin/AdminApp'));
 
 // Public site layout
 const PublicLayout = () => (
@@ -27,7 +27,20 @@ function App() {
     <BrowserRouter>
       <Routes>
         {/* Admin routes */}
-        <Route path="/admin/*" element={<AdminApp />} />
+        <Route
+          path="/admin/*"
+          element={(
+            <Suspense
+              fallback={(
+                <div className="min-h-screen bg-neutral-950 text-neutral-400 flex items-center justify-center">
+                  Loading...
+                </div>
+              )}
+            >
+              <AdminApp />
+            </Suspense>
+          )}
+        />
 
         {/* Public site */}
         <Route path="/*" element={<PublicLayout />} />
