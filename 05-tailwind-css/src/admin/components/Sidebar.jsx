@@ -1,6 +1,15 @@
 import React from 'react';
 import { NavLink } from 'react-router-dom';
-import { LayoutDashboard, Users, Calendar, Settings, LogOut } from 'lucide-react';
+import {
+  LayoutDashboard,
+  Users,
+  Calendar,
+  Settings,
+  LogOut,
+  FileText,
+  BarChart3,
+  ShieldCheck
+} from 'lucide-react';
 import { useAuth } from '../hooks/useAuth';
 
 const Sidebar = () => {
@@ -8,6 +17,9 @@ const Sidebar = () => {
 
   const navItems = [
     { path: '/admin/dashboard', label: 'Dashboard', icon: LayoutDashboard },
+    { path: '/admin/content', label: 'Content', icon: FileText },
+    { path: '/admin/analytics', label: 'Analytics', icon: BarChart3 },
+    { path: '/admin/roles', label: 'Roles', icon: ShieldCheck },
     { path: '/admin/contacts', label: 'Contacts', icon: Users },
     { path: '/admin/consultations', label: 'Consultations', icon: Calendar },
     { path: '/admin/settings', label: 'Settings', icon: Settings },
