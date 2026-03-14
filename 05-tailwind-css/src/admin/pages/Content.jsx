@@ -93,7 +93,7 @@ const Content = () => {
     const roles = roleInput
       .split(',')
       .map((role) => role.trim())
-      .filter(Boolean);
+      .filter((role) => role.length >= 2);
     const updated = {
       ...draft,
       hero: {

@@ -39,6 +39,14 @@ const parseServiceTitle = (title) => {
   };
 };
 
+const applyLegacyServiceTitle = (savedServices, mergedServices) => {
+  if (!savedServices?.title) return;
+  if (savedServices.titleMain !== undefined || savedServices.titleHighlight !== undefined) {
+    return;
+  }
+  Object.assign(mergedServices, parseServiceTitle(savedServices.title));
+};
+
 const mergeContent = (base, override = {}) => ({
   ...base,
   ...override,
@@ -63,9 +71,7 @@ export const loadSiteContent = () => {
     const saved = JSON.parse(localStorage.getItem(STORAGE_KEY));
     if (!saved) return defaultContent;
     const merged = mergeContent(defaultContent, saved);
-    if (saved.services?.title && saved.services?.titleMain === undefined && saved.services?.titleHighlight === undefined) {
-      Object.assign(merged.services, parseServiceTitle(saved.services.title));
-    }
+    applyLegacyServiceTitle(saved.services, merged.services);
     return merged;
   } catch {
     return defaultContent;

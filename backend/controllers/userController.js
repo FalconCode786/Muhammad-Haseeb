@@ -2,8 +2,11 @@ const User = require('../models/User');
 
 const normalizeBoolean = (value) => {
   if (typeof value === 'boolean') return value;
-  if (value === 'true') return true;
-  if (value === 'false') return false;
+  if (typeof value === 'string') {
+    const normalized = value.toLowerCase();
+    if (normalized === 'true') return true;
+    if (normalized === 'false') return false;
+  }
   return undefined;
 };
 
