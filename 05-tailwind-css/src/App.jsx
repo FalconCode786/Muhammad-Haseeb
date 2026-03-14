@@ -11,7 +11,7 @@ import AdminApp from './admin/AdminApp';
 
 // Public site layout
 const PublicLayout = () => (
-  <div className="bg-neutral-950 min-h-screen">
+  <div className="bg-slate-950 min-h-screen text-slate-100">
     <Navbar />
     <Hero />
     <About />

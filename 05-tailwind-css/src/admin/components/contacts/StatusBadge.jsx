@@ -1,10 +1,10 @@
 import React from 'react';
 
 const statusStyles = {
-  new: 'bg-blue-500/10 text-blue-400 border-blue-500/20',
-  'in-progress': 'bg-yellow-500/10 text-yellow-400 border-yellow-500/20',
-  responded: 'bg-green-500/10 text-green-400 border-green-500/20',
-  closed: 'bg-neutral-500/10 text-neutral-400 border-neutral-500/20'
+  new: 'bg-sky-500/10 text-sky-300 border-sky-500/20',
+  'in-progress': 'bg-amber-500/10 text-amber-300 border-amber-500/20',
+  responded: 'bg-emerald-500/10 text-emerald-300 border-emerald-500/20',
+  closed: 'bg-slate-500/10 text-slate-400 border-slate-500/20'
 };
 
 const StatusBadge = ({ status }) => {
