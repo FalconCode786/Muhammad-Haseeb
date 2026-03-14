@@ -92,9 +92,9 @@ const Analytics = () => {
     };
   }, [projectAnalytics, consultationAnalytics]);
 
-  const topSlotValue = summary?.topSlotCount
+  const topSlotValue = summary?.topSlot && summary.topSlot !== '—'
     ? `${summary.topSlot} (${summary.topSlotCount})`
-    : summary?.topSlot || '—';
+    : '—';
 
   if (loading) {
     return (

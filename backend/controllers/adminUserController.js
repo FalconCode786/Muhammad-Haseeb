@@ -1,8 +1,5 @@
 const User = require('../models/User');
 
-const normalizeFilter = (filter) => ({
-  ...filter
-});
 
 // @desc    Get admin users
 // @route   GET /api/admin/users
@@ -25,7 +22,7 @@ const getAdminUsers = async (req, res) => {
       filter.$or = [{ name: regex }, { email: regex }];
     }
 
-    const matchFilter = normalizeFilter(filter);
+    const matchFilter = filter;
     const [users, stats] = await Promise.all([
       User.find(matchFilter)
         .sort({ createdAt: -1 })
