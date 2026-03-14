@@ -58,7 +58,7 @@ const startServer = async () => {
       console.log(`🌐 Environment: ${process.env.NODE_ENV}`);
     });
   } catch (error) {
-    console.error('❌ Failed to start server. Verify database connection:', error);
+    console.error('❌ Failed to start server:', error);
     process.exit(1);
   }
 };
