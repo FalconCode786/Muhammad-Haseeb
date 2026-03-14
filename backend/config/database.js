@@ -15,7 +15,6 @@ const connectDB = async () => {
     console.error('❌ Database connection failed. Check MONGODB_URI configuration:', error);
     const connectionError = new Error('Database connection failed. Check MONGODB_URI configuration.');
     connectionError.cause = error;
-    connectionError.stack = error.stack;
     throw connectionError;
   }
 };
