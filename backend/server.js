@@ -53,7 +53,7 @@ app.get('/api/health', (req, res) => {
 app.use('/api/contact', contactRoutes);
 app.use('/api/consultation', consultationRoutes);
 app.use('/api/auth', authRoutes);
-app.use('/api/admin', protect, adminOnly, adminRateLimiter, adminRoutes);
+app.use('/api/admin', adminRateLimiter, protect, adminOnly, adminRoutes);
 // 404 handler
 app.use(notFound);
 
