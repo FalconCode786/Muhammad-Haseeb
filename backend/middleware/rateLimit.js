@@ -1,5 +1,14 @@
-const createRateLimiter = ({ windowMs = 15 * 60 * 1000, max = 100 } = {}) => {
+const DEFAULT_WINDOW_MS = 15 * 60 * 1000;
+const DEFAULT_MAX_REQUESTS = 100;
+const MAX_STORE_SIZE = 1000;
+const CLEANUP_INTERVAL = 100;
+
+const createRateLimiter = ({
+  windowMs = DEFAULT_WINDOW_MS,
+  max = DEFAULT_MAX_REQUESTS
+} = {}) => {
   const store = new Map();
+  let requestCounter = 0;
 
   return (req, res, next) => {
     const now = Date.now();
@@ -25,7 +34,8 @@ const createRateLimiter = ({ windowMs = 15 * 60 * 1000, max = 100 } = {}) => {
       });
     }
 
-    if (store.size > 1000) {
+    requestCounter += 1;
+    if (store.size > MAX_STORE_SIZE && requestCounter % CLEANUP_INTERVAL === 0) {
       for (const [storedKey, storedEntry] of store.entries()) {
         if (storedEntry.resetTime <= now) {
           store.delete(storedKey);
