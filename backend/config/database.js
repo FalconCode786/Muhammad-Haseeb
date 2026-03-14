@@ -6,14 +6,18 @@ const connectDB = async () => {
     throw new Error('MONGODB_URI environment variable is not set. Configure it in your .env file.');
   }
 
-  const conn = await mongoose.connect(mongoUri);
+  try {
+    const conn = await mongoose.connect(mongoUri);
 
-  mongoose.connection.on('error', (error) => {
-    console.error('❌ MongoDB connection error:', error);
-  });
+    mongoose.connection.on('error', (error) => {
+      console.error('❌ MongoDB connection error:', error);
+    });
 
-  console.log(`✅ MongoDB Connected: ${conn.connection.host}`);
-  console.log(`📁 Database: ${conn.connection.name}`);
+    console.log(`✅ MongoDB Connected: ${conn.connection.host}`);
+    console.log(`📁 Database: ${conn.connection.name}`);
+  } catch (error) {
+    throw new Error(`Database connection failed: ${error.message}`);
+  }
 };
 
 module.exports = connectDB;

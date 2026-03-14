@@ -9,14 +9,17 @@ const createRateLimiter = ({
 } = {}) => {
   const store = new Map();
   let requestCounter = 0;
+  let lastCleanup = 0;
 
   return (req, res, next) => {
     const now = Date.now();
-    const key =
-      req.ip ||
-      req.headers['x-forwarded-for'] ||
-      req.socket.remoteAddress ||
-      'unknown';
+    const forwardedFor = req.headers['x-forwarded-for'];
+    const forwardedIp = Array.isArray(forwardedFor)
+      ? forwardedFor[0]
+      : typeof forwardedFor === 'string'
+        ? forwardedFor.split(',')[0].trim()
+        : undefined;
+    const key = forwardedIp || req.ip || req.socket.remoteAddress || 'unknown';
 
     const entry = store.get(key);
     if (!entry || entry.resetTime <= now) {
@@ -35,12 +38,16 @@ const createRateLimiter = ({
     }
 
     requestCounter += 1;
-    if (store.size > MAX_STORE_SIZE && requestCounter % CLEANUP_INTERVAL === 0) {
+    if (
+      store.size > MAX_STORE_SIZE &&
+      (requestCounter % CLEANUP_INTERVAL === 0 || now - lastCleanup > windowMs)
+    ) {
       for (const [storedKey, storedEntry] of store.entries()) {
         if (storedEntry.resetTime <= now) {
           store.delete(storedKey);
         }
       }
+      lastCleanup = now;
     }
 
     return next();
