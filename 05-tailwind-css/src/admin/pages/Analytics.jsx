@@ -236,8 +236,8 @@ const Analytics = () => {
                     innerRadius={60}
                     outerRadius={90}
                   >
-                    {databases.map((_, index) => (
-                      <Cell key={index} fill={chartColors[index % chartColors.length]} />
+                    {databases.map((item, index) => (
+                      <Cell key={item._id} fill={chartColors[index % chartColors.length]} />
                     ))}
                   </Pie>
                   <Tooltip contentStyle={{ background: '#111827', border: '1px solid #374151' }} />
@@ -262,8 +262,8 @@ const Analytics = () => {
                     innerRadius={60}
                     outerRadius={90}
                   >
-                    {consultationTypes.map((_, index) => (
-                      <Cell key={index} fill={chartColors[index % chartColors.length]} />
+                    {consultationTypes.map((item, index) => (
+                      <Cell key={item._id} fill={chartColors[index % chartColors.length]} />
                     ))}
                   </Pie>
                   <Tooltip contentStyle={{ background: '#111827', border: '1px solid #374151' }} />

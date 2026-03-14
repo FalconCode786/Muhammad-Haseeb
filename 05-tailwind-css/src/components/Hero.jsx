@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useMemo, useState, useEffect } from 'react';
 import { Linkedin, Github, ArrowDown, Sparkles, Code, Palette, Cpu } from 'lucide-react';
 import profilePic from '../assets/profile.jpg';
 import { useSiteContent } from '../hooks/useSiteContent';
@@ -7,7 +7,7 @@ const Hero = () => {
   const [currentRole, setCurrentRole] = useState(0);
 
   const { content } = useSiteContent();
-  const roles = content.hero.roles || [];
+  const roles = useMemo(() => content.hero.roles || [], [content.hero.roles]);
   const primaryRole = roles[currentRole] || roles[0] || content.hero.fallbackRole;
 
   useEffect(() => {
@@ -16,7 +16,7 @@ const Hero = () => {
       setCurrentRole((prev) => (prev + 1) % roles.length);
     }, 3000);
     return () => clearInterval(interval);
-  }, [roles.length]);
+  }, [roles]);
 
   return (
     <section className="relative min-h-screen w-full flex items-center overflow-hidden bg-neutral-950 pt-36 pb-12">
