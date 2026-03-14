@@ -314,6 +314,8 @@ const About = () => {
                         <img
                           src={tool.image}
                           alt={tool.name}
+                          loading="lazy"
+                          decoding="async"
                           className="w-10 h-10 object-contain"
                           onError={() => handleImageError(index)}
                         />
@@ -321,6 +323,8 @@ const About = () => {
                         <img
                           src={tool.fallback}
                           alt={tool.name}
+                          loading="lazy"
+                          decoding="async"
                           className="w-10 h-10 object-contain"
                           onError={(e) => {
                             e.target.style.display = 'none';
