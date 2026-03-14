@@ -1,20 +1,12 @@
 const User = require('../models/User');
 
-const buildUserStats = (users) => {
-  const total = users.length;
-  const active = users.filter((user) => user.isActive).length;
-  const inactive = total - active;
-  const admins = users.filter((user) => user.role === 'admin').length;
-  const superadmins = users.filter((user) => user.role === 'superadmin').length;
-
-  return {
-    total,
-    active,
-    inactive,
-    admins,
-    superadmins
-  };
-};
+const buildUserStats = ({ total, active, admins, superadmins }) => ({
+  total,
+  active,
+  inactive: total - active,
+  admins,
+  superadmins
+});
 
 // @desc    Get admin users
 // @route   GET /api/admin/users
@@ -37,19 +29,21 @@ const getAdminUsers = async (req, res) => {
       filter.$or = [{ name: regex }, { email: regex }];
     }
 
-    const [users, allUsers] = await Promise.all([
+    const [users, total, active, admins, superadmins] = await Promise.all([
       User.find(filter)
         .sort({ createdAt: -1 })
         .select('-password'),
-      User.find()
-        .select('role isActive')
+      User.countDocuments(),
+      User.countDocuments({ isActive: true }),
+      User.countDocuments({ role: 'admin' }),
+      User.countDocuments({ role: 'superadmin' })
     ]);
 
     res.json({
       success: true,
       data: {
         users,
-        stats: buildUserStats(allUsers)
+        stats: buildUserStats({ total, active, admins, superadmins })
       }
     });
   } catch (error) {
