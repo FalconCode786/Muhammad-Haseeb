@@ -13,7 +13,10 @@ const connectDB = async () => {
     console.log(`📁 Database: ${conn.connection.name}`);
   } catch (error) {
     console.error('❌ Database connection failed. Check MONGODB_URI configuration:', error);
-    throw error;
+    const connectionError = new Error('Database connection failed. Check MONGODB_URI configuration.');
+    connectionError.cause = error;
+    connectionError.stack = error.stack;
+    throw connectionError;
   }
 };
 
