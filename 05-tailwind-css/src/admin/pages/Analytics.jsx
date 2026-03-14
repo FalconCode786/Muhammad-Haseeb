@@ -92,6 +92,10 @@ const Analytics = () => {
     };
   }, [projectAnalytics, consultationAnalytics]);
 
+  const topSlotValue = summary?.topSlotCount
+    ? `${summary.topSlot} (${summary.topSlotCount})`
+    : summary?.topSlot || '—';
+
   if (loading) {
     return (
       <div className="flex items-center justify-center h-64">
@@ -167,11 +171,7 @@ const Analytics = () => {
         <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
           <StatPill label="Project types tracked" value={summary.projectTypes} icon={TrendingUp} />
           <StatPill label="Consultation topics" value={summary.topics} icon={PieIcon} />
-          <StatPill
-            label={`Top time slot (${summary.topSlotCount})`}
-            value={summary.topSlot}
-            icon={Timer}
-          />
+          <StatPill label="Top time slot" value={topSlotValue} icon={Timer} />
         </div>
       )}
 

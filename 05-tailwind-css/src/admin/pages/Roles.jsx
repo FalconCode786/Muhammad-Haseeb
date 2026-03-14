@@ -125,6 +125,8 @@ const Roles = () => {
   const [editingUser, setEditingUser] = useState(null);
 
   const isSuperAdmin = currentUser?.role === 'superadmin';
+  const canEditUser = (item) => isSuperAdmin && item?._id !== currentUser?.id;
+  const canEdit = canEditUser(editingUser);
 
   const fetchUsers = async () => {
     try {
@@ -210,7 +212,7 @@ const Roles = () => {
         user={editingUser}
         onClose={() => setEditingUser(null)}
         onSave={handleSave}
-        disabled={!isSuperAdmin || editingUser?._id === currentUser?.id}
+        disabled={!canEdit}
       />
 
       {/* Header */}
@@ -323,7 +325,7 @@ const Roles = () => {
               <div className="col-span-2 flex justify-end">
                 <button
                   onClick={() => setEditingUser(item)}
-                  disabled={!isSuperAdmin}
+                  disabled={!canEditUser(item)}
                   className="flex items-center gap-2 px-3 py-2 rounded-lg bg-white/5 border border-white/10 text-neutral-300 hover:text-white hover:bg-white/10 transition-all text-xs disabled:opacity-50 disabled:hover:bg-white/5"
                 >
                   <UserCog className="w-4 h-4" /> Edit

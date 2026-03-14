@@ -37,15 +37,19 @@ const getAdminUsers = async (req, res) => {
       filter.$or = [{ name: regex }, { email: regex }];
     }
 
-    const users = await User.find(filter)
-      .sort({ createdAt: -1 })
-      .select('-password');
+    const [users, allUsers] = await Promise.all([
+      User.find(filter)
+        .sort({ createdAt: -1 })
+        .select('-password'),
+      User.find()
+        .select('role isActive')
+    ]);
 
     res.json({
       success: true,
       data: {
         users,
-        stats: buildUserStats(users)
+        stats: buildUserStats(allUsers)
       }
     });
   } catch (error) {

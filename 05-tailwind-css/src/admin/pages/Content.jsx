@@ -129,6 +129,14 @@ const statusStyles = {
   draft: 'bg-yellow-500/10 text-yellow-400 border-yellow-500/20'
 };
 
+const formatLastUpdated = (value) => {
+  const date = new Date(value);
+  if (Number.isNaN(date.getTime())) {
+    return '—';
+  }
+  return format(date, 'PPP');
+};
+
 const ContentModal = ({ section, onClose, onSave }) => {
   const [form, setForm] = useState(section);
   const [saving, setSaving] = useState(false);
@@ -287,7 +295,7 @@ const Content = () => {
             </div>
 
             <div className="flex items-center justify-between text-xs text-neutral-500">
-              <span>Last updated {format(new Date(section.lastUpdated), 'PPP')}</span>
+              <span>Last updated {formatLastUpdated(section.lastUpdated)}</span>
               <a
                 href={section.previewPath}
                 className="inline-flex items-center gap-1 text-red-400 hover:text-red-300 transition-colors"
