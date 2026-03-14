@@ -8,11 +8,9 @@ const Hero = () => {
 
   const { content } = useSiteContent();
   const roles = useMemo(() => content.hero.roles || [], [content.hero.roles]);
-  const primaryRole = useMemo(() => {
-    if (roles.length === 0) return content.hero.fallbackRole;
-    const safeIndex = currentRole % roles.length;
-    return roles[safeIndex] || content.hero.fallbackRole;
-  }, [roles, currentRole, content.hero.fallbackRole]);
+  const primaryRole = roles.length
+    ? roles[currentRole % roles.length]
+    : content.hero.fallbackRole;
 
   useEffect(() => {
     let interval;

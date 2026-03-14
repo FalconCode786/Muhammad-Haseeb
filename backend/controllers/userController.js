@@ -1,3 +1,4 @@
+const mongoose = require('mongoose');
 const User = require('../models/User');
 
 const normalizeBoolean = (value) => {
@@ -36,6 +37,13 @@ const getUsers = async (req, res) => {
 // @access  Private/SuperAdmin
 const updateUser = async (req, res) => {
   try {
+    if (!mongoose.Types.ObjectId.isValid(req.params.id)) {
+      return res.status(400).json({
+        success: false,
+        message: 'Invalid user ID'
+      });
+    }
+
     const { role, isActive } = req.body;
     const updates = {};
 

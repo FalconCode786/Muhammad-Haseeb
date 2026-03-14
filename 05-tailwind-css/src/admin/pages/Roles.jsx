@@ -97,10 +97,17 @@ const Roles = () => {
       showToast('User not found', 'error');
       return;
     }
-    const changes = {
-      role: existing?.role ?? baseUser.role,
-      isActive: existing?.isActive ?? baseUser.isActive
-    };
+    const changes = {};
+    if (existing?.role !== undefined && existing.role !== baseUser.role) {
+      changes.role = existing.role;
+    }
+    if (existing?.isActive !== undefined && existing.isActive !== baseUser.isActive) {
+      changes.isActive = existing.isActive;
+    }
+    if (Object.keys(changes).length === 0) {
+      showToast('No changes to save', 'error');
+      return;
+    }
     try {
       setSavingId(id);
       const res = await api.put(`/admin/users/${id}`, changes);
