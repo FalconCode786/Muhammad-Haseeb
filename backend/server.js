@@ -53,12 +53,16 @@ const PORT = process.env.PORT || 5000;
 const startServer = async () => {
   try {
     await connectDB();
-    app.listen(PORT, () => {
+    const server = app.listen(PORT, () => {
       console.log(`✅ Server running on port ${PORT}`);
       console.log(`🌐 Environment: ${process.env.NODE_ENV}`);
     });
+    server.on('error', (error) => {
+      console.error('❌ Server failed to bind:', error);
+      process.exit(1);
+    });
   } catch (error) {
-    console.error('❌ Failed to start server:', error);
+    console.error('❌ Database connection failed:', error);
     process.exit(1);
   }
 };
