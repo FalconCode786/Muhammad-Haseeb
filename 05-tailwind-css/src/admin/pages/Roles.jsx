@@ -4,6 +4,8 @@ import { format } from 'date-fns';
 import api from '../utils/api';
 import { useAuth } from '../hooks/useAuth';
 
+const MS_PER_DAY = 24 * 60 * 60 * 1000;
+
 const sampleUsers = [
   {
     _id: 'demo-1',
@@ -20,8 +22,8 @@ const sampleUsers = [
     email: 'ayesha@haseeb.dev',
     role: 'admin',
     isActive: true,
-    lastLogin: new Date(Date.now() - 86400000).toISOString(),
-    createdAt: new Date(Date.now() - 86400000 * 30).toISOString()
+    lastLogin: new Date(Date.now() - MS_PER_DAY).toISOString(),
+    createdAt: new Date(Date.now() - MS_PER_DAY * 30).toISOString()
   }
 ];
 

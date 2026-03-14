@@ -19,16 +19,15 @@ export const useSiteContent = () => {
 
   const saveContent = useCallback((nextContent) => {
     const contentValue = typeof nextContent === 'function'
-      ? nextContent(loadSiteContent())
+      ? nextContent(content)
       : nextContent;
     const updated = updateSiteContent(contentValue);
     setContent(updated);
     return updated;
-  }, []);
+  }, [content]);
 
   const resetContent = useCallback(() => {
-    resetSiteContent();
-    const updated = loadSiteContent();
+    const updated = resetSiteContent();
     setContent(updated);
     return updated;
   }, []);

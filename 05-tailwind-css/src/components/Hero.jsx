@@ -8,7 +8,10 @@ const Hero = () => {
 
   const { content } = useSiteContent();
   const roles = useMemo(() => content.hero.roles || [], [content.hero.roles]);
-  const primaryRole = roles[currentRole] || roles[0] || content.hero.fallbackRole;
+  const primaryRole = useMemo(
+    () => roles[currentRole] || roles[0] || content.hero.fallbackRole,
+    [roles, currentRole, content.hero.fallbackRole]
+  );
 
   useEffect(() => {
     if (roles.length === 0) return;

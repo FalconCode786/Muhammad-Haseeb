@@ -93,7 +93,8 @@ export const updateSiteContent = (nextContent) => {
 };
 
 export const resetSiteContent = () => {
-  if (typeof window === 'undefined') return;
+  if (typeof window === 'undefined') return mergeContent(defaultContent);
   localStorage.removeItem(STORAGE_KEY);
   window.dispatchEvent(new Event('siteContentUpdated'));
+  return mergeContent(defaultContent);
 };
