@@ -35,8 +35,8 @@ const createRateLimiter = ({
       return next();
     }
 
-    entry.count += 1;
-    if (entry.count > max) {
+    const nextCount = entry.count + 1;
+    if (nextCount > max) {
       const retryAfterSeconds = Math.ceil((entry.resetTime - now) / 1000);
       res.set('Retry-After', retryAfterSeconds.toString());
       return res.status(429).json({
@@ -44,6 +44,7 @@ const createRateLimiter = ({
         message: 'Too many requests. Please try again later.'
       });
     }
+    entry.count = nextCount;
 
     if (
       store.size > MAX_STORE_SIZE &&
