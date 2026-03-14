@@ -1,5 +1,7 @@
 const User = require('../models/User');
 
+const escapeRegex = (value) => value.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+
 
 // @desc    Get admin users
 // @route   GET /api/admin/users
@@ -18,7 +20,7 @@ const getAdminUsers = async (req, res) => {
     }
 
     if (q) {
-      const regex = new RegExp(q, 'i');
+      const regex = new RegExp(escapeRegex(q), 'i');
       filter.$or = [{ name: regex }, { email: regex }];
     }
 
