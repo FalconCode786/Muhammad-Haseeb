@@ -62,7 +62,7 @@ const createRateLimiter = ({
   };
 };
 
-const adminRateLimiter = createRateLimiter();
+const adminRateLimiter = createRateLimiter({ windowMs: DEFAULT_WINDOW_MS, max: 20 });
 
 module.exports = {
   createRateLimiter,
