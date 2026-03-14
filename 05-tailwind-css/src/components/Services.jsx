@@ -10,11 +10,15 @@ import {
   CheckCircle2,
   Sparkles
 } from 'lucide-react';
+import { useSiteContent } from '../hooks/useSiteContent';
 
 const Services = () => {
   const [isVisible, setIsVisible] = useState(false);
   const [activeService, setActiveService] = useState(null);
   const sectionRef = useRef(null);
+  const { content } = useSiteContent();
+  const titleMain = content.services.titleMain || '';
+  const titleHighlight = content.services.titleHighlight || 'Services';
 
   useEffect(() => {
     const observer = new IntersectionObserver(
@@ -96,13 +100,14 @@ const Services = () => {
         <div className={`text-center mb-16 transition-all duration-700 ${isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10'}`}>
           <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-red-600/10 border border-red-500/20 mb-6">
             <Zap className="w-4 h-4 text-red-500" />
-            <span className="text-sm text-red-400 font-medium">What I Do</span>
+            <span className="text-sm text-red-400 font-medium">{content.services.eyebrow}</span>
           </div>
           <h2 className="text-4xl sm:text-5xl lg:text-6xl font-bold text-white mb-4">
-            My <span className="text-red-600">Services</span>
+            {titleMain && `${titleMain} `}
+            <span className="text-red-600">{titleHighlight}</span>
           </h2>
           <p className="text-neutral-400 text-lg max-w-2xl mx-auto">
-            Comprehensive digital solutions tailored to your unique needs. From design to deployment, I've got you covered.
+            {content.services.subtitle}
           </p>
         </div>
 
