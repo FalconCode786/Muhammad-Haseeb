@@ -109,7 +109,8 @@ const updateAdminUser = async (req, res) => {
       });
     }
 
-    if (user._id.toString() === req.user.id) {
+    const currentUserId = req.user?.id?.toString() || req.user?._id?.toString();
+    if (user._id.toString() === currentUserId) {
       if (updates.role && updates.role !== user.role) {
         return res.status(400).json({
           success: false,
