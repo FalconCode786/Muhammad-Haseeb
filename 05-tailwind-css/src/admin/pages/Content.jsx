@@ -203,7 +203,7 @@ const ContentModal = ({ section, onClose, onSave }) => {
           ))}
         </div>
         <div className="px-6 py-4 border-t border-white/10 flex items-center justify-between">
-          <span className="text-xs text-neutral-500">Changes are saved locally for now.</span>
+          <span className="text-xs text-yellow-400/90">Saved locally on this device (not synced).</span>
           <button
             onClick={handleSave}
             disabled={saving}

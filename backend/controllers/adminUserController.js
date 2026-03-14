@@ -1,11 +1,7 @@
 const User = require('../models/User');
 
-const buildUserStats = ({ total, active, admins, superadmins }) => ({
-  total,
-  active,
-  inactive: total - active,
-  admins,
-  superadmins
+const normalizeFilter = (filter) => ({
+  ...filter
 });
 
 // @desc    Get admin users
@@ -29,21 +25,44 @@ const getAdminUsers = async (req, res) => {
       filter.$or = [{ name: regex }, { email: regex }];
     }
 
-    const [users, total, active, admins, superadmins] = await Promise.all([
-      User.find(filter)
+    const matchFilter = normalizeFilter(filter);
+    const [users, stats] = await Promise.all([
+      User.find(matchFilter)
         .sort({ createdAt: -1 })
         .select('-password'),
-      User.countDocuments(),
-      User.countDocuments({ isActive: true }),
-      User.countDocuments({ role: 'admin' }),
-      User.countDocuments({ role: 'superadmin' })
+      User.aggregate([
+        { $match: matchFilter },
+        {
+          $group: {
+            _id: null,
+            total: { $sum: 1 },
+            active: {
+              $sum: { $cond: [{ $eq: ['$isActive', true] }, 1, 0] }
+            },
+            admins: {
+              $sum: { $cond: [{ $eq: ['$role', 'admin'] }, 1, 0] }
+            },
+            superadmins: {
+              $sum: { $cond: [{ $eq: ['$role', 'superadmin'] }, 1, 0] }
+            }
+          }
+        }
+      ])
     ]);
+
+    const statsEntry = stats[0] || { total: 0, active: 0, admins: 0, superadmins: 0 };
 
     res.json({
       success: true,
       data: {
         users,
-        stats: buildUserStats({ total, active, admins, superadmins })
+        stats: {
+          total: statsEntry.total,
+          active: statsEntry.active,
+          inactive: statsEntry.total - statsEntry.active,
+          admins: statsEntry.admins,
+          superadmins: statsEntry.superadmins
+        }
       }
     });
   } catch (error) {
