@@ -4,7 +4,6 @@ import profilePic from '../assets/profile.jpg';
 
 const Hero = () => {
   const [currentRole, setCurrentRole] = useState(0);
-
   const roles = ['UI/UX Designer', 'Full Stack Developer', 'AI Automation Specialist'];
 
   useEffect(() => {

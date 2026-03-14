@@ -13,7 +13,7 @@ const Navbar = ({ onLetsTalk }) => {
     if (element) {
       element.scrollIntoView({ behavior: 'smooth' });
     }
-    setActiveLink(href === '#home' ? '' : href);
+    setActiveLink(href.replace('#', ''));
   };
 
   useEffect(() => {
@@ -57,7 +57,7 @@ const Navbar = ({ onLetsTalk }) => {
             <button
               key={link.name}
               onClick={() => scrollToSection(link.href)}
-              className={`rounded-full px-4 py-2 text-sm font-medium transition-all ${activeLink === link.href
+              className={`rounded-full px-4 py-2 text-sm font-medium transition-all ${activeLink === link.href.replace('#', '')
                 ? 'bg-slate-800 text-white'
                 : 'text-slate-300 hover:bg-slate-900 hover:text-white'
                 }`}
