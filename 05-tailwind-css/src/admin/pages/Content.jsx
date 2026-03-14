@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 import { CheckCircle2, FileText, RefreshCw, Save, AlertCircle } from 'lucide-react';
 import { format } from 'date-fns';
 import { useSiteContent } from '../../hooks/useSiteContent';
@@ -46,14 +46,9 @@ const TextAreaField = ({ label, value, onChange, placeholder }) => (
 const Content = () => {
   const { content, saveContent, resetContent } = useSiteContent();
   const [draft, setDraft] = useState(content);
-  const [roleInput, setRoleInput] = useState(content.hero.roles.join(', '));
+  const [roleInput, setRoleInput] = useState((content.hero.roles || []).join(', '));
   const [saving, setSaving] = useState(false);
   const [toast, setToast] = useState(null);
-
-  useEffect(() => {
-    setDraft(content);
-    setRoleInput(content.hero.roles.join(', '));
-  }, [content]);
 
   const showToast = (msg, type = 'success') => {
     setToast({ msg, type });
@@ -106,13 +101,17 @@ const Content = () => {
         roles: roles.length ? roles : draft.hero.roles
       }
     };
-    saveContent(updated);
+    const savedContent = saveContent(updated);
+    setDraft(savedContent);
+    setRoleInput((savedContent.hero.roles || []).join(', '));
     setSaving(false);
     showToast('Content updated successfully');
   };
 
   const handleReset = () => {
-    resetContent();
+    const resetValue = resetContent();
+    setDraft(resetValue);
+    setRoleInput((resetValue.hero.roles || []).join(', '));
     showToast('Content reset to defaults');
   };
 
@@ -205,11 +204,18 @@ const Content = () => {
             value={draft.services.eyebrow}
             onChange={(event) => updateServices('eyebrow', event.target.value)}
           />
-          <InputField
-            label="Title"
-            value={draft.services.title}
-            onChange={(event) => updateServices('title', event.target.value)}
-          />
+          <div className="grid sm:grid-cols-2 gap-4">
+            <InputField
+              label="Title (Main)"
+              value={draft.services.titleMain || ''}
+              onChange={(event) => updateServices('titleMain', event.target.value)}
+            />
+            <InputField
+              label="Title (Highlight)"
+              value={draft.services.titleHighlight || ''}
+              onChange={(event) => updateServices('titleHighlight', event.target.value)}
+            />
+          </div>
           <TextAreaField
             label="Subtitle"
             value={draft.services.subtitle}

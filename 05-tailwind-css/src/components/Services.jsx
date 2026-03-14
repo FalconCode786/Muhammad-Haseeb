@@ -17,9 +17,8 @@ const Services = () => {
   const [activeService, setActiveService] = useState(null);
   const sectionRef = useRef(null);
   const { content } = useSiteContent();
-  const titleParts = content.services.title.split(' ').filter(Boolean);
-  const titleMain = titleParts.length > 1 ? titleParts.slice(0, -1).join(' ') : '';
-  const titleHighlight = titleParts.length > 0 ? titleParts[titleParts.length - 1] : 'Services';
+  const titleMain = content.services.titleMain || '';
+  const titleHighlight = content.services.titleHighlight || 'Services';
 
   useEffect(() => {
     const observer = new IntersectionObserver(

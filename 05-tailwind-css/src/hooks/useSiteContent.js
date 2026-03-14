@@ -28,7 +28,9 @@ export const useSiteContent = () => {
 
   const resetContent = useCallback(() => {
     resetSiteContent();
-    setContent(loadSiteContent());
+    const updated = loadSiteContent();
+    setContent(updated);
+    return updated;
   }, []);
 
   return {

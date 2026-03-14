@@ -18,6 +18,7 @@ const getUsers = async (req, res) => {
       data: users
     });
   } catch (error) {
+    console.error('Get users error:', error);
     res.status(500).json({
       success: false,
       message: 'Failed to fetch users'
@@ -95,6 +96,7 @@ const updateUser = async (req, res) => {
       data: user
     });
   } catch (error) {
+    console.error('Update user error:', error);
     res.status(500).json({
       success: false,
       message: 'Failed to update user'

@@ -12,6 +12,7 @@ export const defaultContent = {
     description:
       'NAVTTC Certified UI/UX Designer & Scrimba Certified Full Stack Developer. Specializing in AI Automation and creating digital experiences that blend aesthetics with functionality.',
     roles: ['UI/UX Designer', 'Full Stack Developer', 'AI Automation Specialist'],
+    fallbackRole: 'Developer',
     ctas: {
       primaryLabel: 'View My Work',
       secondaryLabel: 'Get In Touch'
@@ -19,10 +20,23 @@ export const defaultContent = {
   },
   services: {
     eyebrow: 'What I Do',
-    title: 'My Services',
+    titleMain: 'My',
+    titleHighlight: 'Services',
     subtitle:
       "Comprehensive digital solutions tailored to your unique needs. From design to deployment, I've got you covered."
   }
+};
+
+const parseServiceTitle = (title) => {
+  if (!title) return { titleMain: '', titleHighlight: '' };
+  const parts = title.split(' ').filter(Boolean);
+  if (parts.length <= 1) {
+    return { titleMain: '', titleHighlight: parts[0] || '' };
+  }
+  return {
+    titleMain: parts.slice(0, -1).join(' '),
+    titleHighlight: parts[parts.length - 1]
+  };
 };
 
 const mergeContent = (base, override = {}) => ({
@@ -48,7 +62,11 @@ export const loadSiteContent = () => {
   try {
     const saved = JSON.parse(localStorage.getItem(STORAGE_KEY));
     if (!saved) return defaultContent;
-    return mergeContent(defaultContent, saved);
+    const merged = mergeContent(defaultContent, saved);
+    if (saved.services?.title && saved.services?.titleMain === undefined && saved.services?.titleHighlight === undefined) {
+      Object.assign(merged.services, parseServiceTitle(saved.services.title));
+    }
+    return merged;
   } catch {
     return defaultContent;
   }

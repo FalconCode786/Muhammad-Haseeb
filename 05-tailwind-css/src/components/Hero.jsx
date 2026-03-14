@@ -8,7 +8,7 @@ const Hero = () => {
 
   const { content } = useSiteContent();
   const roles = content.hero.roles || [];
-  const primaryRole = roles[currentRole] || roles[0] || 'Developer';
+  const primaryRole = roles[currentRole] || roles[0] || content.hero.fallbackRole;
 
   useEffect(() => {
     if (roles.length === 0) return;
