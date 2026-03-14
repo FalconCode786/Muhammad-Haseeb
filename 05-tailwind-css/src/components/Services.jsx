@@ -83,25 +83,25 @@ const Services = () => {
     <section
       id="services"
       ref={sectionRef}
-      className="relative w-full py-24 bg-neutral-950 overflow-hidden"
+      className="relative w-full py-24 bg-slate-950 overflow-hidden"
     >
       {/* Background */}
       <div className="absolute inset-0">
-        <div className={`absolute top-20 right-20 w-96 h-96 bg-red-600/10 rounded-full blur-[150px] transition-all duration-1000 ${isVisible ? 'opacity-100' : 'opacity-0'}`} />
-        <div className={`absolute bottom-20 left-20 w-96 h-96 bg-red-900/10 rounded-full blur-[150px] transition-all duration-1000 delay-300 ${isVisible ? 'opacity-100' : 'opacity-0'}`} />
+        <div className={`absolute top-20 right-20 w-96 h-96 bg-sky-500/10 rounded-full blur-[150px] transition-all duration-1000 ${isVisible ? 'opacity-100' : 'opacity-0'}`} />
+        <div className={`absolute bottom-20 left-20 w-96 h-96 bg-indigo-500/10 rounded-full blur-[150px] transition-all duration-1000 delay-300 ${isVisible ? 'opacity-100' : 'opacity-0'}`} />
       </div>
 
-      <div className="relative z-10 w-full max-w-[1800px] mx-auto px-8 sm:px-12 lg:px-20 xl:px-28">
+      <div className="relative z-10 w-full max-w-7xl mx-auto px-6 sm:px-8 lg:px-12">
         {/* Header */}
         <div className={`text-center mb-16 transition-all duration-700 ${isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10'}`}>
-          <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-red-600/10 border border-red-500/20 mb-6">
-            <Zap className="w-4 h-4 text-red-500" />
-            <span className="text-sm text-red-400 font-medium">What I Do</span>
+          <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-slate-900/60 border border-slate-800 mb-6">
+            <Zap className="w-4 h-4 text-sky-400" />
+            <span className="text-sm text-slate-200 font-medium">What I Do</span>
           </div>
           <h2 className="text-4xl sm:text-5xl lg:text-6xl font-bold text-white mb-4">
-            My <span className="text-red-600">Services</span>
+            My <span className="text-sky-400">Services</span>
           </h2>
-          <p className="text-neutral-400 text-lg max-w-2xl mx-auto">
+          <p className="text-slate-300 text-lg max-w-2xl mx-auto">
             Comprehensive digital solutions tailored to your unique needs. From design to deployment, I've got you covered.
           </p>
         </div>
@@ -111,25 +111,25 @@ const Services = () => {
           {services.map((service, index) => (
             <div
               key={service.title}
-              className={`group relative p-6 rounded-2xl bg-white/5 border border-white/10 hover:border-red-500/30 transition-all duration-500 cursor-pointer ${isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10'}`}
+              className={`group relative p-6 rounded-2xl bg-slate-900/60 border border-slate-800 hover:border-slate-600 transition-all duration-500 cursor-pointer ${isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10'}`}
               style={{ transitionDelay: `${index * 100}ms` }}
               onMouseEnter={() => setActiveService(index)}
               onMouseLeave={() => setActiveService(null)}
               onClick={scrollToContact}
             >
               {/* Hover gradient background */}
-              <div className="absolute inset-0 rounded-2xl bg-gradient-to-br from-red-600 to-red-900 opacity-0 group-hover:opacity-5 transition-opacity duration-500" />
+              <div className="absolute inset-0 rounded-2xl bg-gradient-to-br from-sky-500 to-indigo-500 opacity-0 group-hover:opacity-10 transition-opacity duration-500" />
 
               {/* Icon - RED ONLY */}
-              <div className="relative w-14 h-14 rounded-xl bg-red-600/10 border border-red-500/20 flex items-center justify-center mb-4 group-hover:scale-110 group-hover:bg-red-600/20 transition-all duration-300">
-                <service.icon className="w-7 h-7 text-red-500 group-hover:text-red-400 transition-colors" />
+              <div className="relative w-14 h-14 rounded-xl bg-sky-500/10 border border-sky-500/20 flex items-center justify-center mb-4 group-hover:scale-110 group-hover:bg-sky-500/20 transition-all duration-300">
+                <service.icon className="w-7 h-7 text-sky-400 group-hover:text-sky-300 transition-colors" />
               </div>
 
               {/* Content */}
-              <h3 className="text-xl font-bold text-white mb-2 group-hover:text-red-400 transition-colors">
+              <h3 className="text-xl font-bold text-white mb-2 group-hover:text-sky-300 transition-colors">
                 {service.title}
               </h3>
-              <p className="text-neutral-400 text-sm leading-relaxed mb-4">
+              <p className="text-slate-300 text-sm leading-relaxed mb-4">
                 {service.description}
               </p>
 
@@ -141,30 +141,30 @@ const Services = () => {
                     className={`flex items-center gap-2 text-sm transition-all duration-300 ${activeService === index ? 'translate-x-0 opacity-100' : '-translate-x-2 opacity-0'}`}
                     style={{ transitionDelay: `${i * 50}ms` }}
                   >
-                    <CheckCircle2 className="w-4 h-4 text-red-500 flex-shrink-0" />
-                    <span className="text-neutral-300">{feature}</span>
-                  </li>
-                ))}
-              </ul>
+                      <CheckCircle2 className="w-4 h-4 text-sky-400 flex-shrink-0" />
+                      <span className="text-slate-200">{feature}</span>
+                    </li>
+                  ))}
+                </ul>
 
               {/* CTA */}
-              <div className={`flex items-center gap-2 text-sm font-medium text-white group-hover:text-red-400 transition-all duration-300 ${activeService === index ? 'translate-x-0 opacity-100' : 'translate-x-4 opacity-0'}`}>
+              <div className={`flex items-center gap-2 text-sm font-medium text-white group-hover:text-sky-300 transition-all duration-300 ${activeService === index ? 'translate-x-0 opacity-100' : 'translate-x-4 opacity-0'}`}>
                 <span>Get Started</span>
-                <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform text-red-500" />
+                <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform text-sky-400" />
               </div>
 
               {/* Corner accent */}
-              <div className="absolute top-0 right-0 w-20 h-20 bg-red-600 opacity-0 group-hover:opacity-10 rounded-bl-[100px] transition-opacity duration-500" />
+              <div className="absolute top-0 right-0 w-20 h-20 bg-sky-500 opacity-0 group-hover:opacity-10 rounded-bl-[100px] transition-opacity duration-500" />
             </div>
           ))}
         </div>
 
         {/* Bottom CTA */}
         <div className={`mt-16 text-center transition-all duration-700 delay-500 ${isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10'}`}>
-          <p className="text-neutral-400 mb-6">Have a unique project in mind?</p>
+          <p className="text-slate-300 mb-6">Have a unique project in mind?</p>
           <button
             onClick={scrollToContact}
-            className="group inline-flex items-center gap-2 px-8 py-4 rounded-full bg-red-600 text-white font-semibold hover:bg-red-700 transition-all shadow-lg shadow-red-600/25 hover:shadow-red-600/40 hover:scale-105"
+            className="group inline-flex items-center gap-2 px-8 py-4 rounded-full bg-sky-500 text-white font-semibold hover:bg-sky-400 transition-all shadow-lg shadow-sky-500/25 hover:shadow-sky-500/40 hover:scale-105"
           >
             <Sparkles className="w-5 h-5 animate-pulse" />
             Discuss Your Project

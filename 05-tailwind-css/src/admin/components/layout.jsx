@@ -5,7 +5,7 @@ import Header from './Header';
 
 const Layout = () => {
   return (
-    <div className="min-h-screen bg-neutral-950 flex">
+    <div className="min-h-screen bg-slate-950 flex">
       {/* Sidebar */}
       <Sidebar />
 
