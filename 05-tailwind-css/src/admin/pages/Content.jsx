@@ -5,14 +5,14 @@ import { format } from 'date-fns';
 const storageKey = 'adminContentSections';
 
 const getDefaultSections = () => {
-  const now = () => new Date().toISOString();
+  const getNowISOString = () => new Date().toISOString();
   return [
     {
       id: 'hero',
       title: 'Hero Section',
       description: 'Primary landing headline, subheading, and CTAs.',
       status: 'published',
-      lastUpdated: now(),
+      lastUpdated: getNowISOString(),
       previewPath: '/',
       fields: {
         headline: 'Build modern products with confidence.',
@@ -32,7 +32,7 @@ const getDefaultSections = () => {
       title: 'About Section',
       description: 'Founder story, expertise highlights, and credibility markers.',
       status: 'published',
-      lastUpdated: now(),
+      lastUpdated: getNowISOString(),
       previewPath: '/#about',
       fields: {
         summary: 'Strategic full-stack delivery with a focus on modern UX and scalable systems.',
@@ -48,7 +48,7 @@ const getDefaultSections = () => {
       title: 'Services',
       description: 'Packages, retainers, and custom engagement details.',
       status: 'draft',
-      lastUpdated: now(),
+      lastUpdated: getNowISOString(),
       previewPath: '/#services',
       fields: {
         intro: 'Launch-ready design, engineering, and product advisory.',
@@ -64,7 +64,7 @@ const getDefaultSections = () => {
       title: 'Portfolio Highlights',
       description: 'Case studies, featured products, and proof points.',
       status: 'published',
-      lastUpdated: now(),
+      lastUpdated: getNowISOString(),
       previewPath: '/#projects',
       fields: {
         intro: 'Curated case studies focused on outcomes and impact.',
@@ -80,7 +80,7 @@ const getDefaultSections = () => {
       title: 'Testimonials',
       description: 'Client quotes, success metrics, and brand social proof.',
       status: 'draft',
-      lastUpdated: now(),
+      lastUpdated: getNowISOString(),
       previewPath: '/#testimonials',
       fields: {
         quote: '“Consistently exceeded expectations and delivered ahead of schedule.”',
@@ -96,7 +96,7 @@ const getDefaultSections = () => {
       title: 'Contact Details',
       description: 'Lead capture settings and contact information.',
       status: 'published',
-      lastUpdated: now(),
+      lastUpdated: getNowISOString(),
       previewPath: '/#contact',
       fields: {
         email: 'hello@haseeb.dev',

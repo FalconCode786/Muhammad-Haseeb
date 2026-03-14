@@ -126,7 +126,11 @@ const Roles = () => {
 
   const isSuperAdmin = currentUser?.role === 'superadmin';
   const currentUserId = currentUser?.id;
-  const canEditUser = (item) => isSuperAdmin && item?._id?.toString() !== currentUserId;
+  const canEditUser = (item) => (
+    isSuperAdmin
+    && currentUserId
+    && item?._id?.toString() !== currentUserId
+  );
   const canEdit = canEditUser(editingUser);
 
   const fetchUsers = async () => {

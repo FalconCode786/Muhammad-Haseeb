@@ -24,13 +24,12 @@ const getAdminUsers = async (req, res) => {
       filter.$or = [{ name: regex }, { email: regex }];
     }
 
-    const matchFilter = filter;
     const [users, stats] = await Promise.all([
-      User.find(matchFilter)
+      User.find(filter)
         .sort({ createdAt: -1 })
         .select('-password'),
       User.aggregate([
-        { $match: matchFilter },
+        { $match: filter },
         {
           $group: {
             _id: null,
