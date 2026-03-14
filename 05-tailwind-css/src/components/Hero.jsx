@@ -8,10 +8,11 @@ const Hero = () => {
 
   const { content } = useSiteContent();
   const roles = useMemo(() => content.hero.roles || [], [content.hero.roles]);
-  const primaryRole = useMemo(
-    () => roles[currentRole] || roles[0] || content.hero.fallbackRole,
-    [roles, currentRole, content.hero.fallbackRole]
-  );
+  const primaryRole = useMemo(() => {
+    if (roles.length === 0) return content.hero.fallbackRole;
+    const safeIndex = currentRole % roles.length;
+    return roles[safeIndex] || content.hero.fallbackRole;
+  }, [roles, currentRole, content.hero.fallbackRole]);
 
   useEffect(() => {
     if (roles.length === 0) return;
@@ -20,6 +21,7 @@ const Hero = () => {
     }, 3000);
     return () => clearInterval(interval);
   }, [roles]);
+
 
   return (
     <section className="relative min-h-screen w-full flex items-center overflow-hidden bg-neutral-950 pt-36 pb-12">

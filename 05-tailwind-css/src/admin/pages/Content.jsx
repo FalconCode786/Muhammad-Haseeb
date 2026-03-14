@@ -3,8 +3,6 @@ import { CheckCircle2, FileText, RefreshCw, Save, AlertCircle } from 'lucide-rea
 import { format } from 'date-fns';
 import { useSiteContent } from '../../hooks/useSiteContent';
 
-const MIN_ROLE_LENGTH = 2;
-
 const Toast = ({ toast }) => {
   if (!toast) return null;
   return (
@@ -95,7 +93,7 @@ const Content = () => {
     const roles = roleInput
       .split(',')
       .map((role) => role.trim())
-      .filter((role) => role.length >= MIN_ROLE_LENGTH);
+      .filter(Boolean);
     const updated = {
       ...draft,
       hero: {

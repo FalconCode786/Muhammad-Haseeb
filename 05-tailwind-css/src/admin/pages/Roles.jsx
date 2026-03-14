@@ -1,4 +1,4 @@
-import React, { useCallback, useEffect, useMemo, useState } from 'react';
+import React, { useCallback, useEffect, useState } from 'react';
 import { Shield, RefreshCw, CheckCircle2, AlertCircle, UserCog } from 'lucide-react';
 import { format } from 'date-fns';
 import api from '../utils/api';
@@ -80,17 +80,6 @@ const Roles = () => {
 
   const canEdit = user?.role === 'superadmin';
 
-  const userEdits = useMemo(() => {
-    return users.reduce((acc, currentUser) => {
-      const existing = edits[currentUser._id];
-      acc[currentUser._id] = {
-        role: existing?.role ?? currentUser.role,
-        isActive: existing?.isActive ?? currentUser.isActive
-      };
-      return acc;
-    }, {});
-  }, [users, edits]);
-
   const handleEditChange = (id, key, value) => {
     setEdits((prev) => ({
       ...prev,
@@ -102,8 +91,16 @@ const Roles = () => {
   };
 
   const handleSave = async (id) => {
-    const changes = userEdits[id];
-    if (!changes) return;
+    const existing = edits[id];
+    const baseUser = users.find((item) => item._id === id);
+    if (!baseUser) {
+      showToast('User not found', 'error');
+      return;
+    }
+    const changes = {
+      role: existing?.role ?? baseUser.role,
+      isActive: existing?.isActive ?? baseUser.isActive
+    };
     try {
       setSavingId(id);
       const res = await api.put(`/admin/users/${id}`, changes);
@@ -170,7 +167,12 @@ const Roles = () => {
         </div>
         <div className="divide-y divide-white/5">
           {users.map((account) => {
-            const draft = userEdits[account._id];
+            const draft = edits[account._id]
+              ? {
+                  role: edits[account._id].role ?? account.role,
+                  isActive: edits[account._id].isActive ?? account.isActive
+                }
+              : { role: account.role, isActive: account.isActive };
             return (
               <div key={account._id} className="px-6 py-4 grid lg:grid-cols-[1.5fr_1fr_1fr_1fr_auto] gap-4 items-center">
                 <div>

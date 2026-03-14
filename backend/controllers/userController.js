@@ -65,7 +65,7 @@ const updateUser = async (req, res) => {
       });
     }
 
-    if (req.user.id === req.params.id) {
+    if (String(req.user.id) === req.params.id) {
       if (updates.role && updates.role !== req.user.role) {
         return res.status(400).json({
           success: false,
