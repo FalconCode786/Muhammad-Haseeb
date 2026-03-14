@@ -8,7 +8,7 @@ require('dotenv').config();
 const connectDB = require('./config/database');
 const { errorHandler, notFound } = require('./middleware/errorHandler');
 const { protect, adminOnly } = require('./middleware/auth');
-const { adminRateLimiter } = require('./middleware/rateLimit');
+const rateLimit = require('express-rate-limit');
 
 // Route imports
 const contactRoutes = require('./routes/contact');
@@ -17,6 +17,17 @@ const adminRoutes = require('./routes/admin');
 const authRoutes = require('./routes/auth');
 
 const app = express();
+
+const adminRateLimiter = rateLimit({
+  windowMs: 15 * 60 * 1000,
+  max: 20,
+  standardHeaders: true,
+  legacyHeaders: false,
+  message: {
+    success: false,
+    message: 'Too many requests. Please try again later.'
+  }
+});
 
 // Middleware
 app.use(helmet());
