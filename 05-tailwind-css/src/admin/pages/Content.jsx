@@ -275,6 +275,10 @@ const Content = () => {
         </div>
       </div>
 
+      <div className="rounded-2xl bg-yellow-500/10 border border-yellow-500/20 p-4 text-sm text-yellow-100">
+        Content updates are saved locally on this device only. Changes will not sync across browsers or devices without backend storage.
+      </div>
+
       {/* Content Cards */}
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-5">
         {sections.map((section) => (

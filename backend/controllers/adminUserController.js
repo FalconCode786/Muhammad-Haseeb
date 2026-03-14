@@ -63,6 +63,7 @@ const getAdminUsers = async (req, res) => {
       }
     });
   } catch (error) {
+    console.error('Admin users error:', error);
     res.status(500).json({
       success: false,
       message: 'Failed to load admin users'
@@ -133,6 +134,7 @@ const updateAdminUser = async (req, res) => {
       data: sanitized
     });
   } catch (error) {
+    console.error('Update admin user error:', error);
     res.status(500).json({
       success: false,
       message: 'Failed to update admin user'
