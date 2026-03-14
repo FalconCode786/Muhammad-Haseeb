@@ -80,14 +80,14 @@ const Dashboard = () => {
   if (error) {
     return (
       <div className="flex flex-col items-center justify-center h-64 gap-4">
-          <AlertCircle className="w-10 h-10 text-red-500" />
-          <p className="text-slate-300">{error}</p>
-          <button
-            onClick={fetchStats}
-            className="flex items-center gap-2 px-4 py-2 rounded-lg bg-sky-500/10 text-sky-300 hover:bg-sky-500/20 transition-all text-sm"
-          >
-            <RefreshCw className="w-4 h-4" /> Retry
-          </button>
+        <AlertCircle className="w-10 h-10 text-red-500" />
+        <p className="text-slate-300">{error}</p>
+        <button
+          onClick={fetchStats}
+          className="flex items-center gap-2 px-4 py-2 rounded-lg bg-sky-500/10 text-sky-300 hover:bg-sky-500/20 transition-all text-sm"
+        >
+          <RefreshCw className="w-4 h-4" /> Retry
+        </button>
       </div>
     );
   }
@@ -243,9 +243,9 @@ const Dashboard = () => {
 
         {/* Recent Contacts */}
         <div className="rounded-2xl bg-slate-900/60 border border-slate-800 overflow-hidden">
-          <div className="flex items-center justify-between px-6 py-4 border-b border-white/10">
+          <div className="flex items-center justify-between px-6 py-4 border-b border-slate-800">
             <h3 className="text-sm font-semibold text-white">Recent Contacts</h3>
-            <a href="/admin/contacts" className="text-xs text-red-400 hover:text-red-300 transition-colors">View all →</a>
+            <a href="/admin/contacts" className="text-xs text-sky-300 hover:text-sky-200 transition-colors">View all →</a>
           </div>
           <div className="divide-y divide-slate-800">
             {recentActivity.contacts.length === 0 ? (
@@ -267,9 +267,9 @@ const Dashboard = () => {
 
         {/* Upcoming Consultations */}
         <div className="rounded-2xl bg-slate-900/60 border border-slate-800 overflow-hidden">
-          <div className="flex items-center justify-between px-6 py-4 border-b border-white/10">
+          <div className="flex items-center justify-between px-6 py-4 border-b border-slate-800">
             <h3 className="text-sm font-semibold text-white">Upcoming Consultations</h3>
-            <a href="/admin/consultations" className="text-xs text-red-400 hover:text-red-300 transition-colors">View all →</a>
+            <a href="/admin/consultations" className="text-xs text-sky-300 hover:text-sky-200 transition-colors">View all →</a>
           </div>
           <div className="divide-y divide-slate-800">
             {recentActivity.consultations.length === 0 ? (
