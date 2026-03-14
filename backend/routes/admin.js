@@ -7,6 +7,8 @@ const {
   getConsultationAnalytics,
   exportData
 } = require('../controllers/dashboardController');
+const { getAdminUsers, updateAdminUser } = require('../controllers/adminUserController');
+const { superAdminOnly } = require('../middleware/auth');
 
 // All routes protected by auth middleware (added in server.js)
 
@@ -22,5 +24,9 @@ router.get('/analytics/consultations', getConsultationAnalytics);
 
 // Export
 router.get('/export/:type', exportData);
+
+// Admin users
+router.get('/users', getAdminUsers);
+router.patch('/users/:id', superAdminOnly, updateAdminUser);
 
 module.exports = router;

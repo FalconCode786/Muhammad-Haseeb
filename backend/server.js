@@ -11,6 +11,8 @@ const { errorHandler, notFound } = require('./middleware/errorHandler');
 // Route imports
 const contactRoutes = require('./routes/contact');
 const consultationRoutes = require('./routes/consultation');
+const adminRoutes = require('./routes/admin');
+const { protect, adminOnly } = require('./middleware/auth');
 
 const app = express();
 
@@ -42,6 +44,7 @@ app.use('/api/contact', contactRoutes);
 app.use('/api/consultation', consultationRoutes);
 const authRoutes = require('./routes/auth');
 app.use('/api/auth', authRoutes);
+app.use('/api/admin', protect, adminOnly, adminRoutes);
 // 404 handler
 app.use(notFound);
 
