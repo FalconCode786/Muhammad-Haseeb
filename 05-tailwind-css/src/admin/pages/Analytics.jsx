@@ -55,6 +55,10 @@ const ChartEmpty = ({ message }) => (
   </div>
 );
 
+const calculateRate = (value, total) => (
+  total ? ((value / total) * 100).toFixed(1) : '0.0'
+);
+
 const Analytics = () => {
   const [projectAnalytics, setProjectAnalytics] = useState(null);
   const [consultationAnalytics, setConsultationAnalytics] = useState(null);
@@ -145,12 +149,8 @@ const Analytics = () => {
   })) || [];
 
   const conversion = consultationAnalytics?.conversion || { total: 0, confirmed: 0, completed: 0 };
-  const confirmedRate = conversion.total
-    ? ((conversion.confirmed / conversion.total) * 100).toFixed(1)
-    : '0.0';
-  const completedRate = conversion.total
-    ? ((conversion.completed / conversion.total) * 100).toFixed(1)
-    : '0.0';
+  const confirmedRate = calculateRate(conversion.confirmed, conversion.total);
+  const completedRate = calculateRate(conversion.completed, conversion.total);
 
   return (
     <div className="space-y-6">

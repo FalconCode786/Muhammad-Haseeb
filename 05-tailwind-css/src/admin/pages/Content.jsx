@@ -6,14 +6,13 @@ const storageKey = 'adminContentSections';
 const localStorageNotice = 'Saved locally on this device only (no backend persistence).';
 
 const getDefaultSections = () => {
-  const getNowISOString = () => new Date().toISOString();
   return [
     {
       id: 'hero',
       title: 'Hero Section',
       description: 'Primary landing headline, subheading, and CTAs.',
       status: 'published',
-      lastUpdated: getNowISOString(),
+      lastUpdated: new Date().toISOString(),
       previewPath: '/',
       fields: {
         headline: 'Build modern products with confidence.',
@@ -33,7 +32,7 @@ const getDefaultSections = () => {
       title: 'About Section',
       description: 'Founder story, expertise highlights, and credibility markers.',
       status: 'published',
-      lastUpdated: getNowISOString(),
+      lastUpdated: new Date().toISOString(),
       previewPath: '/#about',
       fields: {
         summary: 'Strategic full-stack delivery with a focus on modern UX and scalable systems.',
@@ -49,7 +48,7 @@ const getDefaultSections = () => {
       title: 'Services',
       description: 'Packages, retainers, and custom engagement details.',
       status: 'draft',
-      lastUpdated: getNowISOString(),
+      lastUpdated: new Date().toISOString(),
       previewPath: '/#services',
       fields: {
         intro: 'Launch-ready design, engineering, and product advisory.',
@@ -65,7 +64,7 @@ const getDefaultSections = () => {
       title: 'Portfolio Highlights',
       description: 'Case studies, featured products, and proof points.',
       status: 'published',
-      lastUpdated: getNowISOString(),
+      lastUpdated: new Date().toISOString(),
       previewPath: '/#projects',
       fields: {
         intro: 'Curated case studies focused on outcomes and impact.',
@@ -81,7 +80,7 @@ const getDefaultSections = () => {
       title: 'Testimonials',
       description: 'Client quotes, success metrics, and brand social proof.',
       status: 'draft',
-      lastUpdated: getNowISOString(),
+      lastUpdated: new Date().toISOString(),
       previewPath: '/#testimonials',
       fields: {
         quote: '“Consistently exceeded expectations and delivered ahead of schedule.”',
@@ -97,7 +96,7 @@ const getDefaultSections = () => {
       title: 'Contact Details',
       description: 'Lead capture settings and contact information.',
       status: 'published',
-      lastUpdated: getNowISOString(),
+      lastUpdated: new Date().toISOString(),
       previewPath: '/#contact',
       fields: {
         email: 'hello@haseeb.dev',

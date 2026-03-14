@@ -1,6 +1,7 @@
 const User = require('../models/User');
 
 const escapeRegex = (value) => value.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+const MAX_SEARCH_LENGTH = 100;
 
 
 // @desc    Get admin users
@@ -20,7 +21,7 @@ const getAdminUsers = async (req, res) => {
     }
 
     if (q) {
-      const safeQuery = q.trim().slice(0, 100);
+      const safeQuery = q.trim().slice(0, MAX_SEARCH_LENGTH);
       if (safeQuery) {
         const regex = new RegExp(escapeRegex(safeQuery), 'i');
         filter.$or = [{ name: regex }, { email: regex }];
