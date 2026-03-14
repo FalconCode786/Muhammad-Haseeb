@@ -267,7 +267,7 @@ const About = () => {
             <div className="space-y-8">
               {journey.map((item, index) => (
                 <div
-                  key={item.title}
+                  key={`${item.year}-${item.title}`}
                   className={`relative flex items-start gap-6 transition-all duration-700 ${isVisible ? 'opacity-100 translate-x-0' : 'opacity-0 -translate-x-20'}`}
                   style={{ transitionDelay: `${index * 150}ms` }}
                 >

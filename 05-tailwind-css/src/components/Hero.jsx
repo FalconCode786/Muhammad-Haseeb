@@ -2,16 +2,17 @@ import React, { useState, useEffect } from 'react';
 import { Linkedin, Github, ArrowDown, Sparkles, Code, Palette, Cpu } from 'lucide-react';
 import profilePic from '../assets/profile.jpg';
 
+const roles = ['UI/UX Designer', 'Full Stack Developer', 'AI Automation Specialist'];
+
 const Hero = () => {
   const [currentRole, setCurrentRole] = useState(0);
-  const roles = ['UI/UX Designer', 'Full Stack Developer', 'AI Automation Specialist'];
 
   useEffect(() => {
     const interval = setInterval(() => {
       setCurrentRole((prev) => (prev + 1) % roles.length);
     }, 3000);
     return () => clearInterval(interval);
-  }, [roles.length]);
+  }, []);
 
   return (
     <section id="home" className="relative w-full overflow-hidden bg-slate-950 pt-28 pb-16">

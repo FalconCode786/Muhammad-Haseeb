@@ -13,7 +13,7 @@ const Navbar = ({ onLetsTalk }) => {
     if (element) {
       element.scrollIntoView({ behavior: 'smooth' });
     }
-    setActiveLink(href.replace('#', ''));
+    setActiveLink(href === '#home' ? '' : href.replace('#', ''));
   };
 
   useEffect(() => {
