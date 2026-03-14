@@ -69,14 +69,3 @@ const startServer = async () => {
 };
 
 startServer();
-// Utility helper for manual admin creation (not invoked by default)
-const createAdmin = async () => {
-  const User = require('./models/User');
-  await User.create({
-    name: 'Muhammad Haseeb',
-    email: 'admin@haseeb.dev',
-    password: 'your-secure-password',
-    role: 'admin'
-  });
-  console.log('Admin created');
-};

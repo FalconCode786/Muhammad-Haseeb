@@ -19,7 +19,15 @@ const createRateLimiter = ({
       : typeof forwardedFor === 'string'
         ? forwardedFor.split(',')[0].trim()
         : undefined;
-    const key = forwardedIp || req.ip || req.socket.remoteAddress || 'unknown';
+    const key = forwardedIp || req.ip || req.socket.remoteAddress;
+    if (!key) {
+      return res.status(400).json({
+        success: false,
+        message: 'Unable to determine client IP for rate limiting.'
+      });
+    }
+
+    requestCounter += 1;
 
     const entry = store.get(key);
     if (!entry || entry.resetTime <= now) {
@@ -37,7 +45,6 @@ const createRateLimiter = ({
       });
     }
 
-    requestCounter += 1;
     if (
       store.size > MAX_STORE_SIZE &&
       (requestCounter % CLEANUP_INTERVAL === 0 || now - lastCleanup > windowMs)
