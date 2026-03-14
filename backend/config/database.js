@@ -12,7 +12,9 @@ const connectDB = async () => {
     console.log(`✅ MongoDB Connected: ${conn.connection.host}`);
     console.log(`📁 Database: ${conn.connection.name}`);
   } catch (error) {
-    const connectionError = new Error('Database connection failed. Check MONGODB_URI configuration.');
+    const connectionError = new Error(
+      `Database connection failed: ${error.message}. Check MONGODB_URI configuration.`
+    );
     connectionError.cause = error;
     throw connectionError;
   }
