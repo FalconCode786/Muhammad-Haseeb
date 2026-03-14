@@ -97,6 +97,7 @@ const Content = () => {
     setSaving(true);
     const roleInput = draft.hero.rolesText || '';
     const roleEntries = roleInput.split(',');
+    const hasEmptyEntries = roleEntries.some((role) => role.trim().length === 0);
     const roles = roleEntries
       .map((role) => role.trim())
       .filter(Boolean);
@@ -117,7 +118,7 @@ const Content = () => {
       }
     });
     setSaving(false);
-    const toastMessage = roleEntries.some((role) => role.trim().length === 0)
+    const toastMessage = hasEmptyEntries
       ? 'Content updated. Empty role entries were removed.'
       : 'Content updated successfully';
     showToast(toastMessage);

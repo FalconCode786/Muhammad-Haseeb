@@ -11,7 +11,7 @@ const normalizeBoolean = (value) => {
   return undefined;
 };
 
-const isSelfEdit = (userId, paramId) => String(userId) === paramId;
+const isUserEditingSelf = (userId, paramId) => String(userId) === paramId;
 
 // @desc    Get all admin users
 // @route   GET /api/admin/users
@@ -75,7 +75,7 @@ const updateUser = async (req, res) => {
       });
     }
 
-    if (isSelfEdit(req.user.id, req.params.id)) {
+    if (isUserEditingSelf(req.user.id, req.params.id)) {
       if (updates.role && updates.role !== req.user.role) {
         return res.status(400).json({
           success: false,

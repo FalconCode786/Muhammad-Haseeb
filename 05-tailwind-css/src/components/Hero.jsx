@@ -8,7 +8,8 @@ const Hero = () => {
 
   const { content } = useSiteContent();
   const roles = useMemo(() => content.hero.roles || [], [content.hero.roles]);
-  const primaryRole = roles.length
+  const hasRoles = roles.length > 0;
+  const primaryRole = hasRoles
     ? roles[currentRole % roles.length]
     : content.hero.fallbackRole;
 
