@@ -8,6 +8,7 @@ require('dotenv').config();
 const connectDB = require('./config/database');
 const { errorHandler, notFound } = require('./middleware/errorHandler');
 const { protect, adminOnly } = require('./middleware/auth');
+const { rateLimit } = require('./middleware/rateLimit');
 
 // Route imports
 const contactRoutes = require('./routes/contact');
@@ -44,7 +45,12 @@ app.use('/api/contact', contactRoutes);
 app.use('/api/consultation', consultationRoutes);
 const authRoutes = require('./routes/auth');
 app.use('/api/auth', authRoutes);
-app.use('/api/admin', protect, adminOnly, adminRoutes);
+const adminRateLimit = rateLimit({
+  windowMs: 15 * 60 * 1000,
+  max: 200,
+  message: 'Too many admin requests, please try again later.'
+});
+app.use('/api/admin', adminRateLimit, protect, adminOnly, adminRoutes);
 // 404 handler
 app.use(notFound);
 
