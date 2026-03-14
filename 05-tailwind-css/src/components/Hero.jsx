@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { Linkedin, Github, ArrowDown, Sparkles, Code, Palette, Cpu } from 'lucide-react';
-import profilePic from '../assets/profile.jpg';
+import profileJpg from '../assets/profile.jpg';
+import profileWebp from '../assets/profile.webp';
 
 const Hero = () => {
   const [currentRole, setCurrentRole] = useState(0);
@@ -129,11 +130,19 @@ const Hero = () => {
             {/* Profile circle with hover animation */}
             <div className="relative w-[400px] h-[400px] rounded-full overflow-hidden border-2 border-white/10 group">
               {/* Image with scale animation on hover */}
-              <img
-                src={profilePic}
-                alt="Muhammad Haseeb"
-                className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110"
-              />
+              <picture>
+                <source srcSet={profileWebp} type="image/webp" />
+                <img
+                  src={profileJpg}
+                  alt="Muhammad Haseeb"
+                  width="400"
+                  height="400"
+                  loading="eager"
+                  decoding="async"
+                  fetchPriority="high"
+                  className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110"
+                />
+              </picture>
 
               {/* Gradient overlay */}
               <div className="absolute inset-0 bg-gradient-to-t from-red-900/40 via-transparent to-transparent" />

@@ -1,6 +1,7 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { Menu, X, ArrowRight, Sparkles } from 'lucide-react';
-import logo from '../assets/logo.png';
+import logoPng from '../assets/logo.png';
+import logoWebp from '../assets/logo.webp';
 
 const Navbar = ({ onLetsTalk }) => {
   const [isOpen, setIsOpen] = useState(false);
@@ -91,12 +92,18 @@ const Navbar = ({ onLetsTalk }) => {
                 }}
               >
                 <div className="absolute inset-0 bg-red-600/20 animate-pulse rounded-full" />
-                <img
-                  src={logo}
-                  alt="Logo"
-                  className="w-10 h-10 object-contain relative z-10 transition-transform duration-300 group-hover:scale-110"
-                  style={{ filter: 'drop-shadow(0 0 10px rgba(220,38,38,0.8))' }}
-                />
+                <picture>
+                  <source srcSet={logoWebp} type="image/webp" />
+                  <img
+                    src={logoPng}
+                    alt="Logo"
+                    width="40"
+                    height="40"
+                    decoding="async"
+                    className="w-10 h-10 object-contain relative z-10 transition-transform duration-300 group-hover:scale-110"
+                    style={{ filter: 'drop-shadow(0 0 10px rgba(220,38,38,0.8))' }}
+                  />
+                </picture>
                 <div className="absolute inset-0 rounded-full border border-red-500/30 scale-150 opacity-0 group-hover:opacity-100 group-hover:scale-100 transition-all duration-500" />
               </div>
               <div className="hidden sm:block">
