@@ -20,8 +20,11 @@ const getAdminUsers = async (req, res) => {
     }
 
     if (q) {
-      const regex = new RegExp(escapeRegex(q), 'i');
-      filter.$or = [{ name: regex }, { email: regex }];
+      const safeQuery = q.trim().slice(0, 100);
+      if (safeQuery) {
+        const regex = new RegExp(escapeRegex(safeQuery), 'i');
+        filter.$or = [{ name: regex }, { email: regex }];
+      }
     }
 
     const [users, stats] = await Promise.all([
@@ -129,7 +132,8 @@ const updateAdminUser = async (req, res) => {
     Object.assign(user, updates);
     await user.save();
 
-    const sanitized = await User.findById(user._id).select('-password');
+    const sanitized = user.toObject();
+    delete sanitized.password;
 
     res.json({
       success: true,

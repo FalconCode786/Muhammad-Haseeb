@@ -45,6 +45,14 @@ const Toast = ({ toast }) => {
   );
 };
 
+const formatLoginDate = (value) => {
+  const date = new Date(value);
+  if (Number.isNaN(date.getTime())) {
+    return '—';
+  }
+  return format(date, 'PPp');
+};
+
 const RoleModal = ({ user, onClose, onSave, disabled }) => {
   const [role, setRole] = useState(user?.role || 'admin');
   const [isActive, setIsActive] = useState(user?.isActive ?? true);
@@ -325,7 +333,7 @@ const Roles = () => {
                 </span>
               </div>
               <div className="col-span-3 text-neutral-400 text-xs">
-                {item.lastLogin ? format(new Date(item.lastLogin), 'PPp') : '—'}
+                {item.lastLogin ? formatLoginDate(item.lastLogin) : '—'}
               </div>
               <div className="col-span-2 flex justify-end">
                 <button

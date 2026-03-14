@@ -3,6 +3,7 @@ import { FileText, Edit3, Save, X, Eye, CheckCircle2 } from 'lucide-react';
 import { format } from 'date-fns';
 
 const storageKey = 'adminContentSections';
+const localStorageNotice = 'Saved locally on this device only (no backend persistence).';
 
 const getDefaultSections = () => {
   const getNowISOString = () => new Date().toISOString();
@@ -203,7 +204,7 @@ const ContentModal = ({ section, onClose, onSave }) => {
           ))}
         </div>
         <div className="px-6 py-4 border-t border-white/10 flex items-center justify-between">
-          <span className="text-xs text-yellow-400/90">Saved locally on this device only (no backend persistence).</span>
+          <span className="text-xs text-yellow-400/90">{localStorageNotice}</span>
           <button
             onClick={handleSave}
             disabled={saving}
@@ -276,7 +277,7 @@ const Content = () => {
       </div>
 
       <div className="rounded-2xl bg-yellow-500/10 border border-yellow-500/20 p-4 text-sm text-yellow-100">
-        Content updates are saved locally on this device only. Changes will not sync across browsers or devices without backend storage.
+        {localStorageNotice}
       </div>
 
       {/* Content Cards */}
