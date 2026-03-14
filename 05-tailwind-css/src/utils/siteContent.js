@@ -93,7 +93,7 @@ export const updateSiteContent = (nextContent) => {
 };
 
 export const resetSiteContent = () => {
-  const resetValue = mergeContent(defaultContent);
+  const resetValue = mergeContent(defaultContent, {});
   resetValue.meta.updatedAt = null;
   if (typeof window === 'undefined') return resetValue;
   localStorage.removeItem(STORAGE_KEY);
