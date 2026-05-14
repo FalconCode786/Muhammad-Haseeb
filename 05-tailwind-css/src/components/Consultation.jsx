@@ -99,32 +99,32 @@ const Consultation = () => {
 
   const progress = (step / 3) * 100;
 
-  const inputClasses = "w-full px-4 py-3 bg-white/5 border border-white/10 rounded-xl text-white placeholder-neutral-500 focus:outline-none focus:border-red-500/50 transition-all";
-  const labelClasses = "block text-sm font-medium text-neutral-400 mb-2";
+  const inputClasses = "w-full px-4 py-3 bg-slate-900/60 border border-slate-800 rounded-xl text-white placeholder-slate-500 focus:outline-none focus:border-sky-500/60 transition-all";
+  const labelClasses = "block text-sm font-medium text-slate-400 mb-2";
 
   return (
-    <section 
-      id="consultation" 
+    <section
+      id="consultation"
       ref={sectionRef}
-      className="relative w-full py-24 bg-neutral-950 overflow-hidden"
+      className="relative w-full py-24 bg-slate-950 overflow-hidden"
     >
       {/* Background */}
       <div className="absolute inset-0">
-        <div className={`absolute top-0 left-1/3 w-[500px] h-[500px] bg-red-600/10 rounded-full blur-[150px] transition-all duration-1000 ${isVisible ? 'opacity-100' : 'opacity-0'}`} />
-        <div className={`absolute bottom-0 right-1/3 w-[400px] h-[400px] bg-red-900/10 rounded-full blur-[150px] transition-all duration-1000 delay-300 ${isVisible ? 'opacity-100' : 'opacity-0'}`} />
+        <div className={`absolute top-0 left-1/3 w-[500px] h-[500px] bg-sky-500/10 rounded-full blur-[150px] transition-all duration-1000 ${isVisible ? 'opacity-100' : 'opacity-0'}`} />
+        <div className={`absolute bottom-0 right-1/3 w-[400px] h-[400px] bg-indigo-500/10 rounded-full blur-[150px] transition-all duration-1000 delay-300 ${isVisible ? 'opacity-100' : 'opacity-0'}`} />
       </div>
 
-      <div className="relative z-10 w-full max-w-[1600px] mx-auto px-8 sm:px-12 lg:px-20 xl:px-28">
+      <div className="relative z-10 w-full max-w-7xl mx-auto px-6 sm:px-8 lg:px-12">
         {/* Header */}
         <div className={`text-center mb-12 transition-all duration-700 ${isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10'}`}>
-          <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-red-600/10 border border-red-500/20 mb-6">
-            <Calendar className="w-4 h-4 text-red-500" />
-            <span className="text-sm text-red-400 font-medium">Book a Session</span>
+          <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-slate-900/60 border border-slate-800 mb-6">
+            <Calendar className="w-4 h-4 text-sky-400" />
+            <span className="text-sm text-slate-200 font-medium">Book a Session</span>
           </div>
           <h2 className="text-4xl sm:text-5xl lg:text-6xl font-bold text-white mb-4">
-            Free <span className="text-red-600">Consultation</span>
+            Free <span className="text-sky-400">Consultation</span>
           </h2>
-          <p className="text-neutral-400 text-lg max-w-2xl mx-auto">
+          <p className="text-slate-300 text-lg max-w-2xl mx-auto">
             Schedule a 30-minute free consultation to discuss your project. No commitment required.
           </p>
         </div>
@@ -133,9 +133,9 @@ const Consultation = () => {
         <div className="grid lg:grid-cols-2 gap-12 items-start">
           {/* Left - Benefits */}
           <div className={`space-y-6 transition-all duration-700 delay-200 ${isVisible ? 'opacity-100 translate-x-0' : 'opacity-0 -translate-x-10'}`}>
-            <div className="p-6 rounded-2xl bg-white/5 border border-white/10">
+            <div className="p-6 rounded-2xl bg-slate-900/60 border border-slate-800">
               <h3 className="text-xl font-bold text-white mb-4 flex items-center gap-2">
-                <Sparkles className="w-5 h-5 text-red-500" />
+                <Sparkles className="w-5 h-5 text-sky-400" />
                 What You'll Get
               </h3>
               <ul className="space-y-4">
@@ -147,46 +147,46 @@ const Consultation = () => {
                   'No-obligation quote'
                 ].map((item, i) => (
                   <li key={i} className="flex items-start gap-3">
-                    <CheckCircle2 className="w-5 h-5 text-red-500 flex-shrink-0 mt-0.5" />
-                    <span className="text-neutral-300">{item}</span>
+                    <CheckCircle2 className="w-5 h-5 text-sky-400 flex-shrink-0 mt-0.5" />
+                    <span className="text-slate-200">{item}</span>
                   </li>
                 ))}
               </ul>
             </div>
 
-            <div className="p-6 rounded-2xl bg-gradient-to-br from-red-600/10 to-red-900/10 border border-red-500/20">
+            <div className="p-6 rounded-2xl bg-gradient-to-br from-sky-500/10 to-indigo-500/10 border border-slate-800">
               <div className="flex items-center gap-4 mb-4">
-                <div className="w-12 h-12 rounded-full bg-red-600/20 flex items-center justify-center">
-                  <Clock className="w-6 h-6 text-red-500" />
+                <div className="w-12 h-12 rounded-full bg-sky-500/10 flex items-center justify-center">
+                  <Clock className="w-6 h-6 text-sky-400" />
                 </div>
                 <div>
                   <p className="text-white font-semibold">30 Minutes</p>
-                  <p className="text-neutral-400 text-sm">Duration</p>
+                  <p className="text-slate-400 text-sm">Duration</p>
                 </div>
               </div>
               <div className="flex items-center gap-4">
-                <div className="w-12 h-12 rounded-full bg-red-600/20 flex items-center justify-center">
-                  <Video className="w-6 h-6 text-red-500" />
+                <div className="w-12 h-12 rounded-full bg-sky-500/10 flex items-center justify-center">
+                  <Video className="w-6 h-6 text-sky-400" />
                 </div>
                 <div>
                   <p className="text-white font-semibold">Video/Phone/Chat</p>
-                  <p className="text-neutral-400 text-sm">Your preference</p>
+                  <p className="text-slate-400 text-sm">Your preference</p>
                 </div>
               </div>
             </div>
 
             {/* Testimonial */}
-            <div className="p-6 rounded-2xl bg-white/5 border border-white/10">
-              <p className="text-neutral-300 italic mb-4">
+            <div className="p-6 rounded-2xl bg-slate-900/60 border border-slate-800">
+              <p className="text-slate-200 italic mb-4">
                 "Haseeb's consultation was incredibly helpful. He understood my requirements perfectly and provided a clear roadmap for my project."
               </p>
               <div className="flex items-center gap-3">
-                <div className="w-10 h-10 rounded-full bg-red-600/20 flex items-center justify-center">
-                  <User className="w-5 h-5 text-red-500" />
+                <div className="w-10 h-10 rounded-full bg-sky-500/10 flex items-center justify-center">
+                  <User className="w-5 h-5 text-sky-400" />
                 </div>
                 <div>
                   <p className="text-white font-medium">Ahmed Khan</p>
-                  <p className="text-neutral-500 text-sm">Startup Founder</p>
+                  <p className="text-slate-500 text-sm">Startup Founder</p>
                 </div>
               </div>
             </div>
@@ -194,20 +194,20 @@ const Consultation = () => {
 
           {/* Right - Booking Form */}
           <div className={`transition-all duration-700 delay-400 ${isVisible ? 'opacity-100 translate-x-0' : 'opacity-0 translate-x-10'}`}>
-            <div className="p-6 sm:p-8 rounded-3xl bg-white/5 border border-white/10">
+            <div className="p-6 sm:p-8 rounded-3xl bg-slate-900/60 border border-slate-800">
               {bookingConfirmed ? (
                 <div className="py-12 text-center">
                   <div className="w-20 h-20 mx-auto mb-6 rounded-full bg-green-500/20 flex items-center justify-center animate-bounce">
                     <CheckCircle2 className="w-10 h-10 text-green-500" />
                   </div>
                   <h3 className="text-2xl font-bold text-white mb-2">Booking Confirmed!</h3>
-                  <p className="text-neutral-400 mb-4">
+                  <p className="text-slate-300 mb-4">
                     We've sent a confirmation email to <span className="text-white">{formData.email}</span>
                   </p>
-                  <div className="p-4 rounded-xl bg-white/5 border border-white/10 text-left max-w-sm mx-auto">
-                    <p className="text-sm text-neutral-400 mb-1">Date & Time</p>
+                  <div className="p-4 rounded-xl bg-slate-900/60 border border-slate-800 text-left max-w-sm mx-auto">
+                    <p className="text-sm text-slate-400 mb-1">Date & Time</p>
                     <p className="text-white font-medium mb-3">{formData.date} at {formData.time}</p>
-                    <p className="text-sm text-neutral-400 mb-1">Consultation Type</p>
+                    <p className="text-sm text-slate-400 mb-1">Consultation Type</p>
                     <p className="text-white font-medium capitalize">{formData.type} Call</p>
                   </div>
                 </div>
@@ -215,17 +215,17 @@ const Consultation = () => {
                 <>
                   {/* Progress */}
                   <div className="mb-8">
-                    <div className="flex justify-between text-xs text-neutral-400 mb-2">
+                    <div className="flex justify-between text-xs text-slate-400 mb-2">
                       <span>Step {step} of 3</span>
                       <span>{Math.round(progress)}%</span>
                     </div>
-                    <div className="h-2 bg-white/10 rounded-full overflow-hidden">
-                      <div className="h-full bg-gradient-to-r from-red-600 to-red-500 transition-all duration-500" style={{ width: `${progress}%` }} />
+                    <div className="h-2 bg-slate-800 rounded-full overflow-hidden">
+                      <div className="h-full bg-gradient-to-r from-sky-500 to-sky-400 transition-all duration-500" style={{ width: `${progress}%` }} />
                     </div>
                     <div className="flex justify-between mt-4">
                       {[1, 2, 3].map((s) => (
-                        <div key={s} className={`flex flex-col items-center gap-1 ${s <= step ? 'text-red-500' : 'text-neutral-600'}`}>
-                          <div className={`w-8 h-8 rounded-full flex items-center justify-center text-sm font-medium transition-all ${s < step ? 'bg-green-500 text-white' : s === step ? 'bg-red-600 text-white' : 'bg-white/10 text-neutral-400'}`}>
+                        <div key={s} className={`flex flex-col items-center gap-1 ${s <= step ? 'text-sky-400' : 'text-slate-600'}`}>
+                          <div className={`w-8 h-8 rounded-full flex items-center justify-center text-sm font-medium transition-all ${s < step ? 'bg-emerald-500 text-white' : s === step ? 'bg-sky-500 text-white' : 'bg-slate-800 text-slate-400'}`}>
                             {s < step ? <CheckCircle2 className="w-4 h-4" /> : s}
                           </div>
                           <span className="text-[10px] hidden sm:block">{s === 1 ? 'Details' : s === 2 ? 'Schedule' : 'Confirm'}</span>
@@ -261,8 +261,8 @@ const Consultation = () => {
                             Consultation Topic
                           </label>
                           <select name="topic" value={formData.topic} onChange={handleChange} required className={`${inputClasses} appearance-none cursor-pointer`}>
-                            <option value="" className="bg-neutral-900">Select a topic</option>
-                            {topics.map(t => <option key={t} value={t} className="bg-neutral-900">{t}</option>)}
+                            <option value="" className="bg-slate-950">Select a topic</option>
+                            {topics.map(t => <option key={t} value={t} className="bg-slate-950">{t}</option>)}
                           </select>
                         </div>
                       </div>
@@ -291,7 +291,7 @@ const Consultation = () => {
                                 key={time}
                                 type="button"
                                 onClick={() => setFormData(prev => ({ ...prev, time }))}
-                                className={`px-3 py-2 rounded-lg text-sm transition-all ${formData.time === time ? 'bg-red-600 text-white' : 'bg-white/5 text-neutral-400 hover:bg-white/10'}`}
+                                className={`px-3 py-2 rounded-lg text-sm transition-all ${formData.time === time ? 'bg-sky-500 text-white' : 'bg-slate-900/60 text-slate-300 hover:bg-slate-900'}`}
                               >
                                 {time}
                               </button>
@@ -307,10 +307,10 @@ const Consultation = () => {
                                 key={type.id}
                                 type="button"
                                 onClick={() => setFormData(prev => ({ ...prev, type: type.id }))}
-                                className={`p-3 rounded-xl border transition-all ${formData.type === type.id ? 'border-red-500 bg-red-600/10' : 'border-white/10 bg-white/5 hover:border-white/20'}`}
+                                className={`p-3 rounded-xl border transition-all ${formData.type === type.id ? 'border-sky-500 bg-sky-500/10' : 'border-slate-800 bg-slate-900/60 hover:border-slate-600'}`}
                               >
-                                <type.icon className={`w-5 h-5 mx-auto mb-1 ${formData.type === type.id ? 'text-red-500' : 'text-neutral-400'}`} />
-                                <p className={`text-xs font-medium ${formData.type === type.id ? 'text-white' : 'text-neutral-400'}`}>{type.label}</p>
+                                <type.icon className={`w-5 h-5 mx-auto mb-1 ${formData.type === type.id ? 'text-sky-400' : 'text-slate-400'}`} />
+                                <p className={`text-xs font-medium ${formData.type === type.id ? 'text-white' : 'text-slate-400'}`}>{type.label}</p>
                               </button>
                             ))}
                           </div>
@@ -330,27 +330,27 @@ const Consultation = () => {
                           <textarea name="message" value={formData.message} onChange={handleChange} rows={4} placeholder="Tell me more about your project..." className={`${inputClasses} resize-none`} />
                         </div>
 
-                        <div className="p-4 rounded-xl bg-white/5 border border-white/10">
+                        <div className="p-4 rounded-xl bg-slate-900/60 border border-slate-800">
                           <h4 className="text-sm font-medium text-white mb-3">Booking Summary</h4>
                           <div className="space-y-2 text-sm">
                             <div className="flex justify-between">
-                              <span className="text-neutral-400">Name:</span>
+                              <span className="text-slate-400">Name:</span>
                               <span className="text-white">{formData.name}</span>
                             </div>
                             <div className="flex justify-between">
-                              <span className="text-neutral-400">Topic:</span>
+                              <span className="text-slate-400">Topic:</span>
                               <span className="text-white">{formData.topic}</span>
                             </div>
                             <div className="flex justify-between">
-                              <span className="text-neutral-400">Date:</span>
+                              <span className="text-slate-400">Date:</span>
                               <span className="text-white">{formData.date}</span>
                             </div>
                             <div className="flex justify-between">
-                              <span className="text-neutral-400">Time:</span>
+                              <span className="text-slate-400">Time:</span>
                               <span className="text-white">{formData.time}</span>
                             </div>
                             <div className="flex justify-between">
-                              <span className="text-neutral-400">Type:</span>
+                              <span className="text-slate-400">Type:</span>
                               <span className="text-white capitalize">{formData.type} Call</span>
                             </div>
                           </div>
@@ -361,7 +361,7 @@ const Consultation = () => {
                     {/* Navigation */}
                     <div className="flex gap-3 mt-8">
                       {step > 1 && (
-                        <button type="button" onClick={prevStep} className="px-6 py-3 rounded-xl border border-white/20 text-white hover:bg-white/5 transition-all">
+                        <button type="button" onClick={prevStep} className="px-6 py-3 rounded-xl border border-slate-700 text-white hover:bg-slate-900 transition-all">
                           Back
                         </button>
                       )}
@@ -371,7 +371,7 @@ const Consultation = () => {
                           type="button"
                           onClick={nextStep}
                           disabled={!isStepValid()}
-                          className="flex-1 px-6 py-3 rounded-xl bg-red-600 text-white font-medium hover:bg-red-700 transition-all disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center gap-2"
+                          className="flex-1 px-6 py-3 rounded-xl bg-sky-500 text-white font-medium hover:bg-sky-400 transition-all disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center gap-2"
                         >
                           Continue
                           <ArrowRight className="w-4 h-4" />
@@ -379,8 +379,8 @@ const Consultation = () => {
                       ) : (
                         <button
                           type="submit"
-                          className="flex-1 px-6 py-3 rounded-xl bg-gradient-to-r from-red-600 to-red-700 text-white font-medium hover:shadow-lg hover:shadow-red-600/25 transition-all flex items-center justify-center gap-2"
-                        >
+                        className="flex-1 px-6 py-3 rounded-xl bg-gradient-to-r from-sky-500 to-sky-400 text-white font-medium hover:shadow-lg hover:shadow-sky-500/25 transition-all flex items-center justify-center gap-2"
+                      >
                           Confirm Booking
                           <CheckCircle2 className="w-4 h-4" />
                         </button>

@@ -34,26 +34,26 @@ const Login = () => {
   };
 
   return (
-    <div className="min-h-screen bg-neutral-950 flex items-center justify-center p-4">
+    <div className="min-h-screen bg-slate-950 flex items-center justify-center p-4">
       {/* Background effects */}
       <div className="fixed inset-0 overflow-hidden pointer-events-none">
-        <div className="absolute top-20 left-20 w-96 h-96 bg-red-600/10 rounded-full blur-[150px]" />
-        <div className="absolute bottom-20 right-20 w-96 h-96 bg-purple-600/10 rounded-full blur-[150px]" />
+        <div className="absolute top-20 left-20 w-96 h-96 bg-sky-500/10 rounded-full blur-[150px]" />
+        <div className="absolute bottom-20 right-20 w-96 h-96 bg-indigo-500/10 rounded-full blur-[150px]" />
       </div>
 
       <div className="relative w-full max-w-md">
         {/* Logo */}
         <div className="text-center mb-8">
-          <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-red-600/10 border border-red-500/20 mb-4">
-            <Sparkles className="w-4 h-4 text-red-500" />
-            <span className="text-sm text-red-400">Admin Portal</span>
+          <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-slate-900/60 border border-slate-800 mb-4">
+            <Sparkles className="w-4 h-4 text-sky-400" />
+            <span className="text-sm text-slate-200">Admin Portal</span>
           </div>
           <h1 className="text-3xl font-bold text-white">Welcome Back</h1>
-          <p className="text-neutral-400 mt-2">Sign in to manage your portfolio</p>
+          <p className="text-slate-300 mt-2">Sign in to manage your portfolio</p>
         </div>
 
         {/* Login Form */}
-        <div className="p-8 rounded-2xl bg-white/5 border border-white/10 backdrop-blur-sm">
+        <div className="p-8 rounded-2xl bg-slate-900/60 border border-slate-800 backdrop-blur-sm">
           {error && (
             <div className="mb-6 p-4 rounded-lg bg-red-600/10 border border-red-500/20 text-red-400 text-sm">
               {error}
@@ -63,18 +63,18 @@ const Login = () => {
           <form onSubmit={handleSubmit} className="space-y-6">
             {/* Email */}
             <div>
-              <label className="block text-sm font-medium text-neutral-400 mb-2">
+              <label className="block text-sm font-medium text-slate-400 mb-2">
                 Email Address
               </label>
               <div className="relative">
-                <Mail className="absolute left-4 top-1/2 -translate-y-1/2 w-5 h-5 text-neutral-500" />
+                <Mail className="absolute left-4 top-1/2 -translate-y-1/2 w-5 h-5 text-slate-500" />
                 <input
                   type="email"
                   name="email"
                   value={formData.email}
                   onChange={handleChange}
                   required
-                  className="w-full pl-12 pr-4 py-3 bg-white/5 border border-white/10 rounded-xl text-white placeholder-neutral-500 focus:outline-none focus:border-red-500/50 transition-all"
+                  className="w-full pl-12 pr-4 py-3 bg-slate-900/60 border border-slate-800 rounded-xl text-white placeholder-slate-500 focus:outline-none focus:border-sky-500/60 transition-all"
                   placeholder="admin@example.com"
                 />
               </div>
@@ -82,24 +82,24 @@ const Login = () => {
 
             {/* Password */}
             <div>
-              <label className="block text-sm font-medium text-neutral-400 mb-2">
+              <label className="block text-sm font-medium text-slate-400 mb-2">
                 Password
               </label>
               <div className="relative">
-                <Lock className="absolute left-4 top-1/2 -translate-y-1/2 w-5 h-5 text-neutral-500" />
+                <Lock className="absolute left-4 top-1/2 -translate-y-1/2 w-5 h-5 text-slate-500" />
                 <input
                   type={showPassword ? 'text' : 'password'}
                   name="password"
                   value={formData.password}
                   onChange={handleChange}
                   required
-                  className="w-full pl-12 pr-12 py-3 bg-white/5 border border-white/10 rounded-xl text-white placeholder-neutral-500 focus:outline-none focus:border-red-500/50 transition-all"
+                  className="w-full pl-12 pr-12 py-3 bg-slate-900/60 border border-slate-800 rounded-xl text-white placeholder-slate-500 focus:outline-none focus:border-sky-500/60 transition-all"
                   placeholder="••••••••"
                 />
                 <button
                   type="button"
                   onClick={() => setShowPassword(!showPassword)}
-                  className="absolute right-4 top-1/2 -translate-y-1/2 text-neutral-500 hover:text-white transition-colors"
+                  className="absolute right-4 top-1/2 -translate-y-1/2 text-slate-500 hover:text-white transition-colors"
                 >
                   {showPassword ? <EyeOff className="w-5 h-5" /> : <Eye className="w-5 h-5" />}
                 </button>
@@ -110,7 +110,7 @@ const Login = () => {
             <button
               type="submit"
               disabled={loading}
-              className="w-full flex items-center justify-center gap-2 px-6 py-3 rounded-xl bg-red-600 text-white font-medium hover:bg-red-700 transition-all disabled:opacity-70 disabled:cursor-not-allowed"
+              className="w-full flex items-center justify-center gap-2 px-6 py-3 rounded-xl bg-sky-500 text-white font-medium hover:bg-sky-400 transition-all disabled:opacity-70 disabled:cursor-not-allowed"
             >
               {loading ? (
                 <>
@@ -128,14 +128,14 @@ const Login = () => {
 
           {/* Back to site */}
           <div className="mt-6 text-center">
-            <a href="/" className="text-sm text-neutral-400 hover:text-white transition-colors">
+            <a href="/" className="text-sm text-slate-400 hover:text-white transition-colors">
               ← Back to portfolio
             </a>
           </div>
         </div>
 
         {/* Footer */}
-        <p className="mt-8 text-center text-sm text-neutral-500">
+        <p className="mt-8 text-center text-sm text-slate-500">
           Protected area. Unauthorized access is prohibited.
         </p>
       </div>

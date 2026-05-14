@@ -8,29 +8,29 @@ const ContactTable = ({ contacts, onView, onEdit, onDelete }) => {
     <div className="overflow-x-auto">
       <table className="w-full">
         <thead>
-          <tr className="border-b border-white/10">
-            <th className="text-left py-3 px-4 text-sm font-medium text-neutral-400">Name</th>
-            <th className="text-left py-3 px-4 text-sm font-medium text-neutral-400">Contact</th>
-            <th className="text-left py-3 px-4 text-sm font-medium text-neutral-400">Project</th>
-            <th className="text-left py-3 px-4 text-sm font-medium text-neutral-400">Status</th>
-            <th className="text-left py-3 px-4 text-sm font-medium text-neutral-400">Date</th>
-            <th className="text-right py-3 px-4 text-sm font-medium text-neutral-400">Actions</th>
+          <tr className="border-b border-slate-800">
+            <th className="text-left py-3 px-4 text-sm font-medium text-slate-400">Name</th>
+            <th className="text-left py-3 px-4 text-sm font-medium text-slate-400">Contact</th>
+            <th className="text-left py-3 px-4 text-sm font-medium text-slate-400">Project</th>
+            <th className="text-left py-3 px-4 text-sm font-medium text-slate-400">Status</th>
+            <th className="text-left py-3 px-4 text-sm font-medium text-slate-400">Date</th>
+            <th className="text-right py-3 px-4 text-sm font-medium text-slate-400">Actions</th>
           </tr>
         </thead>
         <tbody>
           {contacts.map((contact) => (
             <tr
               key={contact._id}
-              className="border-b border-white/5 hover:bg-white/5 transition-colors group"
+              className="border-b border-slate-800 hover:bg-slate-900 transition-colors group"
             >
               <td className="py-3 px-4">
                 <div>
                   <p className="text-white font-medium">{contact.fullName}</p>
-                  <p className="text-sm text-neutral-500">{contact.email || 'No email'}</p>
+                  <p className="text-sm text-slate-500">{contact.email || 'No email'}</p>
                 </div>
               </td>
               <td className="py-3 px-4">
-                <div className="flex items-center gap-2 text-neutral-400">
+                <div className="flex items-center gap-2 text-slate-400">
                   <Phone className="w-4 h-4" />
                   <span className="text-sm">{contact.contactNumber}</span>
                 </div>
@@ -39,7 +39,7 @@ const ContactTable = ({ contacts, onView, onEdit, onDelete }) => {
                 <div>
                   <p className="text-white text-sm">{contact.projectType || '-'}</p>
                   {contact.projectName && (
-                    <p className="text-xs text-neutral-500 truncate max-w-37.5">
+                    <p className="text-xs text-slate-500 truncate max-w-37.5">
                       {contact.projectName}
                     </p>
                   )}
@@ -49,7 +49,7 @@ const ContactTable = ({ contacts, onView, onEdit, onDelete }) => {
                 <StatusBadge status={contact.status} />
               </td>
               <td className="py-3 px-4">
-                <span className="text-sm text-neutral-400">
+                <span className="text-sm text-slate-400">
                   {format(new Date(contact.createdAt), 'MMM d, yyyy')}
                 </span>
               </td>
@@ -57,21 +57,21 @@ const ContactTable = ({ contacts, onView, onEdit, onDelete }) => {
                 <div className="flex items-center justify-end gap-2 opacity-0 group-hover:opacity-100 transition-opacity">
                   <button
                     onClick={() => onView(contact)}
-                    className="p-2 rounded-lg bg-white/5 text-neutral-400 hover:bg-white/10 hover:text-white transition-all"
+                    className="p-2 rounded-lg bg-slate-900/60 text-slate-300 hover:bg-slate-900 hover:text-white transition-all"
                     title="View Details"
                   >
                     <ExternalLink className="w-4 h-4" />
                   </button>
                   <button
                     onClick={() => onEdit(contact)}
-                    className="p-2 rounded-lg bg-white/5 text-neutral-400 hover:bg-blue-600/20 hover:text-blue-400 transition-all"
+                    className="p-2 rounded-lg bg-slate-900/60 text-slate-300 hover:bg-sky-500/10 hover:text-sky-300 transition-all"
                     title="Edit Status"
                   >
                     <MoreHorizontal className="w-4 h-4" />
                   </button>
                   <button
                     onClick={() => onDelete(contact)}
-                    className="p-2 rounded-lg bg-white/5 text-neutral-400 hover:bg-red-600/20 hover:text-red-400 transition-all"
+                    className="p-2 rounded-lg bg-slate-900/60 text-slate-300 hover:bg-red-600/20 hover:text-red-400 transition-all"
                     title="Delete"
                   >
                     <span className="sr-only">Delete</span>
