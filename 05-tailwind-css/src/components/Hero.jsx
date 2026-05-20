@@ -1,18 +1,30 @@
-import React, { useState, useEffect } from 'react';
+import React, { useMemo, useState, useEffect } from 'react';
 import { Linkedin, Github, ArrowDown, Sparkles, Code, Palette, Cpu } from 'lucide-react';
 import profilePic from '../assets/profile.jpg';
+import { useSiteContent } from '../hooks/useSiteContent';
 
 const Hero = () => {
   const [currentRole, setCurrentRole] = useState(0);
 
-  const roles = ['UI/UX Designer', 'Full Stack Developer', 'AI Automation Specialist'];
+  const { content } = useSiteContent();
+  const roles = useMemo(() => content.hero.roles || [], [content.hero.roles]);
+  const hasRoles = roles.length > 0;
+  const primaryRole = hasRoles
+    ? roles[currentRole % roles.length]
+    : content.hero.fallbackRole;
 
   useEffect(() => {
-    const interval = setInterval(() => {
-      setCurrentRole((prev) => (prev + 1) % roles.length);
-    }, 3000);
-    return () => clearInterval(interval);
-  }, []);
+    let interval;
+    if (roles.length > 0) {
+      interval = setInterval(() => {
+        setCurrentRole((prev) => (prev + 1) % roles.length);
+      }, 3000);
+    }
+    return () => {
+      if (interval) clearInterval(interval);
+    };
+  }, [roles]);
+
 
   return (
     <section className="relative min-h-screen w-full flex items-center overflow-hidden bg-neutral-950 pt-36 pb-12">
@@ -30,30 +42,28 @@ const Hero = () => {
             {/* Badge */}
             <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-white/5 border border-white/10">
               <Sparkles className="w-4 h-4 text-red-500" />
-              <span className="text-sm text-neutral-300">Available for freelance work</span>
+              <span className="text-sm text-neutral-300">{content.hero.badge}</span>
               <span className="w-2 h-2 rounded-full bg-green-500 animate-pulse" />
             </div>
 
             {/* Main Heading */}
             <h1 className="text-6xl sm:text-7xl lg:text-8xl font-bold text-white leading-[1.05]">
-              Hi, I'm<br />
-              <span className="text-red-600">Muhammad</span><br />
-              <span className="text-neutral-500">Haseeb</span>
+              {content.hero.greeting}<br />
+              <span className="text-red-600">{content.hero.firstName}</span><br />
+              <span className="text-neutral-500">{content.hero.lastName}</span>
             </h1>
 
             {/* Role */}
             <div className="flex items-center">
               <span className="text-xl text-neutral-400">
-                I am a <span className="text-white font-semibold">{roles[currentRole]}</span>
+                I am a <span className="text-white font-semibold">{primaryRole}</span>
                 <span className="animate-pulse text-red-500">|</span>
               </span>
             </div>
 
             {/* Description */}
             <p className="text-base text-neutral-400 leading-relaxed">
-              NAVTTC Certified UI/UX Designer & Scrimba Certified Full Stack Developer.
-              Specializing in AI Automation and creating digital experiences that blend
-              aesthetics with functionality.
+              {content.hero.description}
             </p>
 
             {/* Certifications */}
@@ -107,11 +117,11 @@ const Hero = () => {
             {/* CTA Buttons */}
             <div className="flex gap-4 pt-2">
               <a href="#work" className="flex items-center gap-2 px-8 py-3.5 rounded-full bg-red-600 text-white font-semibold hover:bg-red-700 transition-all shadow-lg shadow-red-600/25">
-                View My Work
+                {content.hero.ctas.primaryLabel}
                 <ArrowDown className="w-4 h-4" />
               </a>
               <a href="#contact" className="px-8 py-3.5 rounded-full border border-white/20 text-white font-semibold hover:bg-white/5 transition-all">
-                Get In Touch
+                {content.hero.ctas.secondaryLabel}
               </a>
             </div>
           </div>

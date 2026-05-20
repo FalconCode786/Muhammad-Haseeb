@@ -1,0 +1,4 @@
+node_modules/
+dist/
+05-tailwind-css/dist/
+backend/node_modules/

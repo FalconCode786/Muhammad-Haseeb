@@ -5,6 +5,9 @@ import { useAuth } from '../hooks/useAuth';
 
 const pageTitles = {
   '/admin/dashboard': 'Dashboard',
+  '/admin/content': 'Content',
+  '/admin/analytics': 'Analytics',
+  '/admin/roles': 'Roles & Access',
   '/admin/contacts': 'Contacts',
   '/admin/consultations': 'Consultations',
   '/admin/settings': 'Settings',
