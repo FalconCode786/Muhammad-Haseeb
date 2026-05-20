@@ -3,6 +3,7 @@ const mongoose = require('mongoose');
 const cors = require('cors');
 const helmet = require('helmet');
 const morgan = require('morgan');
+const rateLimit = require('express-rate-limit');
 require('dotenv').config();
 
 const connectDB = require('./config/database');
@@ -11,6 +12,15 @@ const { errorHandler, notFound } = require('./middleware/errorHandler');
 // Route imports
 const contactRoutes = require('./routes/contact');
 const consultationRoutes = require('./routes/consultation');
+const adminRoutes = require('./routes/admin');
+const { protect, adminOnly } = require('./middleware/auth');
+
+const adminLimiter = rateLimit({
+  windowMs: 15 * 60 * 1000,
+  max: 120,
+  standardHeaders: true,
+  legacyHeaders: false
+});
 
 const app = express();
 
@@ -42,6 +52,7 @@ app.use('/api/contact', contactRoutes);
 app.use('/api/consultation', consultationRoutes);
 const authRoutes = require('./routes/auth');
 app.use('/api/auth', authRoutes);
+app.use('/api/admin', adminLimiter, protect, adminOnly, adminRoutes);
 // 404 handler
 app.use(notFound);
 

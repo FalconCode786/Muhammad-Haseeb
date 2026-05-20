@@ -7,6 +7,9 @@ import Dashboard from './pages/Dashboard';
 import Contacts from './pages/Contacts';
 import Consultations from './pages/Consultations';
 import Settings from './pages/Settings';
+import Content from './pages/Content';
+import Analytics from './pages/Analytics';
+import Roles from './pages/Roles';
 import Layout from './components/layout';
 
 // Protected route wrapper
@@ -46,6 +49,9 @@ const AdminApp = () => {
         >
           <Route index element={<Navigate to="dashboard" replace />} />
           <Route path="dashboard" element={<Dashboard />} />
+          <Route path="content" element={<Content />} />
+          <Route path="analytics" element={<Analytics />} />
+          <Route path="roles" element={<Roles />} />
           <Route path="contacts" element={<Contacts />} />
           <Route path="consultations" element={<Consultations />} />
           <Route path="settings" element={<Settings />} />

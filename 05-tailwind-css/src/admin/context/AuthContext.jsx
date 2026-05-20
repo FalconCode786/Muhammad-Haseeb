@@ -18,7 +18,11 @@ export const AuthProvider = ({ children }) => {
       if (token && storedUser) {
         try {
           const parsed = JSON.parse(storedUser);
-          setUser(parsed);
+          const normalized = { ...parsed, id: parsed?.id || parsed?._id };
+          setUser(normalized);
+          if (normalized?.id) {
+            localStorage.setItem('adminUser', JSON.stringify(normalized));
+          }
         } catch (err) {
           console.log('Parse error:', err);
           localStorage.removeItem('adminToken');
