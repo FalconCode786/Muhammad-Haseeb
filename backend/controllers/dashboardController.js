@@ -5,7 +5,7 @@ const User = require('../models/User');
 // @desc    Get dashboard overview stats
 // @route   GET /api/admin/dashboard
 // @access  Private/Admin
-const getDashboardStats = async (req, res) => {
+const getDashboardStats = async (req, res, next) => {
   try {
     const today = new Date();
     today.setHours(0, 0, 0, 0);
@@ -163,17 +163,14 @@ const getDashboardStats = async (req, res) => {
 
   } catch (error) {
     console.error('Dashboard stats error:', error);
-    res.status(500).json({
-      success: false,
-      message: 'Failed to fetch dashboard stats'
-    });
+    return next(error);
   }
 };
 
 // @desc    Get activity feed
 // @route   GET /api/admin/activity
 // @access  Private/Admin
-const getActivityFeed = async (req, res) => {
+const getActivityFeed = async (req, res, next) => {
   try {
     const { limit = 20, page = 1 } = req.query;
     const skip = (Number(page) - 1) * Number(limit);
@@ -232,17 +229,14 @@ const getActivityFeed = async (req, res) => {
     });
 
   } catch (error) {
-    res.status(500).json({
-      success: false,
-      message: 'Failed to fetch activity feed'
-    });
+    return next(error);
   }
 };
 
 // @desc    Get project types analytics
 // @route   GET /api/admin/analytics/projects
 // @access  Private/Admin
-const getProjectAnalytics = async (req, res) => {
+const getProjectAnalytics = async (req, res, next) => {
   try {
     const projectTypes = await Contact.aggregate([
       {
@@ -299,17 +293,14 @@ const getProjectAnalytics = async (req, res) => {
     });
 
   } catch (error) {
-    res.status(500).json({
-      success: false,
-      message: 'Failed to fetch project analytics'
-    });
+    return next(error);
   }
 };
 
 // @desc    Get consultation analytics
 // @route   GET /api/admin/analytics/consultations
 // @access  Private/Admin
-const getConsultationAnalytics = async (req, res) => {
+const getConsultationAnalytics = async (req, res, next) => {
   try {
     // Consultations by topic
     const byTopic = await Consultation.aggregate([
@@ -375,17 +366,14 @@ const getConsultationAnalytics = async (req, res) => {
     });
 
   } catch (error) {
-    res.status(500).json({
-      success: false,
-      message: 'Failed to fetch consultation analytics'
-    });
+    return next(error);
   }
 };
 
 // @desc    Export data
 // @route   GET /api/admin/export/:type
 // @access  Private/Admin
-const exportData = async (req, res) => {
+const exportData = async (req, res, next) => {
   try {
     const { type } = req.params;
     const { format = 'json', startDate, endDate } = req.query;
@@ -435,10 +423,7 @@ const exportData = async (req, res) => {
     });
 
   } catch (error) {
-    res.status(500).json({
-      success: false,
-      message: 'Failed to export data'
-    });
+    return next(error);
   }
 };
 

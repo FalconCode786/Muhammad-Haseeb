@@ -2,8 +2,10 @@ const Consultation = require('../models/Consultation');
 const { sendEmail, emailTemplates } = require('../config/email');
 const { sanitizeInput } = require('../utils/helpers');
 
+const ACTIVE_BOOKING_STATUSES = ['pending', 'confirmed', 'completed'];
+
 // Book consultation
-const bookConsultation = async (req, res) => {
+const bookConsultation = async (req, res, next) => {
   try {
     const { name, email, topic, date, time, type, message } = req.body;
 
@@ -11,7 +13,7 @@ const bookConsultation = async (req, res) => {
     const existingBooking = await Consultation.findOne({
       date: new Date(date),
       time: time,
-      status: { $nin: ['cancelled', 'no-show'] }
+      status: { $in: ACTIVE_BOOKING_STATUSES }
     });
 
     if (existingBooking) {
@@ -59,10 +61,7 @@ const bookConsultation = async (req, res) => {
       });
     }
 
-    res.status(500).json({
-      success: false,
-      message: 'Failed to book consultation. Please try again.'
-    });
+    return next(error);
   }
 };
 
@@ -86,7 +85,7 @@ const sendConsultationEmails = async (data) => {
 };
 
 // Get available slots
-const getAvailableSlots = async (req, res) => {
+const getAvailableSlots = async (req, res, next) => {
   try {
     const { date } = req.query;
     if (!date) {
@@ -103,7 +102,7 @@ const getAvailableSlots = async (req, res) => {
 
     const booked = await Consultation.find({
       date: new Date(date),
-      status: { $nin: ['cancelled', 'no-show'] }
+      status: { $in: ACTIVE_BOOKING_STATUSES }
     }).select('time');
 
     const bookedTimes = booked.map(b => b.time);
@@ -115,15 +114,12 @@ const getAvailableSlots = async (req, res) => {
     });
 
   } catch (error) {
-    res.status(500).json({
-      success: false,
-      message: 'Failed to fetch available slots'
-    });
+    return next(error);
   }
 };
 
 // Get all consultations
-const getConsultations = async (req, res) => {
+const getConsultations = async (req, res, next) => {
   try {
     const { status, upcoming, page = 1, limit = 10 } = req.query;
     const filter = {};
@@ -155,15 +151,12 @@ const getConsultations = async (req, res) => {
     });
 
   } catch (error) {
-    res.status(500).json({
-      success: false,
-      message: 'Failed to fetch consultations'
-    });
+    return next(error);
   }
 };
 
 // Get single consultation
-const getConsultation = async (req, res) => {
+const getConsultation = async (req, res, next) => {
   try {
     const consultation = await Consultation.findById(req.params.id);
     if (!consultation) {
@@ -174,15 +167,12 @@ const getConsultation = async (req, res) => {
     }
     res.json({ success: true, data: consultation });
   } catch (error) {
-    res.status(500).json({
-      success: false,
-      message: 'Failed to fetch consultation'
-    });
+    return next(error);
   }
 };
 
 // Update consultation
-const updateConsultation = async (req, res) => {
+const updateConsultation = async (req, res, next) => {
   try {
     const { status, meetingLink, adminNotes } = req.body;
     const updateData = { updatedAt: Date.now() };
@@ -211,15 +201,12 @@ const updateConsultation = async (req, res) => {
     });
 
   } catch (error) {
-    res.status(500).json({
-      success: false,
-      message: 'Failed to update consultation'
-    });
+    return next(error);
   }
 };
 
 // Cancel consultation
-const cancelConsultation = async (req, res) => {
+const cancelConsultation = async (req, res, next) => {
   try {
     const consultation = await Consultation.findByIdAndUpdate(
       req.params.id,
@@ -254,15 +241,12 @@ const cancelConsultation = async (req, res) => {
     });
 
   } catch (error) {
-    res.status(500).json({
-      success: false,
-      message: 'Failed to cancel consultation'
-    });
+    return next(error);
   }
 };
 
 // Get stats
-const getConsultationStats = async (req, res) => {
+const getConsultationStats = async (req, res, next) => {
   try {
     const today = new Date();
     today.setHours(0, 0, 0, 0);
@@ -297,10 +281,7 @@ const getConsultationStats = async (req, res) => {
     });
 
   } catch (error) {
-    res.status(500).json({
-      success: false,
-      message: 'Failed to fetch stats'
-    });
+    return next(error);
   }
 };
 

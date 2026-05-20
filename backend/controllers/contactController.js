@@ -5,7 +5,7 @@ const { sanitizeInput } = require('../utils/helpers');
 // @desc    Submit contact form
 // @route   POST /api/contact
 // @access  Public
-const submitContact = async (req, res) => {
+const submitContact = async (req, res, next) => {
   try {
     // Get client IP and user agent
     const ipAddress = req.headers['x-forwarded-for'] || req.socket.remoteAddress;
@@ -54,10 +54,7 @@ const submitContact = async (req, res) => {
       });
     }
 
-    res.status(500).json({
-      success: false,
-      message: 'Failed to submit contact form. Please try again later.'
-    });
+    return next(error);
   }
 };
 
@@ -88,7 +85,7 @@ const sendEmails = async (contactData) => {
 // @desc    Get all contacts (for admin)
 // @route   GET /api/contact
 // @access  Private/Admin
-const getContacts = async (req, res) => {
+const getContacts = async (req, res, next) => {
   try {
     const { status, page = 1, limit = 10, sort = '-createdAt' } = req.query;
 
@@ -120,17 +117,14 @@ const getContacts = async (req, res) => {
 
   } catch (error) {
     console.error('Get contacts error:', error);
-    res.status(500).json({
-      success: false,
-      message: 'Failed to fetch contacts'
-    });
+    return next(error);
   }
 };
 
 // @desc    Get single contact
 // @route   GET /api/contact/:id
 // @access  Private/Admin
-const getContact = async (req, res) => {
+const getContact = async (req, res, next) => {
   try {
     const contact = await Contact.findById(req.params.id);
 
@@ -147,17 +141,14 @@ const getContact = async (req, res) => {
     });
 
   } catch (error) {
-    res.status(500).json({
-      success: false,
-      message: 'Failed to fetch contact'
-    });
+    return next(error);
   }
 };
 
 // @desc    Update contact status
 // @route   PUT /api/contact/:id
 // @access  Private/Admin
-const updateContact = async (req, res) => {
+const updateContact = async (req, res, next) => {
   try {
     const { status, adminNotes } = req.body;
 
@@ -185,17 +176,14 @@ const updateContact = async (req, res) => {
     });
 
   } catch (error) {
-    res.status(500).json({
-      success: false,
-      message: 'Failed to update contact'
-    });
+    return next(error);
   }
 };
 
 // @desc    Delete contact
 // @route   DELETE /api/contact/:id
 // @access  Private/Admin
-const deleteContact = async (req, res) => {
+const deleteContact = async (req, res, next) => {
   try {
     const contact = await Contact.findByIdAndDelete(req.params.id);
 
@@ -212,17 +200,14 @@ const deleteContact = async (req, res) => {
     });
 
   } catch (error) {
-    res.status(500).json({
-      success: false,
-      message: 'Failed to delete contact'
-    });
+    return next(error);
   }
 };
 
 // @desc    Get contact stats
 // @route   GET /api/contact/stats
 // @access  Private/Admin
-const getContactStats = async (req, res) => {
+const getContactStats = async (req, res, next) => {
   try {
     const stats = await Contact.aggregate([
       {
@@ -251,10 +236,7 @@ const getContactStats = async (req, res) => {
     });
 
   } catch (error) {
-    res.status(500).json({
-      success: false,
-      message: 'Failed to fetch stats'
-    });
+    return next(error);
   }
 };
 
