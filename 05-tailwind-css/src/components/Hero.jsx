@@ -15,7 +15,7 @@ const Hero = () => {
   }, []);
 
   return (
-    <section className="relative min-h-screen w-full flex items-center overflow-hidden bg-neutral-950 pt-36 pb-12">
+    <section className="relative min-h-screen w-full flex items-center overflow-hidden bg-neutral-950 pt-10 pb-12">
       {/* Background */}
       <div className="absolute inset-0 overflow-hidden">
         <div className="absolute top-20 left-20 w-96 h-96 bg-red-600/20 rounded-full blur-[120px]" />
